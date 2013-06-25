@@ -6,6 +6,11 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+gem 'devise'
+gem 'jquery-rails'
+gem 'slim'
+gem 'slim-rails'
+
 
 
 # Gems used only for assets and not required
@@ -36,7 +41,3 @@ end
 
 # To use debugger
 # gem 'debugger'
-
-gem "jquery-rails"
-gem "slim"
-gem "slim-rails"

@@ -1,4 +1,7 @@
 Rabotlivko::Application.routes.draw do
+  devise_for :users
+
+  match 'test', to: 'users#test', as: 'user_root'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
