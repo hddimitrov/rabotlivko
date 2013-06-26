@@ -10,7 +10,7 @@ gem 'devise'
 gem 'jquery-rails'
 gem 'slim'
 gem 'slim-rails'
-
+gem 'rails_admin'
 
 
 # Gems used only for assets and not required
