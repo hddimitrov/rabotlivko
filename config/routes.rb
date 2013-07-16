@@ -1,8 +1,6 @@
 Rabotlivko::Application.routes.draw do
-  devise_for :admins
-  devise_for :users
-
-  match 'test', to: 'users#test', as: 'user_root'
+  devise_for :users, controllers: {sessions: 'sessions', registrations: 'registrations'}
+  match '/adverts', to: 'adverts#index', as: :user_root
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -15,7 +13,7 @@ Rabotlivko::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+  resources :adverts
 
   # Sample resource route with options:
   #   resources :products do
@@ -59,5 +57,4 @@ Rabotlivko::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 end
