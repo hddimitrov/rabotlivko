@@ -1,7 +1,10 @@
 Rabotlivko::Application.routes.draw do
   devise_for :users, controllers: {sessions: 'sessions', registrations: 'registrations'}
   match '/adverts', to: 'adverts#index', as: :user_root
-  match '/users/:id', to: 'users#show'
+
+  match '/me', to: 'users#profile_master'
+  match '/users/:id', to: 'users#show', as: :user
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
