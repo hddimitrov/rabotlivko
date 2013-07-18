@@ -19,9 +19,16 @@
           a href="#" Архив
 
   .span6
-    .name = @user.name
-    .email = @user.email
+    .row
+      .span2
+        img src='http://lorempixel.com/120/120/cats'
+
+      .span4
+        .name
+          h4 = @user.name
+        .email = @user.email
+
   .span3
     .banner
-      img src='http://placehold.it/150x500'
+      img src='http://lorempixel.com/150/500/technics'
 
