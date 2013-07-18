@@ -1,0 +1,30 @@
+doctype
+html
+  head
+    title Rabotlivko
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          button.btn.btn-navbar data-target=".nav-collapse" data-toggle="collapse" type="button"
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand href="#" Работливко
+          .nav-collapse.collapse
+            p.navbar-text.pull-right
+              a.navbar-link href="#" = @user.try(:name) || 'Not logged'
+            ul.nav
+              li.active
+                a href="#" Home
+              li
+                a href="#about" За нас
+              li
+                a href="#contact" Контакти
+
+
+    .container
+      = yield
