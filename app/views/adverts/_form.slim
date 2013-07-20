@@ -12,4 +12,7 @@
     = f.input :description, required: true, input_html: { required: true }, label: 'Description'
 
     .form-actions
-      a.btn data-toggle='modal' href='#login-modal' type='button' Publish
+      - if current_user.present?
+        = f.button :submit, label: 'Publish'
+      - else
+        a.btn data-toggle='modal' href='#login-modal' type='button' Publish
