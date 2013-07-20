@@ -1,0 +1,8 @@
+p
+  | Здравей  #{@email},
+
+p
+  | Можеш да активираш своя акаунт на следния линк:
+
+p
+  = link_to 'Потвърждавам', confirmation_url(:confirmation_token => @resource.confirmation_token)
