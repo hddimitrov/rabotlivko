@@ -1,8 +1,19 @@
 Rabotlivko::Application.routes.draw do
-  devise_for :users, controllers: {sessions: 'sessions', registrations: 'registrations'}
-  match '/adverts', to: 'adverts#index', as: :user_root
 
-  match '/me', to: 'users#profile_master'
+  root :to => 'adverts#index'
+  resources :adverts
+
+  match '/users/sign_in'  => 'devise/sessions#create',  as: :user_session, via: :post
+  match '/users/sign_out' => 'devise/sessions#destroy', as: :destroy_user_session, via: :delete
+
+  match '/users/sign_in'  => 'devise/sessions#create',  as: :user_session, via: :post
+
+  match '/users/password/new'  => 'devise/sessions#create',  as: :user_session, via: :post
+  match '/users/confirmation/new'  => 'devise/confirmations#create', via: :post
+  match '/users/resource/confirmation'  => 'devise/create', via: :post
+
+
+  match '/me', to: 'users#profile_master', as: :user_root
   match '/users/:id', to: 'users#show', as: :user
 
   # The priority is based upon order of creation:
@@ -17,7 +28,6 @@ Rabotlivko::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
-  resources :adverts
 
   # Sample resource route with options:
   #   resources :products do
@@ -54,7 +64,6 @@ Rabotlivko::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'adverts#index'
 
   # See how all your routes lay out with "rake routes"
 

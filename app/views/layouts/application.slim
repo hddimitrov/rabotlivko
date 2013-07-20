@@ -13,10 +13,14 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.brand href="#" Работливко
+          a.brand href="#{root_path}" Работливко
           .nav-collapse.collapse
             p.navbar-text.pull-right
-              a.navbar-link href="#" = @user.try(:name) || 'Not logged'
+              - if current_user.present?
+                a.navbar-link href="#{user_root_path}" = current_user.name
+                = link_to 'Излез', destroy_user_session_path, :method => :delete
+              - else
+                a href="#login-modal" role="button" data-toggle="modal" Влез
             ul.nav
               li.active
                 a href="#" Home
@@ -25,6 +29,7 @@ html
               li
                 a href="#contact" Контакти
 
+    =  render partial: 'shared/login_modal'
 
     .container
       = yield
