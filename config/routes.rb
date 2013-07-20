@@ -3,15 +3,16 @@ Rabotlivko::Application.routes.draw do
   root :to => 'adverts#index'
   resources :adverts
 
-  match '/users/sign_in'  => 'devise/sessions#create',  as: :user_session, via: :post
-  match '/users/sign_out' => 'devise/sessions#destroy', as: :destroy_user_session, via: :delete
 
-  match '/users/sign_in'  => 'devise/sessions#create',  as: :user_session, via: :post
-
-  match '/users/password/new'  => 'devise/sessions#create',  as: :user_session, via: :post
-  match '/users/confirmation/new'  => 'devise/confirmations#create', via: :post
-  match '/users/resource/confirmation'  => 'devise/create', via: :post
-
+  devise_for :users, skip: [:registrations, :sessions, :confirmations, :passwords]
+  devise_scope :user do
+    match 'sign_up'  => 'registrations#create',  as: :user_registration, via: :post
+    match 'sign_in'  => 'sessions#create',       as: :user_session, via: :post
+    match 'sign_out' => 'devise/sessions#destroy', as: :destroy_user_session, via: :delete
+    match 'password'          => 'devise/passwords#create',     via: :post
+    match 'confirmation/new'  => 'devise/confirmations#create', via: :post
+    match 'confirmation'      => 'devise/confirmations#show',   via: :get
+  end
 
   match '/me', to: 'users#profile_master', as: :user_root
   match '/users/:id', to: 'users#show', as: :user
