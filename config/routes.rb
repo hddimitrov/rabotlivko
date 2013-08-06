@@ -6,12 +6,12 @@ Rabotlivko::Application.routes.draw do
 
   devise_for :users, skip: [:registrations, :sessions, :confirmations, :passwords]
   devise_scope :user do
-    match 'sign_up'  => 'registrations#create',  as: :user_registration, via: :post
-    match 'sign_in'  => 'sessions#create',       as: :user_session, via: :post
-    match 'sign_out' => 'devise/sessions#destroy', as: :destroy_user_session, via: :delete
+    match 'sign_up'           => 'registrations#create',  as: :user_registration, via: :post
+    match 'sign_in'           => 'sessions#create',       as: :user_session, via: :post
+    match 'sign_out'          => 'devise/sessions#destroy', as: :destroy_user_session, via: :delete
     match 'password'          => 'devise/passwords#create',     via: :post
-    match 'confirmation/new'  => 'devise/confirmations#create', via: :post
-    match 'confirmation'      => 'devise/confirmations#show',   via: :get
+    match 'confirmation/new'  => 'confirmations#create', via: :post, as: :resend_confirmation
+    match 'confirmation'      => 'devise/confirmations#show',   via: :get, as: :confirmation
   end
 
   match '/me', to: 'users#profile_master', as: :user_root

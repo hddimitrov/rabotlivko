@@ -1,0 +1,26 @@
+#resend-confirmation-modal.modal.fade
+  .modal-header
+    h3
+      | Resend confirmation instructions
+      a.button.close.pull-right data-dismiss='modal' x
+  .modal-body
+    | Моля въведете email адресa, с който сте се регситрирали в Работливко
+
+    = form_for(resource, as: resource_name, url: resend_confirmation_path, type: :xml, remote: true, html: { method: :post, id: 'resend-confirmation' }) do |f|
+
+      = f.label :email
+      br
+      = f.email_field :email, :autofocus => true
+      br
+      = f.submit 'Изпрати'
+
+javascript:
+  $(document).ready(function() {
+    $('form#resend-confirmation').bind('ajax:success', function(e, data, status, xhr){
+        if (data.success) {
+          // window.location.pathname = "#{user_root_path}";
+        } else {
+          alert('failure!')
+        }
+    });
+  });

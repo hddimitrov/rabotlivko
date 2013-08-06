@@ -21,6 +21,7 @@ html
                 = link_to 'Излез', destroy_user_session_path, :method => :delete
               - else
                 a href="#login-modal" role="button" data-toggle="modal" Влез
+                a href="#resend-confirmation-modal" role="button" data-toggle="modal" Confirmation
             ul.nav
               li.active
                 a href="#" Home
@@ -29,7 +30,8 @@ html
               li
                 a href="#contact" Контакти
 
-    =  render partial: 'shared/login_modal'
+    = render partial: 'shared/login_modal'
+    = render partial: 'shared/resend_confirmation_modal'
 
     .container
       = yield
