@@ -13,4 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require chosen.jquery.min
+//= require angular
+//= require angular-cookies
+//= require_tree ./angular
 //= require_tree .
