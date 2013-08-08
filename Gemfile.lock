@@ -31,6 +31,10 @@ GEM
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
+    carrierwave (0.9.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -72,6 +76,7 @@ GEM
     mime-types (1.23)
     multi_json (1.7.7)
     multipart-post (1.1.5)
+    nested_form (0.3.2)
     oauth2 (0.8.0)
       faraday (~> 0.8)
       httpauth (~> 0.1)
@@ -161,10 +166,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  carrierwave
   coffee-rails (~> 3.2.1)
   devise
   jquery-rails
   less-rails
+  nested_form
   omniauth
   omniauth-facebook
   pg
