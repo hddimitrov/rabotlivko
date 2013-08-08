@@ -13,22 +13,26 @@ class User < ActiveRecord::Base
 
   def self.find_for_facebook_oauth(auth)
     user = User.where(provider: auth.provider, uid: auth.uid).first
+    info = auth.info
 
     puts '================================================='
     puts auth.credentials.inspect
     puts '-------------------------------------------------'
-    puts auth.info
+    puts info.inspect
     puts '-------------------------------------------------'
-    puts auth.info.name
+    puts info['name'].inspect
+    puts info['email'].inspect
     puts '================================================='
 
     if user.blank?
       user = User.new
-      user.name = auth.info.name,
-      user.provider = auth.provider,
-      user.uid = auth.uid,
-      user.email =  auth.info.email,
+      
+      user.provider = auth.provider
+      user.uid = auth.uid
       user.fb_token = auth.credentials.token
+
+      user.name = info['name']
+      user.email =  info['email']
 
       user.skip_confirmation!
 
