@@ -7,10 +7,10 @@
           li = message
   fieldset
     legend New Advert
-
+    = f.input :category_id, collection: Category.all
     = f.input :title, required: true, input_html: { required: true }, label: 'Title'
     = f.input :description, required: true, input_html: { required: true }, label: 'Description'
-
+    = f.input :price
     .form-actions
       - if current_user.present?
         = f.button :submit, label: 'Publish'
