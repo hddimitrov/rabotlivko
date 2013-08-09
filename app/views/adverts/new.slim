@@ -1,5 +1,7 @@
-h1 New advert
+div ng-app='adverts' ng-controller='AdvertsCtrl'
+  h1 New advert
+  div
+    | {{msg}}
+  == render 'form'
 
-== render 'form'
-
-= link_to 'Back', adverts_path
+  = link_to 'Back', adverts_path

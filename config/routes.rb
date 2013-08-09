@@ -3,8 +3,8 @@ Rabotlivko::Application.routes.draw do
   root :to => 'adverts#index'
   resources :adverts
 
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }, skip: [:registrations, :sessions, :confirmations, :passwords]
 
-  devise_for :users, skip: [:registrations, :sessions, :confirmations, :passwords]
   devise_scope :user do
     match 'sign_up'           => 'registrations#create',  as: :user_registration, via: :post
     match 'sign_in'           => 'sessions#create',       as: :user_session, via: :post

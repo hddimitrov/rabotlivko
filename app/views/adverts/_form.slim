@@ -1,4 +1,4 @@
-= simple_form_for(@advert, :url => adverts_path, method: 'POST', :html => { :class => 'form-horizontal' }) do |f|
+= simple_nested_form_for(@advert, :url => adverts_path, method: 'POST', :html => { :class => 'form-horizontal' }) do |f|
   - if @advert.errors.any?
     #error_explanation
       h2 = "#{pluralize(@advert.errors.count, "error")} prohibited this advert from being saved:"
@@ -7,12 +7,53 @@
           li = message
   fieldset
     legend New Advert
+    = f.input :category_id, collection: Category.all, input_html: {chosen: '', class: 'chzn-select'}
+    = f.input :title
+    = f.input :description
+    = f.input :price
 
-    = f.input :title, required: true, input_html: { required: true }, label: 'Title'
-    = f.input :description, required: true, input_html: { required: true }, label: 'Description'
+    br
+    = f.fields_for :attachments do |attachment_form|
+      = attachment_form.label :description
+      br
+      = attachment_form.text_field :description
+      br
+      = attachment_form.label :file
+      br
+      = attachment_form.file_field :file
+      = attachment_form.link_to_remove "Remove this attachment"
+    end
+
+    = f.link_to_add "Add attachment", :attachments
 
     .form-actions
       - if current_user.present?
         = f.button :submit, label: 'Publish'
       - else
         a.btn data-toggle='modal' href='#login-modal' type='button' Publish
+
+
+/ = nested_form_for @article, :html=>{:multipart => true } do |f|
+/   <%= f.error_messages %>
+/   <p>
+/   <%= f.label :title %><br />
+/   <%= f.text_field :title %>
+/   </p>
+/   <p>
+/   <%= f.label :description %><br />
+/   <%= f.text_area :description %>
+/   </p>
+/   <%= f.fields_for :attachments do |attachment_form|  %>
+/     <p>
+/     <%= attachment_form.label :description %><br />
+/     <%= attachment_form.text_area :description %>
+/     </p>
+/     <p>
+/     <%= attachment_form.label :file %><br />
+/     <%= attachment_form.file_field :file %>
+/     </p>
+/     <%= attachment_form.link_to_remove "Remove this attachment" %>
+/   <% end %>
+/   <%= f.link_to_add "Add attachment", :attachments %>
+/   <p><%= f.submit %></p>
+/  <% end %>
