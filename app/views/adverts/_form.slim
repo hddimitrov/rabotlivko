@@ -1,4 +1,4 @@
-= nested_form_for(@advert, :url => adverts_path, method: 'POST', :html => { :class => 'form-horizontal' }) do |f|
+= simple_nested_form_for(@advert, :url => adverts_path, method: 'POST', :html => { :class => 'form-horizontal' }) do |f|
   - if @advert.errors.any?
     #error_explanation
       h2 = "#{pluralize(@advert.errors.count, "error")} prohibited this advert from being saved:"
@@ -7,14 +7,10 @@
           li = message
   fieldset
     legend New Advert
-    = f.label :category
-    = f.select :category_id, Category.all.map {|x| [x.title, x.id]}
-    = f.label :title
-    = f.text_field :title
-    = f.label :description
-    = f.text_area :description
-    = f.label :price
-    = f.text_field :price
+    = f.input :category_id, collection: Category.all, input_html: {chosen: '', class: 'chzn-select'}
+    = f.input :title
+    = f.input :description
+    = f.input :price
 
     br
     = f.fields_for :attachments do |attachment_form|
