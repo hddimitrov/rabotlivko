@@ -1,35 +1,35 @@
 doctype
 html
   head
-    title Rabotlivko
-    = stylesheet_link_tag    "application", :media => "all"
-    = javascript_include_tag "application"
+    title Работливко
+    = stylesheet_link_tag    'application', :media => 'all'
+    = javascript_include_tag 'application'
     = csrf_meta_tags
-  body
+  body ng-app='rab'
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
         .container
-          button.btn.btn-navbar data-target=".nav-collapse" data-toggle="collapse" type="button"
+          button.btn.btn-navbar data-target='.nav-collapse' data-toggle='collapse' type='button'
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.brand href="#{root_path}" Работливко
+          a.brand href='#{root_path}' Работливко
           .nav-collapse.collapse
             p.navbar-text.pull-right
               - if current_user.present?
-                a.navbar-link href="#{user_root_path}" = current_user.name
+                a.navbar-link href='#{user_root_path}' = current_user.name
                 = link_to 'Излез', destroy_user_session_path, :method => :delete
               - else
-                = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
-                a href="#login-modal" role="button" data-toggle="modal" Влез
-                a href="#resend-confirmation-modal" role="button" data-toggle="modal" Confirmation
+                = link_to 'Sign in with Facebook', user_omniauth_authorize_path(:facebook)
+                a href='#login-modal' role='button' data-toggle='modal' Влез
+                a href='#resend-confirmation-modal' role='button' data-toggle='modal' Confirmation
             ul.nav
               li.active
-                a href="#" Home
+                a href='/' Home
               li
-                a href="#about" За нас
+                a href='#{want_ads_path}' Обяви
               li
-                a href="#contact" Контакти
+                a href='#{adverts_path}' Реклами
 
     = render partial: 'shared/login_modal'
     = render partial: 'shared/resend_confirmation_modal'
