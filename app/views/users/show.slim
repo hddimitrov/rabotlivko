@@ -1,34 +1,35 @@
-.row
-  .span3
-    .well.sidebar-nav
-      ul.nav.nav-list
-        li.nav-header Sidebar
-        li.active
-          a href="#" Активни
-        li
-          a href="#" Известия
-        li
-          a href="#" Любими
-        li
-          a href="#" Хора
-        li
-          a href="#" Чернови
-        li
-          a href="#" Неоценени
-        li
-          a href="#" Архив
+.wrapper ng-controller='ProfileCtrl'
+  .row
+    .span3
+      .well.sidebar-nav
+        ul.nav.nav-list
+          li.nav-header Sidebar
+          li.active
+            a href="#" Активни
+          li
+            a href="#" Известия
+          li
+            a href="#" Любими
+          li
+            a href="#" Хора
+          li
+            a href="#" Чернови
+          li
+            a href="#" Неоценени
+          li
+            a href="#" Архив
 
-  .span6
-    .row
-      .span2
-        img src='http://lorempixel.com/120/120/cats'
+    .span6
+      .row
+        .span2
+          img src='http://lorempixel.com/120/120/cats'
 
-      .span4
-        .name
-          h4 = @user.name
-        .email = @user.email
+        .span4
+          .name
+            h4 = @user.name
+          .email = @user.email
 
-  .span3
-    .banner
-      img src='http://lorempixel.com/150/500/technics'
+    .span3
+      .banner
+        img src='http://lorempixel.com/150/500/technics'
 
