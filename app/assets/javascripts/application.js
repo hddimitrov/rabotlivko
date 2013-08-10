@@ -17,6 +17,7 @@
 //= require chosen.jquery.min
 //= require angular
 //= require angular-cookies
+//= require angular-ui-bootstrap
 //= require_directory ./angular
 //= require_directory ./angular/controllers
 //= require_tree .

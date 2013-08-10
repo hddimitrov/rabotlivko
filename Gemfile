@@ -22,6 +22,7 @@ gem 'sass-rails',   '~> 3.2.3'
 gem 'twitter-bootstrap-rails'
 gem 'jquery-rails'
 gem 'angularjs-rails'
+gem 'angular-ui-bootstrap-rails'
 
 gem 'devise'
 gem 'omniauth'
