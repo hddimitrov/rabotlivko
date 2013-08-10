@@ -1,4 +1,4 @@
-angular.module('rab', ['ngCookies', 'rab.directives'])
+angular.module('rab', ['ngCookies', 'ui.bootstrap', 'rab.directives'])
 
 angular.module('rab').config(['$locationProvider', function(lProvider) {
   lProvider.html5Mode(false);
