@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
 
   def self.find_for_facebook_oauth(auth)
     user = User.where(provider: auth.provider, uid: auth.uid).first
+    info = auth.info
 
     if user.blank?
       user = User.new
