@@ -1,0 +1,34 @@
+= simple_nested_form_for @want_ad do |f|
+  - if @want_ad.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@want_ad.errors.count, "error")} prohibited this want_ad from being saved:"
+      ul
+        - @want_ad.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.input :title
+  .field
+    = f.input :description
+  .field
+    = f.input :price
+    = f.input :q_price_free
+    = f.input :q_price_negotiable
+  .field
+    = f.input :deadline, as: :date
+  .field
+    = f.input :q_draft
+  .field
+    = f.fields_for :attachments do |attachment_form|
+      = attachment_form.input :description
+      = attachment_form.input :file, as: :file
+      = attachment_form.link_to_remove "Remove this attachment"
+    end
+
+    = f.link_to_add "Add attachment", :attachments
+
+  .actions
+    - if current_user.present?
+      = f.button :submit, label: 'Publish'
+    - else
+      a.btn data-toggle='modal' href='#login-modal' type='button' Publish

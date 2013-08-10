@@ -1,0 +1,29 @@
+h1 Listing want_ads
+
+table
+  tr
+    th User
+    th Title
+    th Description
+    th Price
+    th Deadline
+    th Draft
+    th
+    th
+    th
+
+  - @want_ads.each do |want_ad|
+    tr
+      td = want_ad.user_id
+      td = want_ad.title
+      td = want_ad.description
+      td = want_ad.price
+      td = want_ad.deadline
+      td = want_ad.q_draft
+      td = link_to 'Show', want_ad
+      td = link_to 'Edit', edit_want_ad_path(want_ad)
+      td = link_to 'Destroy', want_ad, :confirm => 'Are you sure?', :method => :delete
+
+br
+
+= link_to 'New Want ad', new_want_ad_path

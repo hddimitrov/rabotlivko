@@ -1,7 +1,8 @@
 Rabotlivko::Application.routes.draw do
-
   root :to => 'adverts#index'
+
   resources :adverts
+  resources :want_ads
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }, skip: [:registrations, :sessions, :confirmations, :passwords]
 
