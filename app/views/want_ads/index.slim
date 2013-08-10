@@ -1,8 +1,7 @@
 h1 Listing want_ads
 
-table
+table.table
   tr
-    th User
     th Title
     th Description
     th Price
@@ -14,7 +13,6 @@ table
 
   - @want_ads.each do |want_ad|
     tr
-      td = want_ad.user_id
       td = want_ad.title
       td = want_ad.description
       td = want_ad.price

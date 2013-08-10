@@ -6,6 +6,8 @@ class Advert < ActiveRecord::Base
   has_many :attachments, :as => :attachable
   accepts_nested_attributes_for :attachments
 
+  scope :drafts, where(q_draft: true)
+
   def self.create_from_cookies(user_id, cookies)
     advert = Advert.new
     advert.user_id = user_id
