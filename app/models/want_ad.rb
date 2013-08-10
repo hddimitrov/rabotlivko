@@ -6,4 +6,6 @@ class WantAd < ActiveRecord::Base
   belongs_to :category
   has_many :attachments, :as => :attachable
   accepts_nested_attributes_for :attachments
+
+  scope :drafts, where(q_draft: true)
 end
