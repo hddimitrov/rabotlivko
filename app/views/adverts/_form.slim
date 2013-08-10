@@ -7,10 +7,10 @@
           li = message
   fieldset
     legend New Advert
-    = f.input :category_id, collection: Category.all, input_html: {chosen: '', class: 'chzn-select'}
-    = f.input :title
-    = f.input :description
-    = f.input :price
+    = f.input :category_id, collection: Category.all, input_html: {chosen: '', class: 'chzn-select', 'ng-model'=>'ad.category_id'}
+    = f.input :title, input_html: {'ng-model'=>'ad.title'}
+    = f.input :description, input_html: {'ng-model'=>'ad.description'}
+    = f.input :price, input_html: {'ng-model'=>'ad.price'}
 
     br
     = f.fields_for :attachments do |attachment_form|
@@ -28,9 +28,9 @@
 
     .form-actions
       - if current_user.present?
-        = f.button :submit, label: 'Publish'
+        = f.button :submit, label: 'Publish(Logged)'
       - else
-        a.btn data-toggle='modal' href='#login-modal' type='button' Publish
+        a.btn data-toggle='modal' href='#login-modal' type='button' Publish (Not Logged)
 
 
 / = nested_form_for @article, :html=>{:multipart => true } do |f|

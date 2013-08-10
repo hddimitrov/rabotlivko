@@ -1,6 +1,6 @@
-angular.module('rabotlivko.directives', []);
+angular.module('rab.directives', []);
 
-angular.module('rabotlivko.directives').directive('chosen', function() {
+angular.module('rab.directives').directive('chosen', function() {
   var linker = function(scope, element, attributes) {
     scope.$watch(attributes.values, function() {
       element.trigger('liszt:updated');
