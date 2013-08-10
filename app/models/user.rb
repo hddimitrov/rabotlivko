@@ -12,23 +12,25 @@ class User < ActiveRecord::Base
   has_many :adverts
 
   def self.find_for_facebook_oauth(auth)
-    user = User.where(provider: auth.provider, uid: auth.uid).first
     info = auth.info
 
-    if user.blank?
-      user = User.new
+    user = User.find_by_email(info['email'])
 
-      user.provider = auth.provider
+    if user.present?
       user.uid = auth.uid
+      user.provider = auth.provider
       user.fb_token = auth.credentials.token
-
+    else
+      user = User.new
       user.name = info['name']
-      user.email =  info['email']
-
+      user.email = info['email']
+      user.uid = auth.uid
+      user.provider = auth.provider
+      user.fb_token = auth.credentials.token
       user.skip_confirmation!
-
-      user.save(validate: false)
     end
+
+    user.save(validate: false)
 
     user
   end
