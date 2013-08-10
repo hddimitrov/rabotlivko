@@ -1,0 +1,24 @@
+p#notice = notice
+
+p
+  strong User:
+  = @want_ad.user_id
+p
+  strong Title:
+  = @want_ad.title
+p
+  strong Description:
+  = @want_ad.description
+p
+  strong Price:
+  = @want_ad.price
+p
+  strong Deadline:
+  = @want_ad.deadline
+p
+  strong Draft:
+  = @want_ad.q_draft
+
+= link_to 'Edit', edit_want_ad_path(@want_ad)
+'|
+= link_to 'Back', want_ads_path
