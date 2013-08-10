@@ -1,10 +1,12 @@
-angular.module('rab').controller('AdvertsCtrl', ['$scope', '$cookies', function($scope, $cookies) {
+angular.module('rab').controller('AdvertsCtrl', ['$scope', function($scope) {
   $scope.advert = {};
-  $scope.store_new_advert = function() {
-    $cookies.rab_new_advert_title               = $scope.advert.title;
-    $cookies.rab_new_advert_description         = $scope.advert.description;
-    $cookies.rab_new_advert_category_id         = $scope.advert.category_id + '';
-    $cookies.rab_new_advert_price               = $scope.advert.price + '';
+  $scope.new_advert_cookies_save = function() {
+    console.log('new_advert_cookies_save')
+    $.cookie('rab_new_advert_category_id', $scope.advert.category_id + '', {path: '/'});
+    $.cookie('rab_new_advert_title', $scope.advert.title, {path: '/'});
+    $.cookie('rab_new_advert_description', $scope.advert.description, {path: '/'});
+    $.cookie('rab_new_advert_price_type', $scope.advert.price_type, {path: '/'});
+    $.cookie('rab_new_advert_price', $scope.advert.price + '', {path: '/'});
     return true;
   };
 }]);

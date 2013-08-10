@@ -6,7 +6,7 @@ class Advert < ActiveRecord::Base
   has_many :attachments, :as => :attachable
   accepts_nested_attributes_for :attachments
 
-  def create_from_cookies_info(user_id, cookies)
+  def self.create_from_cookies(user_id, cookies)
     advert = Advert.new
     advert.user_id = user_id
     advert.category_id = cookies[:rab_new_advert_category_id] if cookies[:rab_new_advert_category_id].present?

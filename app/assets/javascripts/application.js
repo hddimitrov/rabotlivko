@@ -15,8 +15,8 @@
 //= require twitter/bootstrap
 //= require nested_form
 //= require chosen.jquery.min
+//= require jquery.cookie
 //= require angular
-//= require angular-cookies
 //= require angular-ui-bootstrap
 //= require_directory ./angular
 //= require_directory ./angular/controllers

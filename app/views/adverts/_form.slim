@@ -30,4 +30,4 @@
       - if current_user.present?
         = f.button :submit, label: 'Publish(Logged)'
       - else
-        a.btn data-toggle='modal' href='#login-modal' type='button' ng-click='store_new_advert()' Publish (Not Logged)
+        a.btn data-toggle='modal' href='#login-modal' type='button' ng-click='new_advert_cookies_save()' Publish (Not Logged)
