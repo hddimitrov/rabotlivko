@@ -4,13 +4,13 @@
       .well.sidebar-nav
         tabset vertical="true" type='"pills"'
           li.nav-header Sidebar
-          tab heading="Активни" select="alert_me()"
-          tab heading="Известия"
-          tab heading="Любими"
-          tab heading="Хора"
-          tab heading="Чернови"
-          tab heading="Неоценени"
-          tab heading="Архив"
+          tab heading="Известия" select='set_active_tab("notifications")'
+          tab heading="Хора" select='set_active_tab("people")'
+          tab heading="Любими" select='set_active_tab("favs")'
+          tab heading="Активни" select='set_active_tab("active")'
+          tab heading="Неоценени" select='set_active_tab("unevaluated")'
+          tab heading="Чернови" select='set_active_tab("drafts")'
+          tab heading="Архив" select='set_active_tab("archive")'
 
     .span6
       .row
@@ -21,6 +21,44 @@
           .name
             h4 = @user.name
           .email = @user.email
+
+      .row
+        .tab-content
+          .tab-pane ng-class='{active: active_tab == "notifications"}'
+            | Известия
+          .tab-pane ng-class='{active: active_tab == "people"}'
+            tabset
+              tab heading="Любими" Любими
+              tab heading="Блокирани" Блокирани
+          .tab-pane ng-class='{active: active_tab == "favs"}'
+            tabset
+              tab heading='Смесени' Смесени
+              tab heading='Жълти' Жълти
+              tab heading='Зелени' Зелени
+          .tab-pane ng-class='{active: active_tab == "active"}'
+            tabset
+              tab heading='Смесени' Смесени
+              tab heading='Жълти' Жълти
+              tab heading='Зелени' Зелени
+          .tab-pane ng-class='{active: active_tab == "unevaluated"}'
+            tabset
+              tab heading='Смесени' Смесени
+              tab heading='Жълти' Жълти
+              tab heading='Зелени' Зелени
+            | Неоценени
+          .tab-pane ng-class='{active: active_tab == "drafts"}'
+            tabset
+              tab heading='Смесени' Смесени
+              tab heading='Жълти' Жълти
+              tab heading='Зелени' Зелени
+            | Чернови
+          .tab-pane ng-class='{active: active_tab == "archive"}'
+            tabset
+              tab heading='Смесени' Смесени
+              tab heading='Жълти' Жълти
+              tab heading='Зелени' Зелени
+            | Архив
+
 
     .span3
       .banner
