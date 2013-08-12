@@ -5,6 +5,7 @@ Rabotlivko::Application.routes.draw do
   resources :want_ads
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }, skip: [:registrations, :sessions, :confirmations, :passwords]
+  ActiveAdmin.routes(self)
 
   devise_scope :user do
     match 'sign_up'           => 'registrations#create',  as: :user_registration, via: :post
@@ -17,6 +18,10 @@ Rabotlivko::Application.routes.draw do
 
   match '/me', to: 'users#profile_master', as: :user_root
   match '/users/:id', to: 'users#show', as: :user
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

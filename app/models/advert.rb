@@ -4,7 +4,7 @@ class Advert < ActiveRecord::Base
   belongs_to :user
   belongs_to :category
   has_many :attachments, :as => :attachable
-  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :attachments, allow_destroy: true
 
   scope :drafts, where(q_draft: true)
 

@@ -11,6 +11,13 @@ class User < ActiveRecord::Base
 
   has_many :adverts
 
+  scope :today,       lambda { where('created_at > ?', Time.now.beginning_of_day) }
+  scope :yesterday,   lambda { where('created_at < ? AND created_at > ?', 1.day.ago.end_of_day, 1.day.ago.beginning_of_day) }
+  scope :this_month,  lambda { where('created_at > ?', Time.now.beginning_of_month) }
+  scope :last_month,  lambda { where('created_at < ? AND created_at > ?', 1.month.ago.end_of_month, 1.month.ago.beginning_of_month) }
+  scope :this_year,   lambda { where('created_at > ?', Time.now.beginning_of_year) }
+  scope :beginning,   lambda { where('id > 0')}
+
   def self.find_for_facebook_oauth(auth)
     info = auth.info
 
