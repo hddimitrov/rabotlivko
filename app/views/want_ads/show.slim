@@ -1,24 +1,38 @@
-p#notice = notice
+.row
+  .span9
+    .row
+      .span7
+        h3.title.pull-left = @want_ad.title
+      span2
+        h3.category.pull-right = @want_ad.category.try(:title)
 
-p
-  strong User:
-  = @want_ad.user_id
-p
-  strong Title:
-  = @want_ad.title
-p
-  strong Description:
-  = @want_ad.description
-p
-  strong Price:
-  = @want_ad.price
-p
-  strong Deadline:
-  = @want_ad.deadline
-p
-  strong Draft:
-  = @want_ad.q_draft
+    .row
+      .description = @want_ad.description
 
-= link_to 'Edit', edit_want_ad_path(@want_ad)
-'|
-= link_to 'Back', want_ads_path
+    br
+    .row
+      .price
+        strong = @want_ad.price
+
+    br
+    .row
+      .price
+        strong = @want_ad.deadline
+
+    .row
+      .attachments
+        - for attachment in @want_ad.attachments
+          .attachment
+            img.pull-left src="#{attachment.file}" width='150'
+    br
+    br
+    .row
+      = link_to 'Edit', edit_want_ad_path(@want_ad)
+      ' |
+      = link_to 'Back', want_ads_path
+  .span3
+    .banner
+        img src='http://lorempixel.com/150/500/technics'
+    br
+    .banner
+        img src='http://lorempixel.com/150/500/cats'
