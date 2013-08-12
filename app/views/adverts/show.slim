@@ -1,8 +1,35 @@
-= @advert.title
-hr
-= @advert.description
-hr
+/  attr_accessible :user_id, :category_id, :title, :description, :q_draft, :price, :q_price_free, :q_price_negotiable,
 
-= link_to 'Edit', edit_advert_path(@advert)
-'|
-= link_to 'Back', adverts_path
+.row
+  .span9
+    .row
+      .span7
+        h3.title.pull-left = @advert.title
+      span2
+        h3.category.pull-right = @advert.category.try(:title)
+
+    .row
+      .description = @advert.description
+
+    br
+    .row
+      .price
+        strong = @advert.price
+
+    .row
+      .attachments
+        - for attachment in @advert.attachments
+          .attachment
+            img.pull-left src="#{attachment.file}" width='150'
+    br
+    br
+    .row
+      = link_to 'Edit', edit_advert_path(@advert)
+      ' |
+      = link_to 'Back', adverts_path
+  .span3
+    .banner
+        img src='http://lorempixel.com/150/500/technics'
+    br
+    .banner
+        img src='http://lorempixel.com/150/500/cats'
