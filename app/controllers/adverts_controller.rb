@@ -2,7 +2,11 @@ class AdvertsController < ApplicationController
   # GET /adverts
   # GET /adverts.json
   def index
-    @adverts = Advert.all
+    if params[:category_id].present?
+      @adverts = Advert.where(category_id: params[:category_id])
+    else
+      @adverts = Advert.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb

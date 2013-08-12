@@ -17,3 +17,20 @@ body {
   padding-top: 60px;
   padding-bottom: 40px;
 }
+
+ul.adverts-list{
+  list-style-type: none;
+  border-radius:4px;
+  background-color:#fff;
+  background:white;
+  -webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.07);
+  -moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.07);
+  margin:0 auto 20px auto;
+  box-shadow:0 1px 2px rgba(0, 0, 0, 0.15);
+}
+ul.adverts-list li{border-top:1px solid #ddd;padding:15px 15px;position:relative;}
+ul.adverts-list li .view_image{border:0;position:relative;width:100px;height:75px;}
+ul.adverts-list li>div:first-child{float:left;margin-left:0;}
+ul.adverts-list li .advert-header{border-bottom:1px solid #eee;padding-bottom:8px;margin-bottom:8px;}
+ul.adverts-list li>div{float:none;margin-left:110px;}
+ul.adverts-list li:first-child{border-top:0;}

@@ -1,24 +1,32 @@
-.span12
-  h1 Listing adverts
+.row
+  .span3
+    .well.sidebar-nav
 
-  table.table.table-striped
-    tr
-      th Title
-      th Description
-      th Category
-      th
-      th
-      th
+      | Категории
+      br
+      - Category.all.each do |cat|
+        = link_to cat.title, adverts_path(category_id: cat.id)
+        br
 
-    - @adverts.each do |advert|
-      tr
-        td = advert.title
-        td = advert.description
-        td
-        td = link_to 'Show', advert
-        td = link_to 'Edit', edit_advert_path(advert)
-        td = link_to 'Destroy', advert, :confirm => 'Are you sure?', :method => :delete
+  .span9
+    h1 Реклами
 
-  br
+    ul.unstyled.adverts-list
+      - @adverts.each do |advert|
+        li.clearFix
+          div
+            a href="/recipes/1/"
+              .view_image style="background:#ffffff url('http://media.opencooks.com/cache/34/df/34dfadcfbe7f3fa02af79c1b680c2b23.jpg') no-repeat left top;"
+          .clearFix
+            .advert-header
+              strong
+                span.title
+                  = advert.title
+              strong.pull-right
+                span.label.label-language = advert.user.try(:name)
+            p Bagna Cauda, or "hot bath", is a warm, garlicky dip originating from northern Italy. Anchovies are essential to this dish, so a taste for them should be considered a hard prerequisite. Many variati...
+            strong.pull-right
+              = advert.price
 
-  = link_to 'New Advert', new_advert_path
+
+
