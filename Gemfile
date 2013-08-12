@@ -30,3 +30,7 @@ gem 'omniauth-facebook'
 
 gem 'carrierwave'
 gem 'nested_form'
+
+gem 'activeadmin'
+gem "meta_search",    '>= 1.1.0.pre'
+
