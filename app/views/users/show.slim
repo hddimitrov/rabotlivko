@@ -80,11 +80,12 @@
 
           .tab-pane ng-class='{active: active_tab == "archive"}'
             tabset
-              tab heading='Смесени' Смесени
-              tab heading='Жълти' Жълти
-              tab heading='Зелени' Зелени
-            | Архив
-
+              tab heading='Обяви'
+                ul
+                  - for want_ad in @wanted_ads_archive
+                    li = want_ad.title
+              / tab heading='Жълти' Жълти
+              / tab heading='Зелени' Зелени
 
     .span3
       .banner
