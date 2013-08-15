@@ -28,7 +28,7 @@
             | Известия
           .tab-pane ng-class='{active: active_tab == "people"}'
             tabset
-              tab heading="Любими" Любими
+              tab heading="Любими" Неоценени
               tab heading="Блокирани" Блокирани
           .tab-pane ng-class='{active: active_tab == "favs"}'
             tabset
@@ -37,9 +37,23 @@
               tab heading='Зелени' Зелени
           .tab-pane ng-class='{active: active_tab == "active"}'
             tabset
-              tab heading='Смесени' Смесени
-              tab heading='Жълти' Жълти
-              tab heading='Зелени' Зелени
+              tab heading='Смесени'
+                ul
+                  - for advert in @adverts_active
+                    li = advert.title
+
+                  - for want_ad in @wanted_ads_active
+                    li = want_ad.title
+
+              tab heading='Реклами'
+                ul
+                  - for advert in @adverts_active
+                    li = advert.title
+              tab heading='Обяви'
+                ul
+                  - for want_ad in @wanted_ads_active
+                    li = want_ad.title
+
           .tab-pane ng-class='{active: active_tab == "unevaluated"}'
             tabset
               tab heading='Смесени' Смесени
@@ -48,10 +62,22 @@
             | Неоценени
           .tab-pane ng-class='{active: active_tab == "drafts"}'
             tabset
-              tab heading='Смесени' Смесени
-              tab heading='Жълти' Жълти
-              tab heading='Зелени' Зелени
-            | Чернови
+              tab heading='Смесени'
+                ul
+                  - for advert in @advert_drafts
+                    li = advert.title
+
+                  - for want_ad in @wanted_ad_drafts
+                    li = want_ad.title
+              tab heading='Реклами'
+                ul
+                  - for advert in @advert_drafts
+                    li = advert.title
+              tab heading='Обяви'
+                ul
+                  - for want_ad in @wanted_ad_drafts
+                    li = want_ad.title
+
           .tab-pane ng-class='{active: active_tab == "archive"}'
             tabset
               tab heading='Смесени' Смесени
@@ -64,3 +90,5 @@
       .banner
         img src='http://lorempixel.com/150/500/technics'
 
+
+.adverts data

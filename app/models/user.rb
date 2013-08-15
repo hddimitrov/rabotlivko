@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
                   :uid, :provider, :fb_token
 
   has_many :adverts
+  has_many :want_ads
 
   scope :today,       lambda { where('created_at > ?', Time.now.beginning_of_day) }
   scope :yesterday,   lambda { where('created_at < ? AND created_at > ?', 1.day.ago.end_of_day, 1.day.ago.beginning_of_day) }
