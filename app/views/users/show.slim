@@ -1,6 +1,5 @@
 .wrapper ng-controller='ProfileCtrl'
   .row
-
     .span3
       - if current_user.present? and current_user.id == @user.id
         .well.sidebar-nav
@@ -118,7 +117,12 @@
     .row
       .span3
       .span6
-        a.pull-right.btn.btn-success ng-click="block(#{@user.id})" Махни от блокирани
-        a.pull-right.btn.btn-danger ng-click="block(#{@user.id})" Блокирай
-        a.pull-right.btn.btn-warning ng-click="unfav(#{@user.id})" Махни от любими
-        a.pull-right.btn.btn-success ng-click="fav(#{@user.id})" Добави в любими
+        - if current_user.blocked_users.include? @user
+          a.pull-right.btn.btn-success ng-click="unblock(#{@user.id})" Махни от блокирани
+        - else
+          a.pull-right.btn.btn-danger ng-click="block(#{@user.id})" Блокирай
+
+        - if current_user.favorite_users.include? @user
+          a.pull-right.btn.btn-warning ng-click="unfav(#{@user.id})" Махни от любими
+        - else
+          a.pull-right.btn.btn-success ng-click="fav(#{@user.id})" Добави в любими

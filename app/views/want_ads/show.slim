@@ -28,8 +28,10 @@
     - if current_user.present? and current_user.id != @want_ad.id
       br
       br
-        a.pull-right.btn.btn-warning ng-click="unfav(#{@want_ad.id})" Махни от любими
-        a.pull-right.btn.btn-success ng-click="fav(#{@want_ad.id})" Добави в любими
+        - if current_user.favorite_wantads.include? @want_ad
+          a.pull-right.btn.btn-warning ng-click="unfav(#{@want_ad.id})" Махни от любими
+        - else
+          a.pull-right.btn.btn-success ng-click="fav(#{@want_ad.id})" Добави в любими
 
     br
     br
