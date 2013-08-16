@@ -8,4 +8,6 @@ class WantAd < ActiveRecord::Base
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
   scope :drafts, where(q_draft: true)
+
+  markable_as :favorite
 end

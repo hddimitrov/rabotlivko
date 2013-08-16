@@ -19,6 +19,25 @@ Rabotlivko::Application.routes.draw do
   match '/me', to: 'users#profile_master', as: :user_root
   match '/users/:id', to: 'users#show', as: :user
 
+  scope 'api' do
+    scope 'advert' do
+      match 'fav',   to: 'favorites#fav_advert', via: :post
+      match 'unfav', to: 'favorites#unfav_advert', via: :post
+    end
+
+    scope 'want_ad' do
+      match 'fav',   to: 'favorites#fav_want_ad', via: :post
+      match 'unfav', to: 'favorites#unfav_want_ad', via: :post
+    end
+
+    scope 'user' do
+      match 'fav',     to: 'favorites#fav_user', via: :post
+      match 'unfav',   to: 'favorites#unfav_user', via: :post
+      match 'block',   to: 'favorites#block_user', via: :post
+      match 'unblock', to: 'favorites#unblock_user', via: :post
+    end
+  end
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 

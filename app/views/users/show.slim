@@ -28,13 +28,30 @@
             | Известия
           .tab-pane ng-class='{active: active_tab == "people"}'
             tabset
-              tab heading="Любими" Неоценени
-              tab heading="Блокирани" Блокирани
+              tab heading="Любими"
+                ul
+                  - for user in @user.favorite_users
+                    li = link_to user.name, user_path(user)
+              tab heading="Блокирани"
+                ul
+                  - for user in @user.blocked_users
+                    li = link_to user.name, user_path(user)
           .tab-pane ng-class='{active: active_tab == "favs"}'
             tabset
-              tab heading='Смесени' Смесени
-              tab heading='Жълти' Жълти
-              tab heading='Зелени' Зелени
+              tab heading='Смесени'
+                ul
+                  - for advert in @fav_adverts
+                    li = advert.title
+                  - for want_ad in @fav_want_ads
+                    li = want_ad.title
+              tab heading='Реклами'
+                ul
+                  - for advert in @fav_adverts
+                    li = advert.title
+              tab heading='Обяви'
+                ul
+                  - for want_ad in @fav_want_ads
+                    li = want_ad.title
           .tab-pane ng-class='{active: active_tab == "active"}'
             tabset
               tab heading='Смесени'
@@ -91,5 +108,11 @@
       .banner
         img src='http://lorempixel.com/150/500/technics'
 
-
-.adverts data
+  - if current_user.present? && current_user.id != @user.id
+    .row
+      .span3
+      .span6
+        a.pull-right.btn.btn-success ng-click="block(#{@user.id})" Махни от блокирани
+        a.pull-right.btn.btn-danger ng-click="block(#{@user.id})" Блокирай
+        a.pull-right.btn.btn-warning ng-click="unfav(#{@user.id})" Махни от любими
+        a.pull-right.btn.btn-success ng-click="fav(#{@user.id})" Добави в любими

@@ -1,4 +1,4 @@
-.row
+.row ng-controller='AdvertsCtrl'
   .span9
     .row
       .span7
@@ -19,6 +19,13 @@
         - for attachment in @advert.attachments
           .attachment
             img.pull-left src="#{attachment.file}" width='150'
+
+    - if current_user.present? and current_user.id != @advert.id
+      br
+      br
+        a.pull-right.btn.btn-warning ng-click="unfav(#{@advert.id})" Махни от любими
+        a.pull-right.btn.btn-success ng-click="fav(#{@advert.id})" Добави в любими
+
     br
     br
     .row
