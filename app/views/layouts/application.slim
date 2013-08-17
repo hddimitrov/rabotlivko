@@ -20,9 +20,8 @@ html
                 a.navbar-link href='#{user_root_path}' = current_user.name
                 = link_to 'Излез', destroy_user_session_path, :method => :delete
               - else
-                = link_to 'Sign in with Facebook', user_omniauth_authorize_path(:facebook)
+                = link_to 'Влез със Facebook', user_omniauth_authorize_path(:facebook), :class => 'zocial facebook pull-right'
                 a href='#login-modal' role='button' data-toggle='modal' Влез
-                a href='#resend-confirmation-modal' role='button' data-toggle='modal' Confirmation
             ul.nav
               li.active
                 a href='/' Home

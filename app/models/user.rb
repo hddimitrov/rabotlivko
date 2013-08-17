@@ -7,9 +7,16 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:facebook]
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me,
-                  :uid, :provider, :fb_token
+                  :uid, :provider, :fb_token, :attachments_attributes, :address_attributes
 
   has_many :adverts
+  has_many :want_ads
+
+  has_one :address, as: :addressable
+  accepts_nested_attributes_for :address
+
+  has_many :attachments, as: :attachable, dependent: :delete_all
+  accepts_nested_attributes_for :attachments, allow_destroy: true
 
   scope :today,       lambda { where('created_at > ?', Time.now.beginning_of_day) }
   scope :yesterday,   lambda { where('created_at < ? AND created_at > ?', 1.day.ago.end_of_day, 1.day.ago.beginning_of_day) }

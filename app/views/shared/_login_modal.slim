@@ -30,6 +30,8 @@
         .cf
         = f.submit "Sign up", class: 'btn btn-success btn-medium'
 
+    = link_to 'Влез със Facebook', user_omniauth_authorize_path(:facebook), :class => 'zocial facebook pull-right'
+
 javascript:
   $(document).ready(function() {
     $('#already-registered').bind('change', function(e) {

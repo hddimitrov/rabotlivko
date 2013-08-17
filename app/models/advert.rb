@@ -1,9 +1,12 @@
 class Advert < ActiveRecord::Base
   attr_accessible :user_id, :category_id, :title, :description, :q_draft, :price, :q_price_free, :q_price_negotiable,
-  :attachments_attributes
+  :attachments_attributes, :address_attributes
   belongs_to :user
   belongs_to :category
-  has_many :attachments, :as => :attachable
+  has_one :address, as: :addressable, dependent: :destroy
+  accepts_nested_attributes_for :address
+
+  has_many :attachments, as: :attachable, dependent: :delete_all
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
   scope :drafts, where(q_draft: true)

@@ -13,6 +13,10 @@
     = f.input :price, input_html: {'ng-model'=>'advert.price'}
 
     br
+    = f.fields_for :address_attributes do |address|
+      = address.input :state_id, collection: State.all, input_html: {chosen: '', class: 'chzn-select', 'ng-model'=>'advert.state_id'}
+
+    br
     = f.fields_for :attachments do |attachment_form|
       = attachment_form.label :description
       br
