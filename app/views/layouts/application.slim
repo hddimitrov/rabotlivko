@@ -15,20 +15,42 @@ html
             span.icon-bar
           a.brand href='#{root_path}' Работливко
           .nav-collapse.collapse
-            p.navbar-text.pull-right
-              - if current_user.present?
-                a.navbar-link href='#{user_root_path}' = current_user.name
-                = link_to 'Излез', destroy_user_session_path, :method => :delete
-              - else
-                = link_to 'Влез със Facebook', user_omniauth_authorize_path(:facebook), :class => 'zocial facebook pull-right'
-                a href='#login-modal' role='button' data-toggle='modal' Влез
-            ul.nav
-              li.active
-                a href='/' Home
-              li
-                a href='#{want_ads_path}' Обяви
-              li
-                a href='#{adverts_path}' Реклами
+          ul.nav.nav-pills
+            li#fdsa.dropdown
+              a#drop5.dropdown-toggle data-target="#" data-toggle="dropdown" href="#" role="button"
+                | Възложител
+                b.caret
+              ul#menu2.dropdown-menu aria-labelledby="drop5" role="menu"
+                li
+                  a href="#{new_want_ad_path}" tabindex="-1" Публикувай обява
+                li
+                  a href="#" tabindex="-1" Търси изпълнител
+                li
+                  a href="#{adverts_path}" tabindex="-1" Търси реклама
+                li.divider
+                li
+                  a href="#" tabindex="-1" Как става?
+            li.dropdown
+              a#drop5.dropdown-toggle data-target="#" data-toggle="dropdown" href="#" role="button"
+                | Изпълнител
+                b.caret
+              ul#menu3.dropdown-menu aria-labelledby="drop5" role="menu"
+                li
+                  a href="#" tabindex="-1" Стани изпълнител
+                li
+                  a href="#{new_advert_path}" tabindex="-1" Направи си реклама
+                li
+                  a href="#{want_ads_path}" tabindex="-1" Търси обява
+                li.divider
+                li
+                  a href="#" tabindex="-1" Как става?
+          p.navbar-text.pull-right
+            - if current_user.present?
+              a.navbar-link href='#{user_root_path}' = current_user.name
+              = link_to 'Излез', destroy_user_session_path, :method => :delete
+            - else
+              a href='#login-modal' role='button' data-toggle='modal' Влез
+              a.zocial.facebook href='#{user_omniauth_authorize_path(:facebook)}' Влез със Facebook
 
     = render partial: 'shared/login_modal'
     = render partial: 'shared/resend_confirmation_modal'
