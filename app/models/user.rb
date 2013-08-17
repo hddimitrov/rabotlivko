@@ -25,6 +25,9 @@ class User < ActiveRecord::Base
   scope :this_year,   lambda { where('created_at > ?', Time.now.beginning_of_year) }
   scope :beginning,   lambda { where('id > 0')}
 
+  acts_as_marker
+  markable_as [ :favorite, :blocked ]
+
   def self.find_for_facebook_oauth(auth)
     info = auth.info
 

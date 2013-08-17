@@ -1,16 +1,20 @@
 .wrapper ng-controller='ProfileCtrl'
   .row
     .span3
-      .well.sidebar-nav
-        tabset vertical="true" type='"pills"'
-          li.nav-header Sidebar
-          tab heading="Известия" select='set_active_tab("notifications")'
-          tab heading="Хора" select='set_active_tab("people")'
-          tab heading="Любими" select='set_active_tab("favs")'
-          tab heading="Активни" select='set_active_tab("active")'
-          tab heading="Неоценени" select='set_active_tab("unevaluated")'
-          tab heading="Чернови" select='set_active_tab("drafts")'
-          tab heading="Архив" select='set_active_tab("archive")'
+      - if current_user.present? and current_user.id == @user.id
+        .well.sidebar-nav
+          tabset vertical="true" type='"pills"'
+            li.nav-header Sidebar
+            tab heading="Известия" select='set_active_tab("notifications")'
+            tab heading="Хора" select='set_active_tab("people")'
+            tab heading="Любими" select='set_active_tab("favs")'
+            tab heading="Активни" select='set_active_tab("active")'
+            tab heading="Неоценени" select='set_active_tab("unevaluated")'
+            tab heading="Чернови" select='set_active_tab("drafts")'
+            tab heading="Архив" select='set_active_tab("archive")'
+      - else
+        .banner
+          img src='http://lorempixel.com/150/500/technics'
 
     .span6
       .row
@@ -22,45 +26,103 @@
             h4 = @user.name
           .email = @user.email
 
-      .row
-        .tab-content
-          .tab-pane ng-class='{active: active_tab == "notifications"}'
-            | Известия
-          .tab-pane ng-class='{active: active_tab == "people"}'
-            tabset
-              tab heading="Любими" Любими
-              tab heading="Блокирани" Блокирани
-          .tab-pane ng-class='{active: active_tab == "favs"}'
-            tabset
-              tab heading='Смесени' Смесени
-              tab heading='Жълти' Жълти
-              tab heading='Зелени' Зелени
-          .tab-pane ng-class='{active: active_tab == "active"}'
-            tabset
-              tab heading='Смесени' Смесени
-              tab heading='Жълти' Жълти
-              tab heading='Зелени' Зелени
-          .tab-pane ng-class='{active: active_tab == "unevaluated"}'
-            tabset
-              tab heading='Смесени' Смесени
-              tab heading='Жълти' Жълти
-              tab heading='Зелени' Зелени
-            | Неоценени
-          .tab-pane ng-class='{active: active_tab == "drafts"}'
-            tabset
-              tab heading='Смесени' Смесени
-              tab heading='Жълти' Жълти
-              tab heading='Зелени' Зелени
-            | Чернови
-          .tab-pane ng-class='{active: active_tab == "archive"}'
-            tabset
-              tab heading='Смесени' Смесени
-              tab heading='Жълти' Жълти
-              tab heading='Зелени' Зелени
-            | Архив
+      - if current_user.present? and current_user.id == @user.id
+        .row
+          .tab-content
+            .tab-pane ng-class='{active: active_tab == "notifications"}'
+              | Известия
+            .tab-pane ng-class='{active: active_tab == "people"}'
+              tabset
+                tab heading="Любими"
+                  ul
+                    - for user in @user.favorite_users
+                      li = link_to user.name, user_path(user)
+                tab heading="Блокирани"
+                  ul
+                    - for user in @user.blocked_users
+                      li = link_to user.name, user_path(user)
+            .tab-pane ng-class='{active: active_tab == "favs"}'
+              tabset
+                tab heading='Смесени'
+                  ul
+                    - for advert in @fav_adverts
+                      li = advert.title
+                    - for want_ad in @fav_want_ads
+                      li = want_ad.title
+                tab heading='Реклами'
+                  ul
+                    - for advert in @fav_adverts
+                      li = advert.title
+                tab heading='Обяви'
+                  ul
+                    - for want_ad in @fav_want_ads
+                      li = want_ad.title
+            .tab-pane ng-class='{active: active_tab == "active"}'
+              tabset
+                tab heading='Смесени'
+                  ul
+                    - for advert in @adverts_active
+                      li = advert.title
 
+                    - for want_ad in @wanted_ads_active
+                      li = want_ad.title
+
+                tab heading='Реклами'
+                  ul
+                    - for advert in @adverts_active
+                      li = advert.title
+                tab heading='Обяви'
+                  ul
+                    - for want_ad in @wanted_ads_active
+                      li = want_ad.title
+
+            .tab-pane ng-class='{active: active_tab == "unevaluated"}'
+              tabset
+                tab heading='Смесени' Смесени
+                tab heading='Жълти' Жълти
+                tab heading='Зелени' Зелени
+              | Неоценени
+            .tab-pane ng-class='{active: active_tab == "drafts"}'
+              tabset
+                tab heading='Смесени'
+                  ul
+                    - for advert in @advert_drafts
+                      li = advert.title
+
+                    - for want_ad in @wanted_ad_drafts
+                      li = want_ad.title
+                tab heading='Реклами'
+                  ul
+                    - for advert in @advert_drafts
+                      li = advert.title
+                tab heading='Обяви'
+                  ul
+                    - for want_ad in @wanted_ad_drafts
+                      li = want_ad.title
+
+            .tab-pane ng-class='{active: active_tab == "archive"}'
+              tabset
+                tab heading='Обяви'
+                  ul
+                    - for want_ad in @wanted_ads_archive
+                      li = want_ad.title
+                / tab heading='Жълти' Жълти
+                / tab heading='Зелени' Зелени
 
     .span3
       .banner
         img src='http://lorempixel.com/150/500/technics'
 
+  - if current_user.present? && current_user.id != @user.id
+    .row
+      .span3
+      .span6
+        - if current_user.blocked_users.include? @user
+          a.pull-right.btn.btn-success ng-click="unblock(#{@user.id})" Махни от блокирани
+        - else
+          a.pull-right.btn.btn-danger ng-click="block(#{@user.id})" Блокирай
+
+        - if current_user.favorite_users.include? @user
+          a.pull-right.btn.btn-warning ng-click="unfav(#{@user.id})" Махни от любими
+        - else
+          a.pull-right.btn.btn-success ng-click="fav(#{@user.id})" Добави в любими

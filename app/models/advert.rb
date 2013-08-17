@@ -11,6 +11,8 @@ class Advert < ActiveRecord::Base
 
   scope :drafts, where(q_draft: true)
 
+  markable_as :favorite
+
   def self.create_from_cookies(user_id, cookies)
     advert = Advert.new
     advert.user_id = user_id

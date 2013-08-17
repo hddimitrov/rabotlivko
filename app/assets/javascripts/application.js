@@ -20,5 +20,6 @@
 //= require angular-ui-bootstrap
 //= require angular-ui-bootstrap-tpls
 //= require_directory ./angular
+//= require_directory ./angular/services
 //= require_directory ./angular/controllers
 //= require_tree .
