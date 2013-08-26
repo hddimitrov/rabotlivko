@@ -7,10 +7,12 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:facebook]
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me,
-                  :uid, :provider, :fb_token, :attachments_attributes, :address_attributes
+                  :uid, :provider, :fb_token, :attachments_attributes, :address_attributes, :q_contractor
 
   has_many :adverts
   has_many :want_ads
+
+  has_many :contract_categories, as: :contractor
 
   has_one :address, as: :addressable
   accepts_nested_attributes_for :address

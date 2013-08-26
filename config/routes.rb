@@ -1,5 +1,5 @@
 Rabotlivko::Application.routes.draw do
-  root :to => 'adverts#index'
+  root :to => 'pages#home'
 
   resources :adverts
   resources :want_ads
@@ -18,6 +18,8 @@ Rabotlivko::Application.routes.draw do
 
   match '/me', to: 'users#profile_master', as: :user_root
   match '/users/:id', to: 'users#show', as: :user
+  match '/contractors', to: 'users#contractors_index', as: :contractors
+  match '/user/become_contractor', to: 'users#become_contractor', via: :post,  as: :become_contractor
 
   scope 'api' do
     scope 'advert' do
@@ -35,6 +37,10 @@ Rabotlivko::Application.routes.draw do
       match 'unfav',   to: 'favorites#unfav_user', via: :post
       match 'block',   to: 'favorites#block_user', via: :post
       match 'unblock', to: 'favorites#unblock_user', via: :post
+    end
+
+    scope 'filter' do
+      match 'adverts',     to: 'adverts#filter', via: :post
     end
   end
 

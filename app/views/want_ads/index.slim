@@ -1,27 +1,38 @@
-h1 Listing want_ads
+.row
+  .span3
+    .well.sidebar-nav
 
-table.table.table-striped
-  tr
-    th Title
-    th Description
-    th Price
-    th Deadline
-    th Draft
-    th
-    th
-    th
+      | Категории
+      br
+      - Category.all.each do |cat|
+        a href='#' ng-click="add_filter('category', #{cat.id})" = cat.title
+        br
 
-  - @want_ads.each do |want_ad|
-    tr
-      td = want_ad.title
-      td = want_ad.description
-      td = want_ad.price
-      td = want_ad.deadline
-      td = want_ad.q_draft
-      td = link_to 'Show', want_ad
-      td = link_to 'Edit', edit_want_ad_path(want_ad)
-      td = link_to 'Destroy', want_ad, :confirm => 'Are you sure?', :method => :delete
+  .span6
+    h1 Обяви
 
-br
+    ul.unstyled.ads-list
+      - @want_ads.each do |want_ad|
+        li.clearFix
+          div
+            a href="#{want_ad_path(want_ad)}"
+              .view_image style="background:#ffffff url('http://media.opencooks.com/cache/34/df/34dfadcfbe7f3fa02af79c1b680c2b23.jpg') no-repeat left top;"
+          .clearFix
+            .ad-header
+              strong
+                span.title
+                  = want_ad.title
+              strong.pull-right
+                span.label.label-language = want_ad.user.try(:name)
+            p = want_ad.description
+            strong.pull-left
+              = want_ad.address.city.name if want_ad.address.try(:city).present?
+              = want_ad.deadline
+            strong.pull-right
+              = want_ad.price
 
-= link_to 'New Want ad', new_want_ad_path
+  .span3
+    .banner
+      img src='http://lorempixel.com/150/500/technics'
+
+

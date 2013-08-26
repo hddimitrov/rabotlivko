@@ -2,11 +2,7 @@ class AdvertsController < ApplicationController
   # GET /adverts
   # GET /adverts.json
   def index
-    if params[:category_id].present?
-      @adverts = Advert.where(category_id: params[:category_id])
-    else
-      @adverts = Advert.all
-    end
+    @adverts = Advert.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -83,6 +79,19 @@ class AdvertsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to adverts_url }
       format.json { head :no_content }
+    end
+  end
+
+  def filter
+    if params[:category_id].present?
+      @adverts = Advert.joins(:user)
+                      .joins("LEFT OUTER JOIN addresses a ON a.addressable_id = adverts.id and a.addressable_type = 'Advert'")
+                      .joins("LEFT OUTER JOIN cities c on c.id = a.city_id")
+                      .where(category_id: params[:category_id])
+                      .select("c.name AS city_name, users.name AS user_name, adverts.*")
+      render json: @adverts.to_json and return
+    else
+      render json: []
     end
   end
 end

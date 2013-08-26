@@ -5,13 +5,13 @@
         .well.sidebar-nav
           tabset vertical="true" type='"pills"'
             li.nav-header Sidebar
-            tab heading="Известия" select='set_active_tab("notifications")'
-            tab heading="Хора" select='set_active_tab("people")'
-            tab heading="Любими" select='set_active_tab("favs")'
-            tab heading="Активни" select='set_active_tab("active")'
-            tab heading="Неоценени" select='set_active_tab("unevaluated")'
-            tab heading="Чернови" select='set_active_tab("drafts")'
-            tab heading="Архив" select='set_active_tab("archive")'
+            tab heading="Известия()" select='set_active_tab("notifications")'
+            tab heading="Хора()" select='set_active_tab("people")'
+            tab heading="Любими()" select='set_active_tab("favs")'
+            tab heading="Активни()" select='set_active_tab("active")'
+            tab heading="Неоценени()" select='set_active_tab("unevaluated")'
+            tab heading="Чернови()" select='set_active_tab("drafts")'
+            tab heading="Архив()" select='set_active_tab("archive")'
       - else
         .banner
           img src='http://lorempixel.com/150/500/technics'
@@ -21,10 +21,29 @@
         .span2
           img.img-rounded src='http://lorempixel.com/120/120/cats'
 
-        .span4
+      .row
+        .span6
           .name
             h4 = @user.name
           .email = @user.email
+
+          - if current_user.present? && current_user.id == @user.id
+            input type='checkbox' id='contractor-checkbox' Стани изпълнител
+            = form_tag '/user/become_contractor', method: :POST, id: 'contracor-form' do
+              fieldset
+                = label_tag :contractor_categories, 'Категории'
+                = select_tag :contractor_categories, options_for_select(Category.all.map{|x| [x.title, x.id]}), class: 'chzn-select', multiple: true
+                br
+                  = select_tag :state_id, options_for_select([]), chosen: '', class: 'chzn-select', id: 'state-select', 'data-ng-model'=>'contractor.state_id', 'data-ng-options'=>'state.id as state.name for state in states', 'data-ng-change'=>'state_changed(contractor.state_id)', 'data-values'=>'contractor.state_id+states'
+                  = select_tag :city_id, options_for_select([]), chosen: '', class: 'chzn-select', id: 'city-select', 'data-ng-model'=>'contractor.city_id', 'data-ng-options'=>'city.id as city.name for city in cities', 'data-ng-change'=>'city_changed(contractor.city_id)', 'data-values'=>'contractor.city_id+cities'
+
+                #locations-data data-states="#{State.all.sort_by(&:name).to_json}" data-cities="#{City.all.group_by(&:state_id).to_json}"
+
+                br
+                .google-map center="center" draggable="true" zoom="zoom" markers="markers" mark-click="false"
+              .buttons
+                input name='commit' type='submit' value='Запази'
+
 
       - if current_user.present? and current_user.id == @user.id
         .row
@@ -44,19 +63,16 @@
             .tab-pane ng-class='{active: active_tab == "favs"}'
               tabset
                 tab heading='Смесени'
-                  ul
-                    - for advert in @fav_adverts
-                      li = advert.title
-                    - for want_ad in @fav_want_ads
-                      li = want_ad.title
+                  - @ads = @fav_adverts
+                  = render partial: 'users/ads_list', ads: @ads
+                  - @ads = @fav_want_ads
+                  = render partial: 'users/ads_list', ads: @ads
                 tab heading='Реклами'
-                  ul
-                    - for advert in @fav_adverts
-                      li = advert.title
+                  - @ads = @fav_adverts
+                  = render partial: 'users/ads_list', ads: @ads
                 tab heading='Обяви'
-                  ul
-                    - for want_ad in @fav_want_ads
-                      li = want_ad.title
+                  - @ads = @fav_want_ads
+                  = render partial: 'users/ads_list', ads: @ads
             .tab-pane ng-class='{active: active_tab == "active"}'
               tabset
                 tab heading='Смесени'
@@ -85,20 +101,12 @@
             .tab-pane ng-class='{active: active_tab == "drafts"}'
               tabset
                 tab heading='Смесени'
-                  ul
-                    - for advert in @advert_drafts
-                      li = advert.title
-
-                    - for want_ad in @wanted_ad_drafts
-                      li = want_ad.title
+                  = render partial: 'users/ads_list', ads: @advert_drafts
+                  = render partial: 'users/ads_list', ads: @wanted_ad_drafts
                 tab heading='Реклами'
-                  ul
-                    - for advert in @advert_drafts
-                      li = advert.title
+                  = render partial: 'users/ads_list', ads: @advert_drafts
                 tab heading='Обяви'
-                  ul
-                    - for want_ad in @wanted_ad_drafts
-                      li = want_ad.title
+                  = render partial: 'users/ads_list', ads: @wanted_ad_drafts
 
             .tab-pane ng-class='{active: active_tab == "archive"}'
               tabset
@@ -126,3 +134,14 @@
           a.pull-right.btn.btn-warning ng-click="unfav(#{@user.id})" Махни от любими
         - else
           a.pull-right.btn.btn-success ng-click="fav(#{@user.id})" Добави в любими
+
+javascript:
+  $(document).ready(function() {
+    $('#contractor-checkbox').bind('change', function(e) {
+      if($(this).is(':checked')) {
+        $('form#contracor-form').show();
+      } else {
+        $('form#contracor-form').hide();
+      }
+    });
+  });

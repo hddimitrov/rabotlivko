@@ -131,7 +131,18 @@ a.zocial {
 .zocial.facebook:before {content: "f";}
 .zocial.facebook {background-color: #4863ae;}
 
-ul.adverts-list{
+.google-map {
+  width: 540px;
+  height: 400px;
+  margin: 0;
+  padding: 0;
+}
+
+.google-map img {
+  max-width:none;
+}
+
+ul.ads-list{
   list-style-type: none;
   border-radius:4px;
   background-color:#fff;
@@ -141,9 +152,32 @@ ul.adverts-list{
   margin:0 auto 20px auto;
   box-shadow:0 1px 2px rgba(0, 0, 0, 0.15);
 }
-ul.adverts-list li{border-top:1px solid #ddd;padding:15px 15px;position:relative;}
-ul.adverts-list li .view_image{border:0;position:relative;width:100px;height:75px;}
-ul.adverts-list li>div:first-child{float:left;margin-left:0;}
-ul.adverts-list li .advert-header{border-bottom:1px solid #eee;padding-bottom:8px;margin-bottom:8px;}
-ul.adverts-list li>div{float:none;margin-left:110px;}
-ul.adverts-list li:first-child{border-top:0;}
+ul.ads-list li{border-top:1px solid #ddd;padding:15px 15px;position:relative;}
+ul.ads-list li .view_image{border:0;position:relative;width:100px;height:75px;}
+ul.ads-list li>div:first-child{float:left;margin-left:0;}
+ul.ads-list li .ad-header{border-bottom:1px solid #eee;padding-bottom:8px;margin-bottom:8px;}
+ul.ads-list li>div{float:none;margin-left:110px;}
+ul.ads-list li:first-child{border-top:0;}
+
+
+.carousel-inner img {
+  width:500px;
+  height:100px;
+}
+
+#myCarousel {
+  font-size:90%;
+}
+
+.carousel-controls-mini {
+
+}
+
+.carousel-controls-mini > a {
+  border:1px solid #eee;
+  width:20px;
+  display:block;
+  float:left;
+  text-align:center;
+}
+

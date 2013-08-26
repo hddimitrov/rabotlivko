@@ -1,0 +1,131 @@
+<div class="container">
+
+  <hr>
+
+  <!-- Slider -->
+  <div class="row-fluid">
+    <div class="span9" id="slider">
+      <!-- Top part of the slider -->
+      <div class="row-fluid">
+        <div class="span2" id="carousel-bounding-box">
+          <div id="myCarousel" class="carousel slide">
+            <!-- Carousel items -->
+            <div class="carousel-inner">
+              <div class="active item" data-slide-number="0"><img class="img-rounded" src="http://lorempixel.com/120/100"></div>
+              <div class="item" data-slide-number="1"><img class="img-rounded" src="http://lorempixel.com/120/100/technics/1"></div>
+              <div class="item" data-slide-number="2"><img class="img-rounded" src="http://lorempixel.com/120/100/business/1"></div>
+              <div class="item" data-slide-number="3"><img class="img-rounded" src="http://lorempixel.com/120/100/city"></div>
+              <div class="item" data-slide-number="4"><img class="img-rounded" src="http://lorempixel.com/120/100/city/1"></div>
+              <div class="item" data-slide-number="5"><img class="img-rounded" src="http://lorempixel.com/120/100"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="span4" id="carousel-text"></div>
+
+
+        <div style="display:none;" id="slide-content">
+          <div id="slide-content-0">
+            <h5>Публикувай обява</h5>
+            <p>Публикувай обява, която.....................................................................................................................................</p>
+            <small><a class="btn btn-large btn-info" href="/want_ads/new">Публикувай обява</a></small>
+          </div>
+          <div id="slide-content-1">
+            <h5>Трябва ти човек</h5>
+            <p>Намери този, който.....................................................................................................................................</p>
+            <small><a class="btn btn-large btn-info" href="/contractors">Търси изпълнител</a></small>
+          </div>
+          <div id="slide-content-2">
+            <h5>Трябвa нещо да се свърши</h5>
+            <p>Виж какво предлагат хората, който.....................................................................................................................................</p>
+            <small><a class="btn btn-large btn-info" href="/adverts">Търси реклама</a></small>
+          </div>
+          <div id="slide-content-3">
+            <h5>Можеш да свършиш нещо</h5>
+            <p>Сподели какво умееш.....................................................................................................................................</p>
+            <small><a class="btn btn-large btn-info" href="/me">Попълни профил</a></small>
+          </div>
+          <div id="slide-content-4">
+            <h5>Можеш да свършиш нещо</h5>
+            <p>Сподели какво умееш.....................................................................................................................................</p>
+            <small><a class="btn btn-large btn-info" href="/adverts/new">Публикувай реклама</a></small>
+          </div>
+          <div id="slide-content-5">
+            <h5>Виж какви обяви има</h5>
+            <p>Виж от какво се нуждаят хората.....................................................................................................................................</p>
+            <small><a class="btn btn-large btn-info" href="/want_ads">Търси обяви</a></small>
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+    </div>
+  </div> <!--/Slider-->
+
+  <br>
+  <hr>
+
+  <div class="row-fluid hidden-phone" id="slider-thumbs">
+    <div class="span12">
+      <!-- Bottom switcher of slider -->
+      <ul class="thumbnails">
+        <li class="span2">
+          <a class="thumbnail" id="carousel-selector-0">
+            <img src="http://placehold.it/170x100&amp;text=one">
+          </a>
+        </li>
+        <li class="span2">
+          <a class="thumbnail" id="carousel-selector-1">
+            <img src="http://placehold.it/170x100&amp;text=two">
+          </a>
+        </li>
+        <li class="span2">
+          <a class="thumbnail" id="carousel-selector-2">
+            <img src="http://placehold.it/170x100&amp;text=three">
+          </a>
+        </li>
+        <li class="span2">
+          <a class="thumbnail" id="carousel-selector-3">
+            <img src="http://placehold.it/170x100&amp;text=four">
+          </a>
+        </li>
+        <li class="span2">
+          <a class="thumbnail" id="carousel-selector-4">
+            <img src="http://placehold.it/170x100&amp;text=five">
+          </a>
+        </li>
+        <li class="span2">
+          <a class="thumbnail" id="carousel-selector-5">
+            <img src="http://placehold.it/170x100&amp;text=six">
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#myCarousel').carousel({ interval: 5000 });
+
+    $('#carousel-text').html($('#slide-content-0').html());
+
+    //Handles the carousel thumbnails
+    $('[id^=carousel-selector-]').click( function(){
+            var id_selector = $(this).attr("id");
+            var id = id_selector.substr(id_selector.length-1);
+            var id = parseInt(id);
+            $('#myCarousel').carousel(id);
+    });
+
+
+    // When the carousel slides, auto update the text
+    $('#myCarousel').on('slid', function (e) {
+            var id = $('.item.active').data('slide-number');
+          $('#carousel-text').html($('#slide-content-'+id).html());
+    });
+  });
+</script>

@@ -1,0 +1,18 @@
+ul.unstyled.ads-list
+  - (@ads || []).each do |ad|
+    li.clearFix
+      div
+        a href="#"
+          .view_image style="background:#ffffff url('http://media.opencooks.com/cache/34/df/34dfadcfbe7f3fa02af79c1b680c2b23.jpg') no-repeat left top;"
+      .clearFix
+        .ad-header
+          strong
+            span.title
+              = ad.title
+          strong.pull-right
+            span.label.label-language = ad.user.try(:name)
+        p = ad.description
+        strong.pull-left
+          = ad.try(:deadline)
+        strong.pull-right
+          = ad.price

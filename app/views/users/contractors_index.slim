@@ -1,4 +1,4 @@
-.row ng-controller='AdvertsCtrl'
+.row
   .span3
     .well.sidebar-nav
 
@@ -9,24 +9,24 @@
         br
 
   .span6
-    h1 Реклами
-    div#js-data data-adverts="#{@adverts.to_json}"
+    h1 Изпълнители
+
     ul.unstyled.ads-list
-        li.clearFix ng-repeat='advert in adverts'
+      - @contractors.each do |contractor|
+        li.clearFix
           div
-            a href="/adverts/{{advert['id']}}"
+            a href="#{user_path(contractor)}"
               .view_image style="background:#ffffff url('http://media.opencooks.com/cache/34/df/34dfadcfbe7f3fa02af79c1b680c2b23.jpg') no-repeat left top;"
           .clearFix
             .ad-header
               strong
-                span.title | {{advert['title']}}
-              strong.pull-right
-                span.label.label-language | {{advert['user_name']}}
-            p | {{advert['description']}}
+                span.title
+                  = contractor.name
+            p Тука той си пише колко е як и каква добра работа върши
 
 
-            strong.pull-left | {{advert['city_name']}}
-            strong.pull-right | {{advert['price']}}
+            strong.pull-left
+              = contractor.address.city.name if contractor.address.try(:city).present?
 
   .span3
     .banner

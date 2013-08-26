@@ -1,5 +1,65 @@
-angular.module('rab').controller('ProfileCtrl', ['$scope', 'favsServices', function($scope, favsServices) {
+angular.module('rab').controller('ProfileCtrl', ['$scope', 'rabServices', 'favsServices', function($scope, rabServices, favsServices) {
   console.log('ProfileCtrl called');
+
+  angular.extend($scope, {
+    center: {
+      latitude: 42.73, // initial map center latitude
+      longitude: 25.56, // initial map center longitude
+    },
+    markers: [], // an array of markers,
+    zoom: 7 // the zoom level
+  });
+
+  $scope.contractor = {};
+  $scope.states = [];
+  $scope.cities_by_state = {};
+  $scope.cities = [];
+
+  $scope.$watch(
+    function () {
+      return $('#locations-data').data('states');
+    },
+    function(newJson) {
+      $scope.states = newJson;
+    },
+    true
+  );
+
+  $scope.$watch(
+    function () {
+      return $('#locations-data').data('cities');
+    },
+    function(newJson) {
+      $scope.cities_by_state = newJson;
+    },
+    true
+  );
+
+  $scope.state_changed = function(state_id) {
+    state = rabServices.findById($scope.states, state_id);
+    if(state) {
+      $scope.center.latitude = state['lat'];
+      $scope.center.longitude = state['lon'];
+      $scope.zoom = 8;
+      $scope.markers = [$scope.center];
+    }
+
+    $scope.cities = $scope.cities_by_state[state_id];
+    console.log($scope.cities);
+  }
+
+  $scope.city_changed = function(city_id) {
+    city = rabServices.findById($scope.cities, city_id);
+    console.log(city_id)
+    console.log(city);
+    if(city) {
+      $scope.center.latitude = city['lat'];
+      $scope.center.longitude = city['lon'];
+      $scope.zoom = 14;
+      $scope.markers = [$scope.center];
+      // $scope.contractor.city_id = city['id'];
+    }
+  }
 
   $scope.set_active_tab = function(tab) {
     $scope.active_tab = tab;

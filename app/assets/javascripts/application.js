@@ -16,9 +16,11 @@
 //= require nested_form
 //= require chosen.jquery.min
 //= require jquery.cookie
+//= require google-maps
 //= require angular
 //= require angular-ui-bootstrap
 //= require angular-ui-bootstrap-tpls
+//= require angular-google-maps
 //= require_directory ./angular
 //= require_directory ./angular/services
 //= require_directory ./angular/controllers
