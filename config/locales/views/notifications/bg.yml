@@ -1,0 +1,9 @@
+notification:
+  comment:
+    create: "<span class='name'><%= parameters[:sender_nick] %></span> profiline yorum yaptı."
+  vote:
+    up: "<span class='name'><%= parameters[:sender_nick] %></span> profilini beğendi."
+  friendship:
+    invite: "<span class='name'><%= parameters[:sender_nick] %></span> arkadaş olmak istiyor"
+    approve: "<span class='name'><%= parameters[:sender_nick] %></span> arkadaşlık isteğini kabul etti."
+    reject: '&nbsp;'
