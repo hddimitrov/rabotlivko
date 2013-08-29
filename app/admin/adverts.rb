@@ -13,15 +13,7 @@ ActiveAdmin.register Advert do
     column :title
     column :category
     column :price
-    column 'Free' do |advert|
-      advert.q_price_free ? 'YES' : 'NO'
-    end
-    column 'Negotiable' do |advert|
-      advert.q_price_negotiable ? 'YES' : 'NO'
-    end
-    column 'Draft' do |advert|
-      advert.q_draft ? 'YES' : 'NO'
-    end
+    column :ad_status
 
     default_actions
   end
@@ -35,15 +27,7 @@ ActiveAdmin.register Advert do
         row :title
         row :description
         row :price
-        row 'Free' do |advert|
-          advert.q_price_free ? 'YES' : 'NO'
-        end
-        row 'Negotiable' do |advert|
-          advert.q_price_negotiable ? 'YES' : 'NO'
-        end
-        row 'Draft' do |advert|
-          advert.q_draft ? 'YES' : 'NO'
-        end
+        row :ad_status
         row :created_at
         row :updated_at
       end
@@ -63,12 +47,10 @@ ActiveAdmin.register Advert do
     f.inputs 'Details' do
       f.input :user
       f.input :category
+      f.input :ad_status
       f.input :title
       f.input :description
-      f.input :q_draft, label: 'Draft'
       f.input :price
-      f.input :q_price_free, label: 'Free'
-      f.input :q_price_negotiable, label: 'Negotiable'
     end
 
     f.inputs 'Attachments' do
