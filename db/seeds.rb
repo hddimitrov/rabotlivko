@@ -13,6 +13,11 @@ Category.find_or_create_by_title('Козметични')
 Category.find_or_create_by_title('Писане')
 Category.find_or_create_by_title('Преводи')
 
+AdStatus.find_or_create_by_name('DRAFT')
+AdStatus.find_or_create_by_name('ACTIVE')
+AdStatus.find_or_create_by_name('ARCHIVED')
+AdStatus.find_or_create_by_name('REMOVED')
+
 state_blg = State.find_or_create_by_name('Благоевград')
 state_bs =  State.find_or_create_by_name('Бургас')
 state_var = State.find_or_create_by_name('Варна')
