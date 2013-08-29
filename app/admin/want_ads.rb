@@ -3,9 +3,7 @@ ActiveAdmin.register WantAd do
   filter :category
   filter :title
   filter :price
-  filter :q_draft, label: 'Draft'
-  filter :q_price_free, label: 'Free'
-  filter :q_price_negotiable, label: 'Negotiable'
+  filter :ad_status
   filter :created_at
 
   index do
