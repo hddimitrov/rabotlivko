@@ -7,3 +7,7 @@ notification:
     invite: "<span class='name'><%= parameters[:sender_nick] %></span> arkadaş olmak istiyor"
     approve: "<span class='name'><%= parameters[:sender_nick] %></span> arkadaşlık isteğini kabul etti."
     reject: '&nbsp;'
+  advert:
+    remove: "Вашата обява <%= parameters[:advert_title] %> беше премахната."
+  want_ad:
+    remove: "Вашата реклама <%= parameters[:want_ad_title] %> беше премахната."

@@ -17,6 +17,8 @@ class Advert < ActiveRecord::Base
 
   markable_as :favorite
 
+  after_update :send_notification
+
   def self.create_from_cookies(user_id, cookies)
     advert = Advert.new
     advert.user_id = user_id
@@ -26,5 +28,18 @@ class Advert < ActiveRecord::Base
     advert.price = 0 if cookies[:rab_new_advert_price].present?
     advert.ad_status_id = AdStatus.find_by_name('DRAFT').id
     advert.save
+  end
+
+  def send_notification
+    if self.ad_status_id_changed? && self.ad_status.name == 'REMOVED'
+      notification = Notification.new({
+        user_id: self.user_id,
+        action: 'advert_remove',
+        key: 'notification.advert.remove',
+        notifiable_cache: "{advert_title: '#{self.title}'}"
+      })
+
+      notification.save
+    end
   end
 end
