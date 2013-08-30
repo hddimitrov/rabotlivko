@@ -10,7 +10,10 @@ class Advert < ActiveRecord::Base
   has_many :attachments, as: :attachable, dependent: :delete_all
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
-  scope :drafts, where(q_draft: true)
+  scope :drafts, joins(:ad_status).where('ad_statuses.name' => 'DRAFT')
+  scope :active, joins(:ad_status).where('ad_statuses.name' => 'ACTIVE')
+  scope :archived, joins(:ad_status).where('ad_statuses.name' => 'ARCHIVED')
+  scope :removed, joins(:ad_status).where('ad_statuses.name' => 'REMOVED')
 
   markable_as :favorite
 
