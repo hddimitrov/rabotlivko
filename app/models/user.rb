@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_many :contractor_categories, foreign_key: :contractor_id, dependent: :delete_all
   has_many :applications, foreign_key: :applicant_id, dependent: :delete_all
 
-  has_one :address, as: :addressable, dependent: :delete_all
+  has_one :address, as: :addressable, dependent: :destroy
   accepts_nested_attributes_for :address
 
   has_many :attachments, as: :attachable, dependent: :delete_all

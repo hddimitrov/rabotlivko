@@ -15,6 +15,14 @@ class WantAdsController < ApplicationController
   def show
     @want_ad = WantAd.find(params[:id])
 
+    @q_owner = current_user.present? && current_user.id == @want_ad.user_id
+
+    if @q_owner
+      @applications = @want_ad.applications
+    else
+      @application = @want_ad.applications.where(applicant_id: current_user.id).last
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @want_ad }
