@@ -3,7 +3,6 @@ class CreateApplications < ActiveRecord::Migration
     create_table :applications do |t|
       t.string :applicable_type
       t.integer :applicable_id
-      t.string :applicant_type
       t.integer :applicant_id
       t.string :owner_status
       t.string :applicant_status

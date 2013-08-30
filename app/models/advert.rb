@@ -12,7 +12,10 @@ class Advert < ActiveRecord::Base
 
   has_many :applications, as: :applicable, dependent: :delete_all
 
-  scope :drafts, where(q_draft: true)
+  scope :drafts, joins(:ad_status).where('ad_statuses.name' => 'DRAFT')
+  scope :active, joins(:ad_status).where('ad_statuses.name' => 'ACTIVE')
+  scope :archived, joins(:ad_status).where('ad_statuses.name' => 'ARCHIVED')
+  scope :removed, joins(:ad_status).where('ad_statuses.name' => 'REMOVED')
 
   markable_as :favorite
 

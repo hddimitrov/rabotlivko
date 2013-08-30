@@ -9,18 +9,18 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me,
                   :uid, :provider, :fb_token, :attachments_attributes, :address_attributes, :q_contractor
 
-  has_many :adverts
-  has_many :want_ads
+  has_many :adverts, dependent: :delete_all
+  has_many :want_ads, dependent: :delete_all
 
-  has_many :contract_categories, as: :contractor
+  has_many :contractor_categories, foreign_key: :contractor_id, dependent: :delete_all
+  has_many :applications, foreign_key: :applicant_id, dependent: :delete_all
 
-  has_one :address, as: :addressable
+  has_one :address, as: :addressable, dependent: :delete_all
   accepts_nested_attributes_for :address
 
   has_many :attachments, as: :attachable, dependent: :delete_all
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
-  has_many :applications, as: :applicant
 
   scope :today,       lambda { where('created_at > ?', Time.now.beginning_of_day) }
   scope :yesterday,   lambda { where('created_at < ? AND created_at > ?', 1.day.ago.end_of_day, 1.day.ago.beginning_of_day) }

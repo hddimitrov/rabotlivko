@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819092711) do
+ActiveRecord::Schema.define(:version => 20130830215522) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -27,6 +27,12 @@ ActiveRecord::Schema.define(:version => 20130819092711) do
   add_index "active_admin_comments", ["author_type", "author_id"], :name => "index_active_admin_comments_on_author_type_and_author_id"
   add_index "active_admin_comments", ["namespace"], :name => "index_active_admin_comments_on_namespace"
   add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_admin_notes_on_resource_type_and_resource_id"
+
+  create_table "ad_statuses", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "addresses", :force => true do |t|
     t.integer  "addressable_id"
@@ -82,12 +88,26 @@ ActiveRecord::Schema.define(:version => 20130819092711) do
     t.integer  "user_id"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "q_draft",            :default => false
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.boolean  "q_price_free",       :default => false
     t.boolean  "q_price_negotiable", :default => false
+    t.integer  "ad_status_id"
+    t.date     "published_at"
   end
+
+  create_table "applications", :force => true do |t|
+    t.string   "applicable_type"
+    t.integer  "applicable_id"
+    t.integer  "applicant_id"
+    t.string   "owner_status"
+    t.string   "applicant_status"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "applications", ["applicable_id"], :name => "index_applications_on_applicable_id"
+  add_index "applications", ["applicant_id"], :name => "index_applications_on_applicant_id"
 
   create_table "attachments", :force => true do |t|
     t.text     "description"
@@ -140,6 +160,20 @@ ActiveRecord::Schema.define(:version => 20130819092711) do
   add_index "marks", ["markable_id", "markable_type", "mark"], :name => "index_marks_on_markable_id_and_markable_type_and_mark"
   add_index "marks", ["marker_id", "marker_type", "mark"], :name => "index_marks_on_marker_id_and_marker_type_and_mark"
 
+  create_table "notifications", :force => true do |t|
+    t.integer  "user_id"
+    t.boolean  "q_notified"
+    t.string   "notifiable_type"
+    t.integer  "notifiable_id"
+    t.string   "notifiable_cache"
+    t.string   "action"
+    t.string   "key"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
+
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
     t.string   "username"
@@ -161,33 +195,8 @@ ActiveRecord::Schema.define(:version => 20130819092711) do
     t.float    "lon"
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "",    :null => false
-    t.string   "name"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
-    t.string   "encrypted_password",     :default => "",    :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "fb_token"
-    t.boolean  "q_contractor",           :default => false
-  end
-
-  add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+# Could not dump table "users" because of following StandardError
+#   Unknown type 'name' for column 'name'
 
   create_table "vs_database_diagrams", :id => false, :force => true do |t|
     t.string   "name",     :limit => 80
@@ -203,14 +212,14 @@ ActiveRecord::Schema.define(:version => 20130819092711) do
     t.integer  "user_id"
     t.integer  "category_id"
     t.string   "title"
-    t.text     "description"
+    t.string   "description"
     t.string   "price"
     t.boolean  "q_price_free",       :default => false
     t.boolean  "q_price_negotiable", :default => false
     t.date     "deadline"
-    t.boolean  "q_draft",            :default => false
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+    t.integer  "ad_status_id"
   end
 
 end
