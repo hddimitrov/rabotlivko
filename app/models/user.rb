@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
   has_many :attachments, as: :attachable, dependent: :delete_all
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
+  has_many :applications, as: :applicant
+
   scope :today,       lambda { where('created_at > ?', Time.now.beginning_of_day) }
   scope :yesterday,   lambda { where('created_at < ? AND created_at > ?', 1.day.ago.end_of_day, 1.day.ago.beginning_of_day) }
   scope :this_month,  lambda { where('created_at > ?', Time.now.beginning_of_month) }

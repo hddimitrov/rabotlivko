@@ -12,6 +12,8 @@ class WantAd < ActiveRecord::Base
   has_many :attachments, as: :attachable, dependent: :delete_all
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
+  has_many :applications, as: :applicable, dependent: :delete_all
+
   scope :drafts, where(q_draft: true)
 
   markable_as :favorite
