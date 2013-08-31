@@ -36,7 +36,8 @@ angular.module('rab').controller('ProfileCtrl', ['$scope', 'rabServices', 'favsS
   );
 
   $scope.state_changed = function(state_id) {
-    state = rabServices.findById($scope.states, state_id);
+    console.log(state_id);
+    state = rabServices.findByProperty($scope.states, 'state_id', state_id);
     if(state) {
       $scope.center.latitude = state['lat'];
       $scope.center.longitude = state['lon'];
@@ -49,7 +50,7 @@ angular.module('rab').controller('ProfileCtrl', ['$scope', 'rabServices', 'favsS
   }
 
   $scope.city_changed = function(city_id) {
-    city = rabServices.findById($scope.cities, city_id);
+    city = rabServices.findByProperty($scope.cities, 'city_id', city_id);
     console.log(city_id)
     console.log(city);
     if(city) {
@@ -57,7 +58,6 @@ angular.module('rab').controller('ProfileCtrl', ['$scope', 'rabServices', 'favsS
       $scope.center.longitude = city['lon'];
       $scope.zoom = 14;
       $scope.markers = [$scope.center];
-      // $scope.contractor.city_id = city['id'];
     }
   }
 

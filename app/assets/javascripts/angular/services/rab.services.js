@@ -11,6 +11,15 @@ rab_services.factory('rabServices', ['$http', function($http) {
       }
       return null; // The object was not found
     },
+
+    findByProperty: function(array, property_name, property_value) {
+      for (var i = 0, len = array.length; i < len; i++) {
+          if (array[i][property_name] === property_value) {
+              return array[i]; // Return as soon as the object is found
+          }
+      }
+      return null; // The object was not found
+    },
     filter_adverts: function(category_id) {
       var promise = $http.post('/api/filter/adverts', {category_id: category_id}).then(function (response) {
         return response.data;
