@@ -1,5 +1,5 @@
-angular.module('rab').controller('ProfileCtrl', ['$scope', 'rabServices', 'favsServices', function($scope, rabServices, favsServices) {
-  console.log('ProfileCtrl called');
+angular.module('rab').controller('profiles_show', ['$scope', 'rabServices', 'favsServices', function($scope, rabServices, favsServices) {
+  console.log('profiles_show called');
 
   angular.extend($scope, {
     center: {

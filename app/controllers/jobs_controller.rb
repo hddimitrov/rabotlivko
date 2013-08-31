@@ -1,24 +1,13 @@
 class JobsController < ApplicationController
   before_filter :authenticate_user!
 
-  def apply_want_ad
+  def applicant_status_want_ad
     want_ad = WantAd.find_by_id(params[:id])
-
     if want_ad.present?
-      want_ad.applications.create({applicant_id: current_user.id, applicant_status: 'applied'})
+      my_app = want_ad.applications.find_or_initialize_by_applicant_id(current_user.id)
+      my_app.applicant_status = params[:status]
+      my_app.save
     end
-
-    render nothing: true
-  end
-
-  def resign_want_ad
-    want_ad = WantAd.find_by_id(params[:id])
-
-    if want_ad.present?
-      my_app = want_ad.applications.where(applicant_id: current_user.id).last
-      my_app.update_attribute(:applicant_status, 'resigned')
-    end
-
     render nothing: true
   end
 end

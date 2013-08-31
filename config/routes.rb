@@ -4,8 +4,7 @@ Rabotlivko::Application.routes.draw do
   resources :adverts
 
   resources :want_ads do
-    match 'apply' => 'jobs#apply_want_ad', :on => :member, via: :post, as: :apply
-    match 'resign' => 'jobs#resign_want_ad', :on => :member, via: :post, as: :resign
+    match 'applicant_status' => 'jobs#applicant_status_want_ad', :on => :member, via: :post, as: :applicant_status
   end
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }, skip: [:registrations, :sessions, :confirmations, :passwords]

@@ -1,4 +1,4 @@
-.row ng-controller='WantAdsCtrl'
+.row ng-controller='want_ads_show'
   .span9
     .row
       .span7
@@ -41,9 +41,16 @@
           = render 'applications'
         - else
           - if @q_applied
-            a.btn href="#{resign_want_ad_path(@want_ad.id)}" data-remote='true' data-method='POST' Откажи се
+            / a.btn href="#{resign_want_ad_path(@want_ad.id)}" data-remote='true' data-method='POST' Откажи се
+            .resign-form ng-show=''
+              = form_tag( applicant_status_want_ad_path(@want_ad.id), remote: true, method: :post ) do |f|
+                = hidden_field_tag :status, 'resigned'
+                = submit_tag "Откажи се", :class => "btn", 'ng-click' => 'resign()'
           - else
-            a.btn href="#{apply_want_ad_path(@want_ad.id)}" data-remote='true' data-method='POST' Кандидатствай
+            .apply-form
+              = form_tag( applicant_status_want_ad_path(@want_ad.id), remote: true, method: :post ) do |f|
+                = hidden_field_tag :status, 'applied'
+                = submit_tag "Кандидатствай", :class => "btn", 'ng-click' => 'apply()'
       / - else
       /   a.btn logni se
 

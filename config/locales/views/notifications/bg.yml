@@ -8,11 +8,11 @@ notification:
       hired:  "<%= parameters[:owner_name] %> ви нае по <%= parameters[:ad_title] %>."
       rejected:  "<%= parameters[:owner_name] %>  Ви отхвърли по <%= parameters[:ad_title] %>."
       fired:  "<%= parameters[:owner_name] %>  Ви уволни от <%= parameters[:ad_title] %>."
-      ready:  "<%= parameters[:owner_name] %>  каза, че работата по <%= parameters[:ad_title] %> е готова."
+      completed:  "<%= parameters[:owner_name] %>  каза, че работата по <%= parameters[:ad_title] %> е готова."
       rated:  "<%= parameters[:owner_name] %> даде оценка по <%= parameters[:ad_title] %>."
     applicant:
       applied:  "<%= parameters[:applicant_name] %> кандидатства по вашата обява <%= parameters[:ad_title] %>."
       resigned:  "<%= parameters[:applicant_name] %> се отказа от вашата обява <%= parameters[:ad_title] %>."
-      ready:  "<%= parameters[:applicant_name] %> каза, че работата по <%= parameters[:ad_title] %> е готова"
+      completed:  "<%= parameters[:applicant_name] %> каза, че работата по <%= parameters[:ad_title] %> е готова"
       rated:  "<%= parameters[:applicant_name] %> даде оценка по <%= parameters[:ad_title] %>."
 

@@ -1,4 +1,4 @@
-angular.module('rab').controller('AdvertsCtrl', ['$scope', 'rabServices', 'favsServices', function($scope, rabServices, favsServices) {
+angular.module('rab').controller('adverts_show', ['$scope', 'rabServices', 'favsServices', function($scope, rabServices, favsServices) {
 
   angular.extend($scope, {
     center: {
