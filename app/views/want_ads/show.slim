@@ -24,31 +24,37 @@
         - for attachment in @want_ad.attachments
           .attachment
             img.pull-left src="#{attachment.file}" width='150'
+    - if current_user.present?
+      .row
+        - if current_user.favorite_wantads.include? @want_ad
+          a.pull-right.btn.btn-warning ng-click="unfav(#{@want_ad.id})" Махни от любими
+        - else
+          a.pull-right.btn.btn-success ng-click="fav(#{@want_ad.id})" Добави в любими
 
     .row
       - if current_user.present?
         - if @q_owner
           ul
             - for application in @applications
-              li
-                .name = application.applicant.name
-                a.btn.pull-right Приеми
-                а.btn.pull-right Отхвърли
+              - if application.owner_status == 'hired'
+                li
+                  а.btn.pull-right ng-click="application_fire()" Уволни
+                  а.btn.pull-right ng-click="application_ready()" Готово е
+              - elsif application.owner_status == 'rejected'
+                li
+                  .name = application.applicant.name
+                  a.btn.pull-right ng-click="application_reject()" Отхвърли
+                  а.btn.pull-right ng-click="application_hire()" Наеми
         - else
           - if @application.blank?
             a.btn Кандидатствай
           - else
-            .name = @application.applicant.name
-            a.btn Кой
-            а.btn Колко
-
-          - if current_user.favorite_wantads.include? @want_ad
-              a.pull-right.btn.btn-warning ng-click="unfav(#{@want_ad.id})" Махни от любими
-          - else
-            a.pull-right.btn.btn-success ng-click="fav(#{@want_ad.id})" Добави в любими
-
-      - else
-        a.btn logni se
+            - if application.owner_status == 'hired'
+              a.btn.pull-rigth
+              а.btn.pull-right ng-click="application_fire()" Отказвам се
+              а.btn.pull-right ng-click="application_ready()" Готово е
+      / - else
+      /   a.btn logni se
 
       br
       br
