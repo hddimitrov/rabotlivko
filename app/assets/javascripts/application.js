@@ -25,3 +25,7 @@
 //= require_directory ./angular/services
 //= require_directory ./angular/controllers
 //= require_tree .
+
+$(document).ready(function() {
+  $(".select-city").chosen({allow_single_deselect: true});
+});

@@ -1,4 +1,4 @@
-angular.module('rab', ['ui.bootstrap', 'google-maps', 'rab.directives', 'rab.services', 'favorite_services'])
+angular.module('rab', ['ui.bootstrap', 'google-maps', 'rab.directives', 'rab.services', 'favorite_services', 'filter_services'])
 
 angular.module('rab').config(['$locationProvider', function(lProvider) {
   lProvider.html5Mode(false);

@@ -1,35 +1,68 @@
-.row
+.row ng-controller='WantAdsCtrl'
   .span3
     .well.sidebar-nav
+      select.select-city data-placeholder='Къде' ng-model='filters.city_id' ng-change='filter_want_ads()'
+        option value=''
+        - for city in @cities
+          option value="#{city.id}" = city.name
+
+      br
+      br
+        input type="text" ng-model='filters.date' ng-change='filter_want_ads()'
+      br
+      br
 
       | Категории
       br
+        a href="javascript:void(0)" ng-click="click_all()" Всички
       - Category.all.each do |cat|
-        a href='#' ng-click="add_filter('category', #{cat.id})" = cat.title
+        a href="javascript:void(0)" ng-click="click_category(#{cat.id})" ng-class="{active: filters.category_id == #{cat.id}}" = cat.title
         br
 
   .span6
+    | {{filters}}
     h1 Обяви
 
     ul.unstyled.ads-list
-      - @want_ads.each do |want_ad|
-        li.clearFix
-          div
-            a href="#{want_ad_path(want_ad)}"
-              .view_image style="background:#ffffff url('http://media.opencooks.com/cache/34/df/34dfadcfbe7f3fa02af79c1b680c2b23.jpg') no-repeat left top;"
-          .clearFix
-            .ad-header
-              strong
-                span.title
-                  = want_ad.title
-              strong.pull-right
-                span.label.label-language = want_ad.user.try(:name)
-            p = want_ad.description
-            strong.pull-left
-              = want_ad.address.city.name if want_ad.address.try(:city).present?
-              = want_ad.deadline
+      li.clearFix ng-repeat='want_ad in want_ads'
+        div
+          a href="/want_ads/{{want_ad.id}}"
+            .view_image style="background:#ffffff url('http://lorempixel.com/100/100/') no-repeat left top;"
+        .clearFix
+          .ad-header
+            strong
+              span.title
+                | {{ want_ad.title }}
             strong.pull-right
-              = want_ad.price
+              span.label.label-language
+                | {{want_ad.user_name}}
+          p
+            | {{ want_ad.description }}
+          strong.pull-left
+            | {{ want_ad.city_name }}
+            | {{ want_ad.deadline }}
+          strong.pull-right
+            | {{want_ad.price}}
+
+    / ul.unstyled.ads-list
+    /   - @want_ads.each do |want_ad|
+    /     li.clearFix
+    /       div
+    /         a href="#{want_ad_path(want_ad)}"
+    /           .view_image style="background:#ffffff url('http://lorempixel.com/100/100/') no-repeat left top;"
+    /       .clearFix
+    /         .ad-header
+    /           strong
+    /             span.title
+    /               = want_ad.title
+    /           strong.pull-right
+    /             span.label.label-language = want_ad.user.try(:name)
+    /         p = want_ad.description
+    /         strong.pull-left
+    /           = want_ad.address.city.name if want_ad.address.try(:city).present?
+    /           = want_ad.deadline
+    /         strong.pull-right
+    /           = want_ad.price
 
   .span3
     .banner
