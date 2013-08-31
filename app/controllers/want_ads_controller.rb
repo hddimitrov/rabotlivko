@@ -1,6 +1,4 @@
 class WantAdsController < ApplicationController
-  # GET /want_ads
-  # GET /want_ads.json
   def index
     @want_ads = WantAd.all
 
@@ -10,24 +8,20 @@ class WantAdsController < ApplicationController
     end
   end
 
-  # GET /want_ads/1
-  # GET /want_ads/1.json
   def show
     @want_ad = WantAd.find(params[:id])
 
     if current_user.present?
-      @q_owner = current_user.present? && current_user.id == @want_ad.user_id
+      @q_owner = current_user.id == @want_ad.user_id
 
       if @q_owner
         @applications = @want_ad.applications
-      else
-        @application = @want_ad.applications.where(applicant_id: current_user.id).last
       end
-    end
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @want_ad }
+      unless @q_owner
+        @application = @want_ad.applications.where(applicant_id: current_user.id).last
+        @q_applied = @application.present?
+      end
     end
   end
 

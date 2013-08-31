@@ -1,0 +1,11 @@
+ul
+  - for application in @applications
+    - if application.owner_status == 'hired'
+      li
+        а.btn.pull-right ng-click="application_fire()" Уволни
+        а.btn.pull-right ng-click="application_ready()" Готово е
+    - elsif application.owner_status != 'rejected'
+      li
+        .name = application.applicant.name
+        = link_to 'Отхвърли', '#', class: 'btn pull-right'
+        = link_to 'Наеми', '#', class: 'btn pull-right'

@@ -4,7 +4,7 @@ class Application < ActiveRecord::Base
   belongs_to :applicable, polymorphic: true
   belongs_to :applicant, class_name: 'User', foreign_key: :applicant_id
 
-  after_update :send_notification
+  after_save :send_notification
 
 
 
@@ -23,9 +23,9 @@ class Application < ActiveRecord::Base
     if self.applicant_status? && self.applicant_status.present?
       notification = Notification.new({
         user_id: self.applicable.user.id,
-        action: "application_applicant_#{self.owner_status}",
+        action: "application_applicant_#{self.applicant_status}",
         key: "notification.application.applicant.#{self.applicant_status}",
-        notifiable_cache: "applicant_name: '#{self.applicant.name}', ad_title: '#{self.applicable.title}'}"
+        notifiable_cache: "{applicant_name: '#{self.applicant.name}', ad_title: '#{self.applicable.title}'}"
       })
 
       notification.save

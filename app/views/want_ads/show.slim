@@ -9,6 +9,9 @@
     .row
       .description = @want_ad.description
 
+    .row
+      .owner.pull-right = @want_ad.user.name
+
     br
     .row
       .price
@@ -24,6 +27,7 @@
         - for attachment in @want_ad.attachments
           .attachment
             img.pull-left src="#{attachment.file}" width='150'
+
     - if current_user.present?
       .row
         - if current_user.favorite_wantads.include? @want_ad
@@ -34,25 +38,12 @@
     .row
       - if current_user.present?
         - if @q_owner
-          ul
-            - for application in @applications
-              - if application.owner_status == 'hired'
-                li
-                  а.btn.pull-right ng-click="application_fire()" Уволни
-                  а.btn.pull-right ng-click="application_ready()" Готово е
-              - elsif application.owner_status == 'rejected'
-                li
-                  .name = application.applicant.name
-                  a.btn.pull-right ng-click="application_reject()" Отхвърли
-                  а.btn.pull-right ng-click="application_hire()" Наеми
+          = render 'applications'
         - else
-          - if @application.blank?
-            a.btn Кандидатствай
+          - if @q_applied
+            a.btn href="#{resign_want_ad_path(@want_ad.id)}" data-remote='true' data-method='POST' Откажи се
           - else
-            - if application.owner_status == 'hired'
-              a.btn.pull-rigth
-              а.btn.pull-right ng-click="application_fire()" Отказвам се
-              а.btn.pull-right ng-click="application_ready()" Готово е
+            a.btn href="#{apply_want_ad_path(@want_ad.id)}" data-remote='true' data-method='POST' Кандидатствай
       / - else
       /   a.btn logni se
 
