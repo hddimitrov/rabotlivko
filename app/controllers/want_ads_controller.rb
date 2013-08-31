@@ -1,5 +1,6 @@
 class WantAdsController < ApplicationController
   def index
+    @cities = City.order(:name)
     @want_ads = WantAd.all
 
     respond_to do |format|
@@ -84,5 +85,36 @@ class WantAdsController < ApplicationController
       format.html { redirect_to want_ads_url }
       format.json { head :no_content }
     end
+  end
+
+# category_id
+  # min_price, max_price
+  # deadline
+
+  def filter
+    want_ads  = WantAd.joins(:user)
+                      .joins("LEFT OUTER JOIN addresses a ON a.addressable_id = want_ads.id and a.addressable_type = 'WantAd'")
+                      .joins("LEFT OUTER JOIN cities ON cities.id = a.city_id")
+                      .select('users.name as user_name, cities.name as city_name, want_ads.*')
+
+    want_ads = want_ads.where(category_id: params[:category_id]) if params[:category_id].present?
+    want_ads = want_ads.where("cities.id = #{params[:city_id]}") if params[:city_id].present?
+    want_ads = want_ads.where("price >= #{params[:min_price]}") if params[:min_price].present?
+    want_ads = want_ads.where("price <= #{params[:max_price]}") if params[:max_price].present?
+    want_ads = want_ads.where("deadline <= '#{params[:date]}'") if params[:date].present?
+
+    want_ads.map do |want_ad|
+      {
+        id: want_ad.id,
+        title: want_ad.title,
+        description: want_ad.description,
+        deadline: want_ad.deadline,
+        owner_name: want_ad.user_name,
+        city_name: want_ad.city_name,
+        price: want_ad.price
+      }
+    end
+
+    render json: want_ads
   end
 end

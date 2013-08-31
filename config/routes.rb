@@ -45,6 +45,7 @@ Rabotlivko::Application.routes.draw do
 
     scope 'filter' do
       match 'adverts',     to: 'adverts#filter', via: :post
+      match 'want_ads',     to: 'want_ads#filter', via: :post
     end
   end
 
