@@ -1,11 +1,10 @@
-ul
-  - for application in @applications
-    - if application.owner_status == 'hired'
-      li
-        а.btn.pull-right ng-click="application_fire()" Уволни
-        а.btn.pull-right ng-click="application_ready()" Готово е
-    - elsif application.owner_status != 'rejected'
-      li
-        .name = application.applicant.name
-        = link_to 'Отхвърли', '#', class: 'btn pull-right'
-        = link_to 'Наеми', '#', class: 'btn pull-right'
+ul.unstyled
+  li ng-repeat='application in applications'
+    .hired ng-show="application.applicant_status == 'applied' && application.owner_status == 'hired'"
+      | {{application.applicant_name}}
+      a.btn.pull-right ng-click="set_owner_status(application.app_id, 'fired')" Уволни
+      a.btn.pull-right ng-click="set_owner_status(application.app_id, 'completed')" Готово
+    .applied ng-show="application.applicant_status == 'applied' && application.owner_status != 'hired' && application.owner_status != 'fired'"
+      | {{application.applicant_name}}
+      a.btn.pull-right ng-click="set_owner_status(application.app_id, 'rejected')" Отхвърли
+      a.btn.pull-right ng-click="set_owner_status(application.app_id, 'hired')" Наеми
