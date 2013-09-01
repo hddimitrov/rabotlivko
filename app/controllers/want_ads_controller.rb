@@ -92,6 +92,8 @@ class WantAdsController < ApplicationController
   # deadline
 
   def filter
+    page = params[:page] || 1
+
     want_ads  = WantAd.joins(:user)
                       .joins("LEFT OUTER JOIN addresses a ON a.addressable_id = want_ads.id and a.addressable_type = 'WantAd'")
                       .joins("LEFT OUTER JOIN cities ON cities.id = a.city_id")
@@ -102,6 +104,8 @@ class WantAdsController < ApplicationController
     want_ads = want_ads.where("price >= #{params[:min_price]}") if params[:min_price].present?
     want_ads = want_ads.where("price <= #{params[:max_price]}") if params[:max_price].present?
     want_ads = want_ads.where("deadline <= '#{params[:date]}'") if params[:date].present?
+    want_ads = want_ads.order("#{params[:sort_by]}") if params[:sort_by].present?
+    want_ads = want_ads.page(page)
 
     want_ads.map do |want_ad|
       {
@@ -115,6 +119,10 @@ class WantAdsController < ApplicationController
       }
     end
 
-    render json: want_ads
+    render json: {
+      want_ads: want_ads,
+      number_pages: want_ads.total_pages,
+      current_page: page
+    }
   end
 end

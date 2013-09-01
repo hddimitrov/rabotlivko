@@ -2,8 +2,9 @@ angular.module('rab').controller('WantAdsCtrl', ['$scope', 'favsServices', 'filt
   $scope.filters = {};
 
   filterServices.filter_want_ads($scope.filters).then(function(response) {
-    $scope.want_ads = response;
-    console.log($scope.want_ads);
+    $scope.want_ads = response.want_ads;
+    $scope.number_pages = response.number_pages;
+    $scope.current_page = response.current_page;
   });
 
   $scope.fav = function(want_ad_id) {
@@ -22,18 +23,14 @@ angular.module('rab').controller('WantAdsCtrl', ['$scope', 'favsServices', 'filt
 
   $scope.filter_want_ads = function() {
     filterServices.filter_want_ads($scope.filters).then(function(response){
-      $scope.want_ads = response;
-      console.log($scope.want_ads);
+      $scope.want_ads = response.want_ads;
+      $scope.number_pages = response.number_pages;
+      $scope.current_page = response.current_page;
     });
   };
 
-  $scope.click_category = function(category_id) {
-    $scope.filters.category_id = category_id;
-    $scope.filter_want_ads();
-  };
-
-  $scope.click_all = function() {
-    $scope.filters.category_id = '';
+  $scope.page_changed = function(page) {
+    $scope.filters.page = page;
     $scope.filter_want_ads();
   }
 }]);

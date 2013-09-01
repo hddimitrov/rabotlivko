@@ -213,6 +213,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   jquery-rails
+  kaminari
   less-rails
   markable
   meta_search (>= 1.1.0.pre)
