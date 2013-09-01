@@ -104,6 +104,8 @@ class WantAdsController < ApplicationController
     want_ads = want_ads.where("price >= #{params[:min_price]}") if params[:min_price].present?
     want_ads = want_ads.where("price <= #{params[:max_price]}") if params[:max_price].present?
     want_ads = want_ads.where("deadline <= '#{params[:date]}'") if params[:date].present?
+    want_ads = want_ads.where("title ILIKE '%#{params[:search]}%' OR description ILIKE '%#{params[:search]}%'") if params[:search].present?
+
     want_ads = want_ads.order("#{params[:sort_by]}") if params[:sort_by].present?
     want_ads = want_ads.page(page)
 

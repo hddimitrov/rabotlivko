@@ -23,6 +23,12 @@
     | {{filters}}
     h1 Обяви
 
+    input.pull-left type='text' ng-model='filters.search'
+    a.btn.pull-left href="javascript:void(0)" ng-click='filter_want_ads()' Search
+
+    br
+    br
+
     ul.pull.right.unstyled
       li
         a href='javascript:void(0)' ng-click="filters.sort_by = 'rating';filter_want_ads()" Рейтинг
