@@ -2,19 +2,19 @@
   .span9
     .row
       .span7
-        h3.title.pull-left = @want_ad.title
+        h3.title.pull-left id='title' data-type="textarea" data-title="Заглавие" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.title
       span2
-        h3.category.pull-right = @want_ad.category.try(:title)
+        h3.category.pull-right id="category_id" data-type="select" data-pk="#{@want_ad.id}" data-url="/api/want_ad/update" data-original-title="Категория" = @want_ad.category.try(:title)
 
     .row
-      .description = @want_ad.description
+      .description id='description' data-type="textarea" data-title="Описание" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.description
 
     .row
       .owner.pull-right = @want_ad.user.name
 
     br
     .row
-      .price
+      .price id='price'
         strong = @want_ad.price
 
     br
@@ -62,3 +62,5 @@
     br
     .banner
         img src='http://lorempixel.com/150/500/cats'
+
+.categories data-categories="#{@categories.to_json}"

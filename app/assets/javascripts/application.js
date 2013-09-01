@@ -17,6 +17,7 @@
 //= require chosen.jquery.min
 //= require jquery.cookie
 //= require google-maps
+//= require bootstrap-editable
 //= require angular
 //= require angular-ui-bootstrap
 //= require angular-ui-bootstrap-tpls
@@ -28,4 +29,10 @@
 
 $(document).ready(function() {
   $(".select-city").chosen({allow_single_deselect: true});
+
+  $('#username').editable();
+  $('#email').editable();
+  $('#title').editable();
+  $('#description').editable();
+  $('#category_id').editable({source: $('.categories').data('categories')});
 });
