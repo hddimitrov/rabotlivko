@@ -1,4 +1,4 @@
-angular.module('rab').controller('adverts_show', ['$scope', 'rabServices', 'favsServices', function($scope, rabServices, favsServices) {
+angular.module('rab').controller('adverts_show', ['$scope', 'rabServices', 'favoriteServices', function($scope, rabServices, favoriteServices) {
 
   angular.extend($scope, {
     center: {
@@ -86,14 +86,14 @@ angular.module('rab').controller('adverts_show', ['$scope', 'rabServices', 'favs
 
   $scope.fav = function(advert_id) {
     console.log('fav adver: ' + advert_id);
-    favsServices.fav_advert(advert_id).then(function(response){
+    favoriteServices.fav_advert(advert_id).then(function(response){
       console.log('advert faved');
     });
   }
 
   $scope.unfav = function(advert_id) {
     console.log('unfav advert: ' + advert_id);
-    favsServices.unfav_advert(advert_id).then(function(response){
+    favoriteServices.unfav_advert(advert_id).then(function(response){
       console.log('advert unfaved');
     });
   }

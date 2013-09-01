@@ -1,4 +1,4 @@
-angular.module('rab').controller('profiles_show', ['$scope', 'rabServices', 'favsServices', function($scope, rabServices, favsServices) {
+angular.module('rab').controller('profiles_show', ['$scope', 'rabServices', 'favoriteServices', function($scope, rabServices, favoriteServices) {
   console.log('profiles_show called');
 
   angular.extend($scope, {
@@ -67,28 +67,28 @@ angular.module('rab').controller('profiles_show', ['$scope', 'rabServices', 'fav
 
   $scope.fav = function(user_id) {
     console.log('fav user: ' + user_id);
-    favsServices.fav_user(user_id).then(function(response){
+    favoriteServices.fav_user(user_id).then(function(response){
       console.log('user faved');
     });
   }
 
   $scope.unfav = function(user_id) {
     console.log('unfav user: ' + user_id);
-    favsServices.unfav_user(user_id).then(function(response){
+    favoriteServices.unfav_user(user_id).then(function(response){
       console.log('user unfaved');
     });
   }
 
   $scope.block = function(user_id) {
     console.log('block user: ' + user_id);
-    favsServices.block_user(user_id).then(function(response){
+    favoriteServices.block_user(user_id).then(function(response){
       console.log('user blocked');
     });
   }
 
   $scope.unblock = function(user_id) {
     console.log('unblock user: ' + user_id);
-    favsServices.unblock_user(user_id).then(function(response){
+    favoriteServices.unblock_user(user_id).then(function(response){
       console.log('user unblocked');
     });
   }

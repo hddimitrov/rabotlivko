@@ -40,17 +40,15 @@
         - if @q_owner
           = render 'applications'
         - else
-          - if @q_applied
-            / a.btn href="#{resign_want_ad_path(@want_ad.id)}" data-remote='true' data-method='POST' Откажи се
-            .resign-form ng-show=''
-              = form_tag( applicant_status_want_ad_path(@want_ad.id), remote: true, method: :post ) do |f|
-                = hidden_field_tag :status, 'resigned'
-                = submit_tag "Откажи се", :class => "btn", 'ng-click' => 'resign()'
-          - else
-            .apply-form
-              = form_tag( applicant_status_want_ad_path(@want_ad.id), remote: true, method: :post ) do |f|
-                = hidden_field_tag :status, 'applied'
-                = submit_tag "Кандидатствай", :class => "btn", 'ng-click' => 'apply()'
+          input#applicant-status type='hidden' value='#{@q_applied && @application.applicant_status}'
+          .resign-form ng-show="applicant_status == 'applied'"
+            = form_tag( applicant_status_want_ad_path(@want_ad.id), remote: true, method: :post ) do |f|
+              = hidden_field_tag :status, 'resigned'
+              = submit_tag "Откажи се", :class => "btn", 'ng-click' => "set_applicant_status('resigned')"
+          .apply-form ng-show="applicant_status == '' || applicant_status == 'resigned'"
+            = form_tag( applicant_status_want_ad_path(@want_ad.id), remote: true, method: :post ) do |f|
+              = hidden_field_tag :status, 'applied'
+              = submit_tag "Кандидатствай", :class => "btn", 'ng-click' => "set_applicant_status('applied')"
       / - else
       /   a.btn logni se
 

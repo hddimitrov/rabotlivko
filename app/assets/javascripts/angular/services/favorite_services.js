@@ -1,8 +1,8 @@
 var favorite_services = {};
 var favorite_services = angular.module('favorite_services', []);
 
-favorite_services.factory('favsServices', ['$http', function($http) {
-  var favsServices = {
+favorite_services.factory('favoriteServices', ['$http', function($http) {
+  var favoriteServices = {
     fav_advert: function(advert_id) {
       var promise = $http.post('/api/advert/fav', {advert_id: advert_id}).then(function (response) {
         return response.data;
@@ -61,5 +61,5 @@ favorite_services.factory('favsServices', ['$http', function($http) {
     }
   }
 
-  return favsServices;
+  return favoriteServices;
 }]);
