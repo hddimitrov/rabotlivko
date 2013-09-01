@@ -17,6 +17,7 @@
 //= require chosen.jquery.min
 //= require jquery.cookie
 //= require google-maps
+//= require bootstrap-editable
 //= require angular
 //= require angular-ui-bootstrap
 //= require angular-ui-bootstrap-tpls
