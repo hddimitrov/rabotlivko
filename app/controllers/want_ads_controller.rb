@@ -10,6 +10,7 @@ class WantAdsController < ApplicationController
   end
 
   def show
+    @categories = Category.all.map {|x| {value: x.id, text: x.title}}
     @want_ad = WantAd.find(params[:id])
 
     if current_user.present?
@@ -61,18 +62,49 @@ class WantAdsController < ApplicationController
 
   # PUT /want_ads/1
   # PUT /want_ads/1.json
-  def update
-    @want_ad = WantAd.find(params[:id])
+  # def update
+  #   @want_ad = WantAd.find(params[:id])
 
-    respond_to do |format|
-      if @want_ad.update_attributes(params[:want_ad])
-        format.html { redirect_to @want_ad, notice: 'Want ad was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @want_ad.errors, status: :unprocessable_entity }
+  #   respond_to do |format|
+  #     if @want_ad.update_attributes(params[:want_ad])
+  #       format.html { redirect_to @want_ad, notice: 'Want ad was successfully updated.' }
+  #       format.json { head :no_content }
+  #     else
+  #       format.html { render action: "edit" }
+  #       format.json { render json: @want_ad.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
+
+  def update
+    want_ad = WantAd.find_by_id(params[:pk])
+
+    if want_ad.present?
+      case params[:name]
+        when 'title'
+          want_ad.title = params[:value]
+        when 'description'
+          want_ad.description = params[:value]
+        when 'category_id'
+          want_ad.category_id = params[:value]
+        when 'city_id'
+          want_ad.address.city_id = params[:value]
+        when 'price'
+          want_ad.price = params[:price]
+        else
+      end
+
+      if want_ad.changed?
+        want_ad.save
+      end
+
+      if want_ad.address.present? && want_ad.address.changed?
+        want_ad.address.save
       end
     end
+
+    render nothing: true
   end
 
   # DELETE /want_ads/1

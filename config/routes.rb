@@ -33,6 +33,7 @@ Rabotlivko::Application.routes.draw do
     scope 'want_ad' do
       match 'fav',   to: 'favorites#fav_want_ad', via: :post
       match 'unfav', to: 'favorites#unfav_want_ad', via: :post
+      match 'update',  to: 'want_ads#update', via: :post
     end
 
     scope 'user' do

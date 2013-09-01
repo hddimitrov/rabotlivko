@@ -17,7 +17,7 @@
   .field
     = f.input :deadline, as: :date
   .field
-    = f.input :q_draft
+    / = f.input :q_draft
   .field
     = f.fields_for :attachments do |attachment_form|
       = attachment_form.input :description

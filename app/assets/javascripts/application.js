@@ -32,4 +32,7 @@ $(document).ready(function() {
 
   $('#username').editable();
   $('#email').editable();
+  $('#title').editable();
+  $('#description').editable();
+  $('#category_id').editable({source: $('.categories').data('categories')});
 });
