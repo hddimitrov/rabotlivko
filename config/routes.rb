@@ -40,11 +40,12 @@ Rabotlivko::Application.routes.draw do
       match 'unfav',   to: 'favorites#unfav_user', via: :post
       match 'block',   to: 'favorites#block_user', via: :post
       match 'unblock', to: 'favorites#unblock_user', via: :post
+      match 'update',  to: 'users#update', via: :post
     end
 
     scope 'filter' do
-      match 'adverts',     to: 'adverts#filter', via: :post
-      match 'want_ads',     to: 'want_ads#filter', via: :post
+      match 'adverts', to: 'adverts#filter', via: :post
+      match 'want_ads', to: 'want_ads#filter', via: :post
     end
   end
 

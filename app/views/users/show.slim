@@ -24,8 +24,10 @@
       .row
         .span6
           .name
-            h4 = @user.name
-          .email = @user.email
+            h4
+             a href="#" id="username" data-type="text" data-title="Име" data-pk="#{@user.id}" data-url='/api/user/update' = @user.name
+
+          .email id="email" data-type="text" data-title="Email" data-pk="#{@user.id}" data-url='/api/user/update' = @user.email
 
           - if current_user.present? && current_user.id == @user.id
             input type='checkbox' id='contractor-checkbox' Стани изпълнител

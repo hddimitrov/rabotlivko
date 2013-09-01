@@ -29,4 +29,7 @@
 
 $(document).ready(function() {
   $(".select-city").chosen({allow_single_deselect: true});
+
+  $('#username').editable();
+  $('#email').editable();
 });

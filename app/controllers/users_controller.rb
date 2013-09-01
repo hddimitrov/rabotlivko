@@ -42,4 +42,26 @@ class UsersController < ApplicationController
 
     redirect_to contractors_path
   end
+
+  def update
+    case params[:name]
+      when 'username'
+        current_user.name = params[:value]
+      when 'email'
+        current_user.email = params[:value]
+      when 'city_id'
+        current_user.address.city_id = params[:value]
+      else
+    end
+
+    if current_user.changed?
+      current_user.save
+    end
+
+    if current_user.address.present? && current_user.address.changed?
+      current_user.address.save
+    end
+
+    render nothing: true
+  end
 end

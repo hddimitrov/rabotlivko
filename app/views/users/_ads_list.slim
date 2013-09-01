@@ -12,7 +12,7 @@ ul.unstyled.ads-list
           strong.pull-right
             span.label.label-language = ad.user.try(:name)
         p = ad.description
-        strong.pull-left
-          = ad.try(:deadline)
+        / strong.pull-left
+        /   = ad.try(:deadline)
         strong.pull-right
           = ad.price
