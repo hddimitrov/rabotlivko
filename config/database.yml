@@ -51,5 +51,5 @@ production:
   encoding: unicode
   database: rabotlivko_production
   pool: 5
-  username: rabotlivko
-  password:
+  username: postgres
+  password: rabotazaden5432
