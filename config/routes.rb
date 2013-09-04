@@ -35,12 +35,9 @@ Rabotlivko::Application.routes.draw do
     end
 
     scope 'job' do
-      match 'get_want_ad_applications'     => 'jobs#get_want_ad_applications', via: :post
-      match 'set_want_ad_status_applicant' => 'jobs#set_want_ad_status_applicant', via: :post
-      match 'set_want_ad_status_owner'     => 'jobs#set_want_ad_status_owner', via: :post
-      match 'get_advert_applications'      => 'jobs#get_advert_applications', via: :post
-      match 'set_advert_status_applicant'  => 'jobs#set_advert_status_applicant', via: :post
-      match 'set_advert_status_owner'      => 'jobs#set_advert_status_owner', via: :post
+      match 'applicant_manage_want_ad_job' => 'jobs#applicant_manage_want_ad_job', via: :post
+      match 'applicant_manage_advert_job'  => 'jobs#applicant_manage_advert_job', via: :post
+      match 'owner_manage_job'             => 'jobs#owner_manage_job', via: :post
     end
 
     scope 'user' do

@@ -12,17 +12,22 @@ class WantAdsController < ApplicationController
   def show
     @categories = Category.all.map {|x| {value: x.id, text: x.title}}
     @want_ad = WantAd.find(params[:id])
+    @applications = []
 
     if current_user.present?
       @q_owner = current_user.id == @want_ad.user_id
 
       if @q_owner
-        @applications = @want_ad.applications
+        @want_ad.applications.each do |app|
+          @applications << {app_id: app.id,
+            applicant_name: app.applicant.name,
+            owner_status: app.owner_status,
+            applicant_status: app.applicant_status}
+        end
       end
 
       unless @q_owner
         @application = @want_ad.applications.where(applicant_id: current_user.id).last
-        @q_applied = @application.present?
       end
     end
   end

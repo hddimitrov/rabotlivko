@@ -1,10 +1,10 @@
-ul.unstyled
+ul.unstyled ng-init='applications = #{@applications.to_json}'
   li ng-repeat='application in applications'
-    .hired ng-show="application.applicant_status == 'applied' && application.owner_status == 'hired'"
+    .hired ng-show="(application.applicant_status == 'applied' || application.applicant_status == 'completed') && application.owner_status == 'hired'"
       | {{application.applicant_name}}
-      a.btn.pull-right ng-click="set_owner_status(application.app_id, 'fired')" Уволни
-      a.btn.pull-right ng-click="set_owner_status(application.app_id, 'completed')" Готово
-    .applied ng-show="application.applicant_status == 'applied' && application.owner_status != 'hired' && application.owner_status != 'fired'"
+      a.btn.pull-right ng-click="owner_manage_job(application, 'fired')" Уволни
+      a.btn.pull-right ng-click="owner_manage_job(application, 'completed')" Готово
+    .applied ng-show="application.applicant_status == 'applied' && !application.owner_status"
       | {{application.applicant_name}}
-      a.btn.pull-right ng-click="set_owner_status(application.app_id, 'rejected')" Отхвърли
-      a.btn.pull-right ng-click="set_owner_status(application.app_id, 'hired')" Наеми
+      a.btn.pull-right ng-click="owner_manage_job(application, 'rejected')" Отхвърли
+      a.btn.pull-right ng-click="owner_manage_job(application, 'hired')" Наеми

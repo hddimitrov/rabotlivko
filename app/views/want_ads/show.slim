@@ -1,4 +1,4 @@
-.row ng-controller='want_ads_show'
+.row ng-controller='want_ads_show' ng-init="init('#{@want_ad.id}', {}, #{@application.to_json})"
   .span9
     .row
       .span7
@@ -40,15 +40,9 @@
         - if @q_owner
           = render 'applications'
         - else
-          input#applicant-status type='hidden' value='#{@q_applied && @application.applicant_status}'
-          .resign-form ng-show="applicant_status == 'applied'"
-            = form_tag( applicant_status_want_ad_path(@want_ad.id), remote: true, method: :post ) do |f|
-              = hidden_field_tag :status, 'resigned'
-              = submit_tag "Откажи се", :class => "btn", 'ng-click' => "set_applicant_status('resigned')"
-          .apply-form ng-show="applicant_status == '' || applicant_status == 'resigned'"
-            = form_tag( applicant_status_want_ad_path(@want_ad.id), remote: true, method: :post ) do |f|
-              = hidden_field_tag :status, 'applied'
-              = submit_tag "Кандидатствай", :class => "btn", 'ng-click' => "set_applicant_status('applied')"
+          a.pull-right.btn.btn-error ng-show="candidate_properties.applicant_status == 'applied' && (!candidate_properties.owner_status || candidate_properties.owner_status == 'hired')" ng-click="applicant_manage_want_ad_job('resigned')" Откажи се
+          a.pull-right.btn.btn-success ng-hide="candidate_properties.owner_status || candidate_properties.applicant_status == 'applied'" ng-click="applicant_manage_want_ad_job('applied')" Кандидатствай
+          a.pull-right.btn.btn-success ng-show="candidate_properties.applicant_status == 'applied' && (candidate_properties.owner_status == 'hired' || candidate_properties.owner_status == 'completed')" ng-click="applicant_manage_want_ad_job('completed')" Готово е
       / - else
       /   a.btn logni se
 

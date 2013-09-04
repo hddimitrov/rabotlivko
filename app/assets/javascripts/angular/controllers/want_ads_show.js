@@ -2,22 +2,11 @@ angular.module('rab').controller('want_ads_show',
                                 ['$scope', 'rabServices', 'favoriteServices','jobServices',
                                 function($scope, rabServices, favoriteServices, jobServices) {
 
-  $scope.applicant_status = '';
-  $scope.applications = [];
 
-  $scope.$watch(
-    function () {
-      return $('#applicant-status').val();
-    },
-    function(newJson) {
-      $scope.applicant_status = newJson;
-    },
-    true
-  );
-
-  jobServices.get_applications().then(function(response){
-    $scope.applications = response;
-  });
+  $scope.init = function(want_ad_id, owner_properties, candidate_properties) {
+    $scope.want_ad_id = want_ad_id;
+    $scope.candidate_properties = candidate_properties;
+  }
 
   $scope.fav = function(want_ad_id) {
     console.log('fav want_ad: ' + want_ad_id);
@@ -33,14 +22,15 @@ angular.module('rab').controller('want_ads_show',
     });
   };
 
-  $scope.set_applicant_status = function(status) {
-    $scope.applicant_status = status;
+  $scope.applicant_manage_want_ad_job = function(status) {
+    jobServices.applicant_manage_want_ad_job($scope.want_ad_id, status).then(function(response){
+      $scope.candidate_properties.applicant_status = status;
+    });
   };
 
-  $scope.set_owner_status = function(app_id, status) {
-    console.log('changing status');
-    app = rabServices.findByProperty($scope.applications, 'app_id', app_id);
-    app.owner_status = status;
-    console.log(app);
+  $scope.owner_manage_job = function(application, status) {
+    jobServices.owner_manage_job(application.app_id, status).then(function(response){
+      application.owner_status = status;
+    });
   };
 }]);
