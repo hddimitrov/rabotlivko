@@ -3,11 +3,7 @@ Rabotlivko::Application.routes.draw do
 
   resources :adverts
 
-  resources :want_ads do
-    match 'set_applicant_status' => 'jobs#set_applicant_status_want_ad', :on => :member, via: :post, as: :applicant_status
-    match 'set_owner_status'     => 'jobs#set_owner_status_want_ad', :on => :member, via: :post, as: :owner_status
-    match 'get_applications'     => 'jobs#get_applications_want_ad', :on => :member, via: :post, as: :get_applications
-  end
+  resources :want_ads
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }, skip: [:registrations, :sessions, :confirmations, :passwords]
   ActiveAdmin.routes(self)
@@ -35,7 +31,16 @@ Rabotlivko::Application.routes.draw do
     scope 'want_ad' do
       match 'fav',   to: 'favorites#fav_want_ad', via: :post
       match 'unfav', to: 'favorites#unfav_want_ad', via: :post
-      match 'update',  to: 'want_ads#update', via: :post
+      match 'update',to: 'want_ads#update', via: :post
+    end
+
+    scope 'job' do
+      match 'get_want_ad_applications'     => 'jobs#get_want_ad_applications', via: :post
+      match 'set_want_ad_status_applicant' => 'jobs#set_want_ad_status_applicant', via: :post
+      match 'set_want_ad_status_owner'     => 'jobs#set_want_ad_status_owner', via: :post
+      match 'get_advert_applications'      => 'jobs#get_advert_applications', via: :post
+      match 'set_advert_status_applicant'  => 'jobs#set_advert_status_applicant', via: :post
+      match 'set_advert_status_owner'      => 'jobs#set_advert_status_owner', via: :post
     end
 
     scope 'user' do
