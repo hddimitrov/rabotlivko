@@ -90,7 +90,7 @@ Devise.setup do |config|
   # able to access the website for two days without confirming his account,
   # access will be blocked just in the third day. Default is 0.days, meaning
   # the user cannot access the website without confirming his account.
-  config.allow_unconfirmed_access_for = 2.days
+  # config.allow_unconfirmed_access_for = 2.days
 
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
@@ -208,9 +208,14 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
 
   require "omniauth-facebook"
-  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
-  config.omniauth :facebook, "466624390099545", "6778c4ff04291e7195a2724a2e5d76f2"
 
+  if Rails.env.production?
+    OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE # if Rails.env.development?
+    config.omniauth :facebook, "209087102586432", "295ead8f0cf52cc5a9042d08c3462baf"
+  else
+    OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE # if Rails.env.development?
+    config.omniauth :facebook, "466624390099545", "6778c4ff04291e7195a2724a2e5d76f2"
+  end
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
