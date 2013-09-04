@@ -37,3 +37,6 @@ gem "meta_search",    '>= 1.1.0.pre'
 gem 'markable'
 
 gem 'kaminari'
+
+gem 'capistrano'
+gem 'rvm-capistrano'
