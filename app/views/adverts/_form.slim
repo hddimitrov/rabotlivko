@@ -1,62 +1,80 @@
-= simple_nested_form_for(@advert, :url => adverts_path, method: 'POST', :html => { :class => 'form-horizontal' }) do |f|
-  - if @advert.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@advert.errors.count, "error")} prohibited this advert from being saved:"
-      ul
-        - @advert.errors.full_messages.each do |message|
-          li = message
-  fieldset
-    legend New Advert
-    = f.input :category_id, collection: Category.all, input_html: {chosen: '', class: 'chzn-select', 'ng-model'=>'advert.category_id'}
-    = f.input :title, input_html: {'ng-model'=>'advert.title'}
-    = f.input :description, input_html: {'ng-model'=>'advert.description'}
-    = f.input :price, input_html: {'ng-model'=>'advert.price'}
-
-    / br
-    / = f.fields_for :address_attributes do |address|
-    /   = address.input :state_id, collection: [], input_html: {chosen: '', class: 'chzn-select', id: 'state-select',
-    /   'data-ng-model'=>'advert.state_id',
-    /   'data-ng-options'=>'state.id as state.name for state in states',
-    /   'data-ng-change'=>'state_changed(advert.state_id)',
-    /   'data-values'=>'advert.state_id+states',
-    /   }
-    /   = address.input :city_id, collection: [], input_html: {chosen: '', class: 'chzn-select', id: 'city-select',
-    /   'data-ng-model'=>'advert.city_id',
-    /   'data-ng-options'=>'city.id as city.name for city in cities',
-    /   'data-ng-change'=>'city_changed(advert.city_id)',
-    /   'data-values'=>'advert.city_id+cities',
-    /   }
-
-    / #locations-data data-states="#{State.all.sort_by(&:name).to_json}" data-cities="#{City.all.group_by(&:state_id).to_json}"
-
-    / br
-    / .google-map center="center" draggable="true" zoom="zoom" markers="markers" mark-click="false"
-
-    br
+= simple_nested_form_for @advert do |f|
+  .field
+    = f.input :title
+  .field
+    = f.input :description, as: :text
+  .field
+    = f.input :price
+    = f.input :q_price_free
+    = f.input :q_price_negotiable
+  .field
     = f.fields_for :attachments do |attachment_form|
-      = attachment_form.label :description
-      br
-      = attachment_form.text_field :description
-      br
-      = attachment_form.label :file
-      br
-      = attachment_form.file_field :file
+      = attachment_form.input :description
+      = attachment_form.input :file, as: :file
       = attachment_form.link_to_remove "Remove this attachment"
     end
 
     = f.link_to_add "Add attachment", :attachments
 
-    .form-actions
-      - if current_user.present?
-        = f.button :submit, id: 'save-draft', value: 'Запази в Чернова'
-        = f.button :submit, id: 'publish', value: 'Публикувай (Logged)'
-      - else
-        a.btn data-toggle='modal' href='#login-modal' type='button' ng-click='new_advert_cookies_save()' Publish (Not Logged)
+  .actions
+    - if current_user.present?
+      = f.button :submit, label: 'Publish'
+    - else
+      a.btn data-toggle='modal' href='#login-modal' type='button' Publish
 
-javascript:
-  $(document).ready(function() {
-     $('#save-draft').click(function() {
-        $('#advert_q_draft').val(true);
-        return true;
-     });
-  });
+/ = simple_nested_form_for(@advert, :url => adverts_path, method: 'POST', :html => { :class => 'form-horizontal' }) do |f|
+/   fieldset
+/     legend New Advert
+/     = f.input :category_id, collection: Category.all, input_html: {chosen: '', class: 'chzn-select', 'ng-model'=>'advert.category_id'}
+/     = f.input :title, input_html: {'ng-model'=>'advert.title'}
+/     = f.input :description, input_html: {'ng-model'=>'advert.description'}
+/     = f.input :price, input_html: {'ng-model'=>'advert.price'}
+
+/     / br
+/     / = f.fields_for :address_attributes do |address|
+/     /   = address.input :state_id, collection: [], input_html: {chosen: '', class: 'chzn-select', id: 'state-select',
+/     /   'data-ng-model'=>'advert.state_id',
+/     /   'data-ng-options'=>'state.id as state.name for state in states',
+/     /   'data-ng-change'=>'state_changed(advert.state_id)',
+/     /   'data-values'=>'advert.state_id+states',
+/     /   }
+/     /   = address.input :city_id, collection: [], input_html: {chosen: '', class: 'chzn-select', id: 'city-select',
+/     /   'data-ng-model'=>'advert.city_id',
+/     /   'data-ng-options'=>'city.id as city.name for city in cities',
+/     /   'data-ng-change'=>'city_changed(advert.city_id)',
+/     /   'data-values'=>'advert.city_id+cities',
+/     /   }
+
+/     / #locations-data data-states="#{State.all.sort_by(&:name).to_json}" data-cities="#{City.all.group_by(&:state_id).to_json}"
+
+/     / br
+/     / .google-map center="center" draggable="true" zoom="zoom" markers="markers" mark-click="false"
+
+/     br
+/     = f.fields_for :attachments do |attachment_form|
+/       = attachment_form.label :description
+/       br
+/       = attachment_form.text_field :description
+/       br
+/       = attachment_form.label :file
+/       br
+/       = attachment_form.file_field :file
+/       = attachment_form.link_to_remove "Remove this attachment"
+/     end
+
+/     = f.link_to_add "Add attachment", :attachments
+
+/     .form-actions
+/       - if current_user.present?
+/         = f.button :submit, id: 'save-draft', value: 'Запази в Чернова'
+/         = f.button :submit, id: 'publish', value: 'Публикувай (Logged)'
+/       - else
+/         a.btn data-toggle='modal' href='#login-modal' type='button' ng-click='new_advert_cookies_save()' Publish (Not Logged)
+
+/ javascript:
+/   $(document).ready(function() {
+/      $('#save-draft').click(function() {
+/         $('#advert_q_draft').val(true);
+/         return true;
+/      });
+/   });

@@ -1,11 +1,4 @@
 = simple_nested_form_for @want_ad do |f|
-  - if @want_ad.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@want_ad.errors.count, "error")} prohibited this want_ad from being saved:"
-      ul
-        - @want_ad.errors.full_messages.each do |message|
-          li = message
-
   .field
     = f.input :title
   .field
