@@ -14,6 +14,7 @@ class AdvertsController < ApplicationController
   # GET /adverts/1.json
   def show
     @advert = Advert.find(params[:id])
+    @q_owner = current_user.present? and current_user.id == @advert.user_id
 
     respond_to do |format|
       format.html # show.html.erb

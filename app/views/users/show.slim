@@ -126,16 +126,12 @@
   - if current_user.present? && current_user.id != @user.id
     .row
       .span3
-      .span6
-        - if current_user.blocked_users.include? @user
-          a.pull-right.btn.btn-success ng-click="unblock(#{@user.id})" Махни от блокирани
-        - else
-          a.pull-right.btn.btn-danger ng-click="block(#{@user.id})" Блокирай
-
-        - if current_user.favorite_users.include? @user
-          a.pull-right.btn.btn-warning ng-click="unfav(#{@user.id})" Махни от любими
-        - else
-          a.pull-right.btn.btn-success ng-click="fav(#{@user.id})" Добави в любими
+      .span6 ng-init='favorited = #{current_user.favorite_users.include? @user}; blocked = #{current_user.blocked_users.include? @user}'
+        div blocked {{blocked}} fav {{favorited}}
+        a.pull-right.btn.btn-warning ng-show='blocked' ng-click="unblock(#{@user.id})" Махни от блокирани
+        a.pull-right.btn.btn-success ng-hide='blocked' ng-click="block(#{@user.id})" Блокирай
+        a.pull-right.btn.btn-warning ng-show='favorited' ng-click="unfav(#{@user.id})" Махни от любими
+        a.pull-right.btn.btn-success ng-hide='favorited' ng-click="fav(#{@user.id})" Добави в любими
 
 javascript:
   $(document).ready(function() {

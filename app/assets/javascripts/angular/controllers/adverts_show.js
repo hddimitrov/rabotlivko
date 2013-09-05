@@ -88,6 +88,7 @@ angular.module('rab').controller('adverts_show', ['$scope', 'rabServices', 'favo
     console.log('fav adver: ' + advert_id);
     favoriteServices.fav_advert(advert_id).then(function(response){
       console.log('advert faved');
+      $scope.favorited = true;
     });
   }
 
@@ -95,6 +96,7 @@ angular.module('rab').controller('adverts_show', ['$scope', 'rabServices', 'favo
     console.log('unfav advert: ' + advert_id);
     favoriteServices.unfav_advert(advert_id).then(function(response){
       console.log('advert unfaved');
+      $scope.favorited = false;
     });
   }
 }]);

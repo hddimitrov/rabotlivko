@@ -69,6 +69,7 @@ angular.module('rab').controller('profiles_show', ['$scope', 'rabServices', 'fav
     console.log('fav user: ' + user_id);
     favoriteServices.fav_user(user_id).then(function(response){
       console.log('user faved');
+      $scope.favorited = true;
     });
   }
 
@@ -76,6 +77,7 @@ angular.module('rab').controller('profiles_show', ['$scope', 'rabServices', 'fav
     console.log('unfav user: ' + user_id);
     favoriteServices.unfav_user(user_id).then(function(response){
       console.log('user unfaved');
+      $scope.favorited = false;
     });
   }
 
@@ -83,6 +85,7 @@ angular.module('rab').controller('profiles_show', ['$scope', 'rabServices', 'fav
     console.log('block user: ' + user_id);
     favoriteServices.block_user(user_id).then(function(response){
       console.log('user blocked');
+      $scope.blocked = true;
     });
   }
 
@@ -90,6 +93,7 @@ angular.module('rab').controller('profiles_show', ['$scope', 'rabServices', 'fav
     console.log('unblock user: ' + user_id);
     favoriteServices.unblock_user(user_id).then(function(response){
       console.log('user unblocked');
+      $scope.blocked = false;
     });
   }
 }]);

@@ -12,6 +12,7 @@ angular.module('rab').controller('want_ads_show',
     console.log('fav want_ad: ' + want_ad_id);
     favoriteServices.fav_want_ad(want_ad_id).then(function(response){
       console.log('want_ad faved');
+      $scope.favorited = true;
     });
   };
 
@@ -19,6 +20,7 @@ angular.module('rab').controller('want_ads_show',
     console.log('unfav want_ad: ' + want_ad_id);
     favoriteServices.unfav_want_ad(want_ad_id).then(function(response){
       console.log('want_ad unfaved');
+      $scope.favorited = false;
     });
   };
 
