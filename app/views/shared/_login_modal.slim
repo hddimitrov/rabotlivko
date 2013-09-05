@@ -30,6 +30,10 @@
         .cf
         = f.submit "Sign up", class: 'btn btn-success btn-medium'
 
+        .alert.confrmation-message style='display: none;'
+          button.close data-dismiss="alert" type="button" &times;
+          .message Ще получите емейл с инструкции за потвърждение на регистрацията си.
+
     a.zocial.facebook href='#{user_omniauth_authorize_path(:facebook)}' Влез със Facebook
 
 javascript:
@@ -45,6 +49,7 @@ javascript:
     });
 
     $('form#sign_in_user').bind('ajax:success', function(e, data, status, xhr){
+        //console.log(data);
         if (data.success) {
           window.location.pathname = "#{user_root_path}";
         } else {
@@ -53,7 +58,8 @@ javascript:
     });
     $('form#sign_up_user').bind('ajax:success', function(e, data, status, xhr){
         if (data.success) {
-          window.location.pathname = "#{user_root_path}";
+          // window.location.pathname = "#{user_root_path}";
+          $('.confrmation-message').show();
         } else {
           alert('failure!')
         }
