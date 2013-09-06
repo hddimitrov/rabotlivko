@@ -83,29 +83,32 @@ class WantAdsController < ApplicationController
 
 
   def update
-    want_ad = WantAd.find_by_id(params[:pk])
 
-    if want_ad.present?
-      case params[:name]
-        when 'title'
-          want_ad.title = params[:value]
-        when 'description'
-          want_ad.description = params[:value]
-        when 'category_id'
-          want_ad.category_id = params[:value]
-        when 'city_id'
-          want_ad.address.city_id = params[:value]
-        when 'price'
-          want_ad.price = params[:price]
-        else
-      end
+    if current_user.present?
+      want_ad = WantAd.find_by_id(params[:pk])
 
-      if want_ad.changed?
-        want_ad.save
-      end
+      if want_ad.present? && want_ad.user_id == current_user.id
+        case params[:name]
+          when 'title'
+            want_ad.title = params[:value]
+          when 'description'
+            want_ad.description = params[:value]
+          when 'category_id'
+            want_ad.category_id = params[:value]
+          when 'city_id'
+            want_ad.address.city_id = params[:value]
+          when 'price'
+            want_ad.price = params[:price]
+          else
+        end
 
-      if want_ad.address.present? && want_ad.address.changed?
-        want_ad.address.save
+        if want_ad.changed?
+          want_ad.save
+        end
+
+        if want_ad.address.present? && want_ad.address.changed?
+          want_ad.address.save
+        end
       end
     end
 
@@ -131,7 +134,7 @@ class WantAdsController < ApplicationController
   def filter
     page = params[:page] || 1
 
-    want_ads  = WantAd.joins(:user)
+    want_ads  = WantAd.active.joins(:user)
                       .joins("LEFT OUTER JOIN addresses a ON a.addressable_id = want_ads.id and a.addressable_type = 'WantAd'")
                       .joins("LEFT OUTER JOIN cities ON cities.id = a.city_id")
                       .select('users.name as user_name, cities.name as city_name, want_ads.*')

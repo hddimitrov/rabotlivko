@@ -10,8 +10,17 @@ filter_services.factory('filterServices', ['$http', function($http) {
       });
 
       return promise;
+    },
+
+    filter_adverts: function(parameters) {
+      console.log(parameters);
+      var promise = $http.post('/api/filter/adverts', parameters).then(function (response) {
+        return response.data;
+      });
+
+      return promise;
     }
-  }
+  };
 
   return filterServices;
 }]);

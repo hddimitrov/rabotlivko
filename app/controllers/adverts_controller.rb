@@ -84,15 +84,38 @@ class AdvertsController < ApplicationController
   end
 
   def filter
-    if params[:category_id].present?
-      @adverts = Advert.joins(:user)
+    page = params[:page] || 1
+
+    adverts  = Advert.active.joins(:user)
                       .joins("LEFT OUTER JOIN addresses a ON a.addressable_id = adverts.id and a.addressable_type = 'Advert'")
-                      .joins("LEFT OUTER JOIN cities c on c.id = a.city_id")
-                      .where(category_id: params[:category_id])
-                      .select("c.name AS city_name, users.name AS user_name, adverts.*")
-      render json: @adverts.to_json and return
-    else
-      render json: []
+                      .joins("LEFT OUTER JOIN cities ON cities.id = a.city_id")
+                      .select('users.name as user_name, cities.name as city_name, adverts.*')
+
+    adverts = adverts.where(category_id: params[:category_id]) if params[:category_id].present?
+    adverts = adverts.where("cities.id = #{params[:city_id]}") if params[:city_id].present?
+    adverts = adverts.where("price >= #{params[:min_price]}") if params[:min_price].present?
+    adverts = adverts.where("price <= #{params[:max_price]}") if params[:max_price].present?
+    adverts = adverts.where("title ILIKE '%#{params[:search]}%' OR description ILIKE '%#{params[:search]}%'") if params[:search].present?
+
+    adverts = adverts.order("#{params[:sort_by]}") if params[:sort_by].present?
+    adverts = adverts.page(page)
+
+    adverts.map do |advert|
+      {
+        id: advert.id,
+        title: advert.title,
+        description: advert.description,
+        deadline: advert.deadline,
+        owner_name: advert.user_name,
+        city_name: advert.city_name,
+        price: advert.price
+      }
     end
+
+    render json: {
+      adverts: adverts,
+      number_pages: adverts.total_pages,
+      current_page: page
+    }
   end
 end
