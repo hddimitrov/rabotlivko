@@ -1,68 +1,32 @@
-#login-modal.modal.fade.hide
+#login-modal.modal.fade.hide ng-controller='login' ng-init="form = 'sign_in'"
   .modal-header
     h3
-      | Register
-      a.button.close.pull-right data-dismiss='modal' &times;
+      | Вход в системата
+      a.button.close.pull-right ng-click='user = null; registered = false; authError = null' data-dismiss='modal' &times;
   .modal-body
-    | I have an account
-    input type='checkbox' id='already-registered'
-    = form_for(resource, as: resource_name, url: session_path(resource_name), format: :json, remote: true, html: {id: 'sign_in_user', class: 'hide'}) do |f|
-      .inputs
-        = f.label 'Email'
-        = f.text_field :email, :required => false, :autofocus => true
-        = f.label 'Password'
-        = f.password_field :password, :required => false
-        .cf
-          | Remember me
-          = f.check_box :remember_me
-        = f.submit 'Sign In', :class => 'btn btn-primary'
-
-    = form_for(resource, :as => resource_name, url: registration_path(resource_name), format: :json, remote: true, html: {id:'sign_up_user'}) do |f|
-      .inputs
-        = f.label 'Name'
-        = f.text_field :name
-        = f.label 'Email'
-        = f.text_field :email
-        = f.label 'Password'
-        = f.password_field :password
-        = f.label 'Confirm password'
-        = f.password_field :password_confirmation, :as => 'password', :input_html => {:name => 'password_confirmation'}
-        .cf
-        = f.submit "Sign up", class: 'btn btn-success btn-medium'
-
-        .alert.confrmation-message style='display: none;'
-          button.close data-dismiss="alert" type="button" &times;
-          .message Ще получите емейл с инструкции за потвърждение на регистрацията си.
-
+    .alert.alert-error ng-show='authError'
+      | {{authError}}
+    .alert.confrmation-message ng-show='registered'
+      .message Ще получиш емейл с инструкции за потвърждение на регистрацията си.
+    form.auth-form name='loginForm' ng-show="form == 'sign_in'"
+      input.input-block-level autofocus='autofocus' ng-model='user.email' placeholder='Email' required='required' type='text'
+      input.input-block-level ng-model='user.password' placeholder='Password' required='required' type='password'
+          label.checkbox
+            input type='checkbox' value='remember-me'
+              | Remember me
+          br
+          button.btn.btn-large.btn-primary ng-click='signin(user)' ng-disabled='loginForm.$invalid' type='submit' Влез
+          a.btn.btn-link ng-click="form = 'sign_up'" Регистрирай се
+    form.auth-form name="registrationForm" ng-show="form == 'sign_up' && !registered"
+      input.input-block-level autofocus="" ng-model="user.email" placeholder="Email" required="" type="text"
+      input.input-block-level ng-model="user.password" placeholder="Парола" required="" type="password"
+      input.input-block-level ng-model="user.confirm_password" placeholder="Повтори парола" required="" type="password"
+      input.input-block-level ng-model="user.name" placeholder="Име" required="" type="text"
+      br
+      br
+      button.btn.btn-large.btn-primary ng-click="signup(user)" ng-disabled="registrationForm.$invalid" type="submit" Запази
+      a.btn.btn-link ng-click="form = 'sign_in'" Вече съм регистриран
+    form.auth-form name="confirmationForm" ng-show="form == 'confirmation'"
+      input.input-block-level autofocus="" ng-model="user.email" placeholder="Email" required="" type="text"
+      button.btn.btn-large.btn-primary ng-click="confirmation(user)" ng-disabled="confirmationForm.$invalid" type="submit" Изпрати
     a.zocial.facebook href='#{user_omniauth_authorize_path(:facebook)}' Влез със Facebook
-
-javascript:
-  $(document).ready(function() {
-    $('#already-registered').bind('change', function(e) {
-      if($(this).is(':checked')) {
-        $('form#sign_up_user').hide();
-        $('form#sign_in_user').show();
-      } else {
-        $('form#sign_in_user').hide();
-        $('form#sign_up_user').show();
-      }
-    });
-
-    $('form#sign_in_user').bind('ajax:success', function(e, data, status, xhr){
-        //console.log(data);
-        if (data.success) {
-          window.location.pathname = "#{user_root_path}";
-        } else {
-          alert('failure!')
-        }
-    });
-    $('form#sign_up_user').bind('ajax:success', function(e, data, status, xhr){
-        if (data.success) {
-          // window.location.pathname = "#{user_root_path}";
-          $('.confrmation-message').show();
-        } else {
-          alert('failure!')
-        }
-    });
-
-  });
