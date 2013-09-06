@@ -50,7 +50,6 @@ html
               = link_to 'Излез', destroy_user_session_path, :method => :delete
             - else
               a href='#login-modal' role='button' data-toggle='modal' Влез
-              a.zocial.facebook href='#{user_omniauth_authorize_path(:facebook)}' Влез със Facebook
 
     = render partial: 'shared/login_modal'
     = render partial: 'shared/resend_confirmation_modal'

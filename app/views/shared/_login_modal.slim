@@ -9,15 +9,19 @@
     .alert.confrmation-message ng-show='registered'
       .message Ще получиш емейл с инструкции за потвърждение на регистрацията си.
     form.auth-form name='loginForm' ng-show="form == 'sign_in'"
+      a.zocial.facebook href='#{user_omniauth_authorize_path(:facebook)}' Влез със Facebook
+      br
       input.input-block-level autofocus='autofocus' ng-model='user.email' placeholder='Email' required='required' type='text'
       input.input-block-level ng-model='user.password' placeholder='Password' required='required' type='password'
           label.checkbox
             input type='checkbox' value='remember-me'
-              | Remember me
+              | Запомни ме
           br
           button.btn.btn-large.btn-primary ng-click='signin(user)' ng-disabled='loginForm.$invalid' type='submit' Влез
           a.btn.btn-link ng-click="form = 'sign_up'" Регистрирай се
     form.auth-form name="registrationForm" ng-show="form == 'sign_up' && !registered"
+      a.zocial.facebook href='#{user_omniauth_authorize_path(:facebook)}' Влез със Facebook
+      br
       input.input-block-level autofocus="" ng-model="user.email" placeholder="Email" required="" type="text"
       input.input-block-level ng-model="user.password" placeholder="Парола" required="" type="password"
       input.input-block-level ng-model="user.confirm_password" placeholder="Повтори парола" required="" type="password"
@@ -29,4 +33,3 @@
     form.auth-form name="confirmationForm" ng-show="form == 'confirmation'"
       input.input-block-level autofocus="" ng-model="user.email" placeholder="Email" required="" type="text"
       button.btn.btn-large.btn-primary ng-click="confirmation(user)" ng-disabled="confirmationForm.$invalid" type="submit" Изпрати
-    a.zocial.facebook href='#{user_omniauth_authorize_path(:facebook)}' Влез със Facebook
