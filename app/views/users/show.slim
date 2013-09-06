@@ -38,9 +38,6 @@
                 br
                   = select_tag :state_id, options_for_select([]), chosen: '', class: 'chzn-select', id: 'state-select', 'data-ng-model'=>'contractor.state_id', 'ng-options'=>'state.state_id as state.name for state in states', 'data-ng-change'=>'state_changed(contractor.state_id)', 'data-values'=>'contractor.state_id+states'
                   = select_tag :city_id, options_for_select([]), chosen: '', class: 'chzn-select', id: 'city-select', 'data-ng-model'=>'contractor.city_id', 'ng-options'=>'city.city_id as city.name for city in cities', 'data-ng-change'=>'city_changed(contractor.city_id)', 'data-values'=>'contractor.city_id+cities'
-
-                #locations-data data-states="#{State.all.sort_by(&:name).map{|x| {state_id: x.id, name: x.name, lat: x.lat, lon: x.lon}}.to_json}" data-cities="#{City.all.map{|x| {state_id: x.state_id, city_id:x.id, name: x.name, lat: x.lat, lon: x.lon}}.group_by{ |x| x[:state_id]}.to_json}"
-
                 br
                 .google-map center="center" draggable="true" zoom="zoom" markers="markers" mark-click="false"
               .buttons

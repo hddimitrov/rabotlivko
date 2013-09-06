@@ -9,12 +9,12 @@ class UsersController < ApplicationController
 
     @adverts_active     = Advert.active
     @advert_drafts      = Advert.drafts
-    @fav_adverts        = current_user.favorite_adverts
+    @fav_adverts        = current_user.favorite_adverts if current_user.present?
 
     @wanted_ads_active  = WantAd.active
     @wanted_ads_archive = WantAd.archived
     @wanted_ad_drafts   = WantAd.drafts
-    @fav_want_ads       = current_user.favorite_wantads
+    @fav_want_ads       = current_user.favorite_wantads if current_user.present?
   end
 
   def profile_master
