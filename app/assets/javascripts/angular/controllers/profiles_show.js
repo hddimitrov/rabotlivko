@@ -1,5 +1,4 @@
 angular.module('rab').controller('profiles_show', ['$scope', 'rabServices', 'favoriteServices', function($scope, rabServices, favoriteServices) {
-  console.log('profiles_show called');
 
   angular.extend($scope, {
     center: {
@@ -14,26 +13,6 @@ angular.module('rab').controller('profiles_show', ['$scope', 'rabServices', 'fav
   $scope.states = [];
   $scope.cities_by_state = {};
   $scope.cities = [];
-
-  $scope.$watch(
-    function () {
-      return $('#locations-data').data('states');
-    },
-    function(newJson) {
-      $scope.states = newJson;
-    },
-    true
-  );
-
-  $scope.$watch(
-    function () {
-      return $('#locations-data').data('cities');
-    },
-    function(newJson) {
-      $scope.cities_by_state = newJson;
-    },
-    true
-  );
 
   $scope.state_changed = function(state_id) {
     console.log(state_id);
