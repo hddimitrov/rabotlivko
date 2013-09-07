@@ -1,6 +1,11 @@
 class Advert < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :slug_name, use: :slugged
+  attr_accessor :slug_name
+
   attr_accessible :user_id, :category_id, :title, :description, :price, :q_price_free, :q_price_negotiable,
-  :attachments_attributes, :address_attributes, :ad_status_id
+                  :attachments_attributes, :address_attributes, :ad_status_id
+
   belongs_to :user
   belongs_to :category
   belongs_to :ad_status
@@ -20,6 +25,10 @@ class Advert < ActiveRecord::Base
   markable_as :favorite
 
   after_update :send_notification
+
+  def slug_name
+    "#{self.id} #{self.title.to_slug.transliterate(:bulgarian)}"
+  end
 
   def self.create_from_cookies(user_id, cookies)
     advert = Advert.new

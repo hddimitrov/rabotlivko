@@ -1,7 +1,10 @@
 class WantAd < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :slug_name, use: :slugged
+  attr_accessor :slug_name
+
   attr_accessible :deadline, :description, :category_id, :price, :title, :user_id, :ad_status_id,
                   :q_price_free, :q_price_negotiable, :attachments_attributes, :address_attributes
-
 
   belongs_to :user
   belongs_to :category
@@ -22,6 +25,10 @@ class WantAd < ActiveRecord::Base
   markable_as :favorite
 
   after_update :send_notification
+
+  def slug_name
+    "#{self.id} #{self.title.to_slug.transliterate(:bulgarian)}"
+  end
 
   def send_notification
     if self.ad_status_id_changed? && self.ad_status.name == 'REMOVED'

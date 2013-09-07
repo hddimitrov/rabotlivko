@@ -1,0 +1,100 @@
+.wrapper ng-controller='profiles_show'
+  .row
+    .span3
+      - if current_user.present? and current_user.id == @user.id
+        .well.sidebar-nav
+          tabset vertical="true" type='"pills"'
+            li.nav-header current_user.name
+            tab heading="Известия()" select='set_active_tab("notifications")'
+            tab heading="Хора()" select='set_active_tab("people")'
+            tab heading="Любими(#{@fav_adverts.size + @fav_want_ads.size})" select='set_active_tab("favs")'
+            tab heading="Активни()" select='set_active_tab("active")'
+            tab heading="Неоценени()" select='set_active_tab("unevaluated")'
+            tab heading="Чернови()" select='set_active_tab("drafts")'
+            tab heading="Архив()" select='set_active_tab("archive")'
+      - else
+        .banner
+          img src='http://lorempixel.com/150/500/technics'
+
+    .span6
+      .row
+        .span2
+          img.img-rounded src='http://lorempixel.com/120/120/cats'
+
+      .row
+        .span6
+          .name
+            h4
+             a href="#" id="username" data-type="text" data-title="Име" data-pk="#{@user.id}" data-url='/api/user/update' = @user.name
+
+          .email id="email" data-type="text" data-title="Email" data-pk="#{@user.id}" data-url='/api/user/update' = @user.email
+      .row
+        .tab-content
+          .tab-pane ng-class='{active: active_tab == "notifications"}'
+            | Известия
+          .tab-pane ng-class='{active: active_tab == "people"}'
+            tabset
+              tab heading="Любими"
+                ul
+                  - for user in @user.favorite_users
+                    li = link_to user.name, user_path(user)
+              tab heading="Блокирани"
+                ul
+                  - for user in @user.blocked_users
+                    li = link_to user.name, user_path(user)
+          .tab-pane ng-class='{active: active_tab == "favs"}'
+            tabset
+              tab heading='Смесени'
+                = render partial: 'users/ads_list', ads: @fav_adverts
+                = render partial: 'users/ads_list', ads: @fav_want_ads
+              tab heading='Реклами'
+                = render partial: 'users/ads_list', ads: @fav_adverts
+              tab heading='Обяви'
+                = render partial: 'users/ads_list', ads: @fav_want_ads
+          .tab-pane ng-class='{active: active_tab == "active"}'
+            tabset
+              tab heading='Смесени'
+                ul
+                  - for advert in @adverts_active
+                    li = advert.title
+
+                  - for want_ad in @wanted_ads_active
+                    li = want_ad.title
+
+              tab heading='Реклами'
+                ul
+                  - for advert in @adverts_active
+                    li = advert.title
+              tab heading='Обяви'
+                ul
+                  - for want_ad in @wanted_ads_active
+                    li = want_ad.title
+
+          .tab-pane ng-class='{active: active_tab == "unevaluated"}'
+            tabset
+              tab heading='Смесени' Смесени
+              tab heading='Жълти' Жълти
+              tab heading='Зелени' Зелени
+            | Неоценени
+          .tab-pane ng-class='{active: active_tab == "drafts"}'
+            tabset
+              tab heading='Смесени'
+                = render partial: 'users/ads_list', ads: @advert_drafts
+                = render partial: 'users/ads_list', ads: @wanted_ad_drafts
+              tab heading='Реклами'
+                = render partial: 'users/ads_list', ads: @advert_drafts
+              tab heading='Обяви'
+                = render partial: 'users/ads_list', ads: @wanted_ad_drafts
+
+          .tab-pane ng-class='{active: active_tab == "archive"}'
+            tabset
+              tab heading='Обяви'
+                ul
+                  - for want_ad in @wanted_ads_archive
+                    li = want_ad.title
+              / tab heading='Жълти' Жълти
+              / tab heading='Зелени' Зелени
+
+    .span3
+      .banner
+        img src='http://lorempixel.com/150/500/technics'

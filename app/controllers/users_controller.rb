@@ -1,28 +1,20 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!, except: [:show]
+  before_filter :authenticate_user!
 
-  def show
-    @user = User.find(params[:id])
+  def profile
+    @user = current_user
 
     adverts = @user.adverts
     want_ads = @user.want_ads
 
     @adverts_active     = Advert.active
     @advert_drafts      = Advert.drafts
-    @fav_adverts        = current_user.favorite_adverts if current_user.present?
+    @fav_adverts        = current_user.favorite_adverts
 
     @wanted_ads_active  = WantAd.active
     @wanted_ads_archive = WantAd.archived
     @wanted_ad_drafts   = WantAd.drafts
-    @fav_want_ads       = current_user.favorite_wantads if current_user.present?
-  end
-
-  def profile_master
-    redirect_to user_path(current_user.id)
-  end
-
-  def contractors_index
-    @contractors = User.where(q_contractor: true)
+    @fav_want_ads       = current_user.favorite_wantads
   end
 
   def become_contractor
@@ -46,7 +38,7 @@ class UsersController < ApplicationController
   def update
     case params[:name]
       when 'username'
-        current_user.name = params[:value]
+        current_user.name = params[:value].to_s.gsub(/[^[:alpha:] .-_]+/, '')
       when 'email'
         current_user.email = params[:value]
       when 'city_id'

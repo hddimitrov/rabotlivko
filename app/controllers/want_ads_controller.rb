@@ -10,8 +10,13 @@ class WantAdsController < ApplicationController
   end
 
   def show
-    @categories = Category.all.map {|x| {value: x.id, text: x.title}}
     @want_ad = WantAd.find(params[:id])
+    # friendly_id
+    if request.path != want_ad_path(@want_ad)
+      return redirect_to @want_ad, status: :moved_permanently
+    end
+
+    @categories = Category.all.map {|x| {value: x.id, text: x.title}}
     @applications = []
 
     if current_user.present?
@@ -32,8 +37,6 @@ class WantAdsController < ApplicationController
     end
   end
 
-  # GET /want_ads/new
-  # GET /want_ads/new.json
   def new
     @want_ad = WantAd.new
 

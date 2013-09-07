@@ -35,7 +35,8 @@ gem 'activeadmin'
 gem "meta_search",    '>= 1.1.0.pre'
 
 gem 'markable'
-
+gem 'babosa'
+gem 'friendly_id', '~> 4.0.10'
 gem 'kaminari'
 
 gem 'capistrano'

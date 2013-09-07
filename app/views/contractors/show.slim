@@ -1,0 +1,27 @@
+.wrapper ng-controller='profiles_show'
+  .row
+    .span3
+      .banner
+        img src='http://lorempixel.com/150/500/technics'
+    .span6
+      .row
+        .span2
+          img.img-rounded src='http://lorempixel.com/120/120/cats'
+      .row
+        .span6
+          .name
+            h4 = @contractor.name
+          .email = @contractor.email
+          .description = @contractor.description
+
+      - if current_user.present?
+        .row
+          .span6 ng-init='favorited = #{current_user.favorite_users.include? @contractor}; blocked = #{current_user.blocked_users.include? @contractor}'
+            div blocked {{blocked}} fav {{favorited}}
+            a.pull-right.btn.btn-warning ng-show='blocked' ng-click="unblock(#{@contractor.id})" Махни от блокирани
+            a.pull-right.btn.btn-success ng-hide='blocked' ng-click="block(#{@contractor.id})" Блокирай
+            a.pull-right.btn.btn-warning ng-show='favorited' ng-click="unfav(#{@contractor.id})" Махни от любими
+            a.pull-right.btn.btn-success ng-hide='favorited' ng-click="fav(#{@contractor.id})" Добави в любими
+    .span3
+      .banner
+        img src='http://lorempixel.com/150/500/technics'

@@ -1,6 +1,5 @@
 class AdvertsController < ApplicationController
-  # GET /adverts
-  # GET /adverts.json
+
   def index
     @adverts = Advert.all
 
@@ -10,10 +9,14 @@ class AdvertsController < ApplicationController
     end
   end
 
-  # GET /adverts/1
-  # GET /adverts/1.json
   def show
     @advert = Advert.find(params[:id])
+
+    # friendly_id
+    if request.path != advert_path(@advert)
+      return redirect_to @advert, status: :moved_permanently
+    end
+
     @q_owner = current_user.present? and current_user.id == @advert.user_id
 
     respond_to do |format|
@@ -22,8 +25,6 @@ class AdvertsController < ApplicationController
     end
   end
 
-  # GET /adverts/new
-  # GET /adverts/new.json
   def new
     @advert = Advert.new
 
@@ -33,13 +34,6 @@ class AdvertsController < ApplicationController
     end
   end
 
-  # GET /adverts/1/edit
-  def edit
-    @advert = Advert.find(params[:id])
-  end
-
-  # POST /adverts
-  # POST /adverts.json
   def create
     @advert = Advert.new(params[:advert])
     @advert.user_id = current_user.id
@@ -55,8 +49,6 @@ class AdvertsController < ApplicationController
     end
   end
 
-  # PUT /adverts/1
-  # PUT /adverts/1.json
   def update
     @advert = Advert.find(params[:id])
 
@@ -71,8 +63,6 @@ class AdvertsController < ApplicationController
     end
   end
 
-  # DELETE /adverts/1
-  # DELETE /adverts/1.json
   def destroy
     @advert = Advert.find(params[:id])
     @advert.destroy

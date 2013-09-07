@@ -1,10 +1,6 @@
 Rabotlivko::Application.routes.draw do
   root :to => 'pages#home'
 
-  resources :adverts
-
-  resources :want_ads
-
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }, skip: [:registrations, :sessions, :confirmations, :passwords]
   ActiveAdmin.routes(self)
 
@@ -17,15 +13,19 @@ Rabotlivko::Application.routes.draw do
     match 'confirmation'      => 'devise/confirmations#show',   via: :get, as: :confirmation
   end
 
-  match '/me', to: 'users#profile_master', as: :user_root
-  match '/users/:id', to: 'users#show', as: :user
-  match '/contractors', to: 'users#contractors_index', as: :contractors
-  match '/user/become_contractor', to: 'users#become_contractor', via: :post,  as: :become_contractor
+  match '/me', to: 'users#profile', as: :user_root
+
+  match '/contractors/:slug', to: 'contractors#show', as: :user
+  match '/contractors',     to: 'contractors#index', as: :contractors
+
+  resources :adverts, except: [:edit, :update]
+  resources :want_ads, except: [:edit, :update]
 
   scope 'api' do
     scope 'advert' do
       match 'fav',   to: 'favorites#fav_advert', via: :post
       match 'unfav', to: 'favorites#unfav_advert', via: :post
+      match 'update',to: 'want_ads#update', via: :post
     end
 
     scope 'want_ad' do
@@ -46,6 +46,7 @@ Rabotlivko::Application.routes.draw do
       match 'block',   to: 'favorites#block_user', via: :post
       match 'unblock', to: 'favorites#unblock_user', via: :post
       match 'update',  to: 'users#update', via: :post
+      match 'become_contractor', to: 'users#become_contractor', via: :post,  as: :become_contractor
     end
 
     scope 'filter' do

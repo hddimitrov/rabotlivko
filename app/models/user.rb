@@ -1,11 +1,15 @@
 class User < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :slug_name, use: :slugged
+  attr_accessor :slug_name
+
   # Include default devise modules. Others available are:
   # :token_authenticatable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
-  # Setup accessible (or protected) attributes for your model
+
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me,
                   :uid, :provider, :fb_token, :attachments_attributes, :address_attributes, :q_contractor
 
@@ -32,6 +36,15 @@ class User < ActiveRecord::Base
   acts_as_marker
   markable_as [ :favorite, :blocked ]
 
+  def slug_name
+    self.name.to_slug.transliterate(:bulgarian).to_s
+  end
+
+  def update_slug
+    composite_slug = (self.name || '').to_slug.transliterate(:bulgarian).to_s
+    self.slug_name = composite_slug
+  end
+
   def self.find_for_facebook_oauth(auth)
     info = auth.info
 
@@ -43,7 +56,7 @@ class User < ActiveRecord::Base
       user.fb_token = auth.credentials.token
     else
       user = User.new
-      user.name = info['name']
+      user.name = info['name'].to_s.gsub(/[^[:alpha:] .-]+/, '')
       user.email = info['email']
       user.uid = auth.uid
       user.provider = auth.provider
