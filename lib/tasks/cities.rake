@@ -5,12 +5,11 @@ namespace :cities do
   task :lat_lon => :environment do
     puts 'Updating coords'
 
-    CSV.foreach('db/data/cities_lat_lon.csv', headers: :first_row) do |row|
-      puts row['name']
-      city = City.find_by_name(row['name'])
+    CSV.foreach('db/data/NM_2011.csv', headers: :first_row) do |row|
+      city = City.find_by_name(row['Name_bg'])
       if city.present?
-        city.lat = row['lat']
-        city.lon = row['lon']
+        city.lat = row['Latitude']
+        city.lon = row['Longitude']
         city.save
       end
     end
