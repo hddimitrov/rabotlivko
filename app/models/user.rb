@@ -36,6 +36,8 @@ class User < ActiveRecord::Base
   acts_as_marker
   markable_as [ :favorite, :blocked ]
 
+  acts_as_messageable required: :body, dependent: :destroy
+
   def slug_name
     self.name.to_slug.transliterate(:bulgarian).to_s
   end

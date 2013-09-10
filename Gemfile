@@ -41,3 +41,5 @@ gem 'kaminari'
 
 gem 'capistrano'
 gem 'rvm-capistrano'
+
+gem 'acts-as-messageable'
