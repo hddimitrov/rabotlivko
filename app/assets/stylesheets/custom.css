@@ -1,0 +1,419 @@
+.contact_map iframe {
+    border: 2px solid #626362;
+}
+.contact_map a {
+    color: #0088CC !important;
+}
+.contact_map a:hover {
+    color: #005580 !important;
+}
+
+.faq_container {
+    background: url("faq_bg.png") no-repeat scroll 0 0 transparent;
+    font-size: 12px;
+    height: 80px;
+    padding: 29px 20px 20px;
+    width: 383px;
+    clear: both;
+}
+.faq_container h4 {
+    margin: 10px 0 5px;
+}
+.faq_container p {
+    margin-bottom: 0;
+}
+.faq_form {
+    clear: both;
+    padding-top: 20px;
+}
+.faq_form input[type=text],
+.faq_form textarea {
+    width: 440px;
+}
+
+.help_container {
+    clear: both;
+    padding: 10px;
+}
+.help_container .step1,
+.help_container .step2,
+.help_container .step3,
+.help_container .step4,
+.help_container .step5,
+.help_container .step6,
+.help_container .step7,
+.help_container .step8,
+.help_container .step9 {
+    width: 175px;
+    height: 175px;
+    background: #5d6978;
+    margin: 0 25px 20px 0;
+}
+
+.search_filter a {
+    display: block;
+    font-size: 12px;
+}
+
+.profile_menu h4 {
+    margin-bottom: 20px;
+}
+.profile_menu a {
+    display: block;
+    margin-bottom: 10px;
+}
+.profile_menu a.active {
+    font-weight: bold;
+}
+.profile-avatar {
+    height: 120px;
+    width: 70px;
+    border: 1px solid #000;
+}
+.profile-avatar-container {
+    position: relative;
+}
+.edit_picture {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.remove_picture {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.form-horizontal .control-group {
+    margin-bottom: 10px;
+}
+.profile-label {
+    width: 100px;
+    text-align: right;
+    margin-right: 10px;
+    padding-top: 5px;
+}
+.profile-content {
+    line-height: 20px;
+    margin: 5px 0 0;
+}
+.profile-link {
+    margin: 0 10px;
+}
+.profile_completion {
+    background-color: #F3F3F3;
+    font-size: 12px;
+    line-height: 14px;
+    margin-right: 20px;
+    padding: 10px;
+    width: 150px;
+}
+.profile-notifications {
+    padding: 10px;
+    background-color: #f3f3f3;
+    margin: 5px 0 10px;
+}
+.form-horizontal .control-label {
+    width: 100px;
+}
+.form-horizontal .controls {
+    margin-left: 120px;
+}
+.description {
+    font-size: 12px;
+    width: 300px;
+}
+
+.search_result_order {
+    border-bottom: 1px solid #B2B2B2;
+    font-size: 12px;
+    padding: 10px;
+    text-align: right;
+}
+
+.media-list {
+    clear: both;
+    font-size: 12px;
+    margin-bottom: 0;
+}
+.media-list .media {
+    border-top: 1px solid #B2B2B2;
+    margin: 0;
+    background: #fff;
+}
+.media-list .media:first-child {
+    border-top: 0 solid;
+}
+.media-list .media-body {
+    padding: 5px 10px 5px 0;
+    position: relative;
+}
+.media-heading {
+    margin: 0 0 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 300px;
+}
+.media > .pull-left {
+    height: 80px;
+}
+.media-list img {
+    max-height: 80px;
+    max-width: 60px;
+}
+.media-list p {
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.media-list.messages p {
+    margin-bottom: 0;
+    overflow: auto;
+    white-space: normal;
+}
+.media-list.ratings .rated-by {
+    margin: 25px 0;
+}
+.media-list.ratings .rating-comment {
+    display: none;
+}
+.media-list.ratings .media:hover .rating-comment {
+    display: block;
+}
+.media-list .price {
+    font-size: 16px;
+}
+
+.documents_list {
+    margin: 10px 0 20px;
+    font-size: 12px;
+}
+.documents_list .btn {
+    margin: 0 10px;
+}
+.documents_list span {
+    line-height: 30px;
+}
+.documents_list .document {
+    background: url("document.png") no-repeat scroll center 0 transparent;
+    font-size: 10px;
+    line-height: 11px;
+    overflow: hidden;
+    padding-top: 50px;
+    text-align: center;
+    text-overflow: ellipsis;
+    width: 60px;
+}
+
+.ad-calendar  {
+    background: url("calendar.png") no-repeat scroll center 0 transparent;
+    font-size: 18px;
+    padding: 20px 25px 25px 15px;
+    text-align: center;
+}
+.ad-price {
+    font-size: 30px;
+    line-height: 80px;
+    margin-left: 10px;
+}
+.ad_chat {
+    border: 2px solid #000000;
+    padding: 10px;
+    margin: 10px 0;
+}
+.chat-container {
+    border: 2px solid #000000;
+    font-size: 12px;
+    padding: 10px;
+    margin: 10px 0;
+}
+.chat-container p {
+    margin-bottom: 10px;
+}
+
+
+#blockUser, #deleteProfile{
+    width:350px;
+    margin-left: -175px;
+    margin-top: 100px;
+}
+#deleteProfile{
+    height: 225px;
+}
+#forgotPassword{
+    height: 225px;
+    width:360px;
+    margin-left: -180px;
+    margin-top: 100px;
+}
+#becomeVIP{
+	height: 240px;
+    width:344px;
+    margin-left: -172px;
+    margin-top: 100px;
+}
+#inviteFriend{
+
+    width:344px;
+    margin-left: -172px;
+    margin-top: 100px;
+}
+#registerAd, #register, #report{
+	height: 400px;
+    width:344px;
+    margin-left: -172px;
+    margin-top: 100px;
+}
+#terms{
+	height: 345px;
+    width:800px;
+    margin-left: -400px;
+    margin-top: 100px;
+}
+#whatsNew{
+	height: 500px;
+    width:800px;
+    margin-left: -400px;
+    margin-top: 30px;
+}
+#imageFriend{
+	float: left;
+	margin-right: 20px;
+}
+#chechlistFriends{
+	margin-top: 0px;
+	float:left;
+}
+.controls ul li {
+	width: 300px;
+	height: 50px;
+}
+.checkbox {
+}
+#fbBtn{
+	margin-left: 10px;
+	margin-top: -85px;
+}
+#regFieldMail, #regFieldName{
+	position:absolute;
+    width:130px;
+    left:100px;
+     text-align: left;
+}
+#regFieldMail{
+    top: 60px;
+}
+#regFieldName{
+    top: 100px;
+}
+#regFieldPass, #regFieldRpass{
+	position:absolute;
+    width:130px;
+    left:100px;
+    text-align: left;
+}
+#regFieldPass{
+    top: 140px;
+}
+#regFieldRpass{
+    top: 180px;
+}
+#regCheckBox2{
+	position:absolute;
+    width:290px;
+    left: 85px;
+    top: 65px;
+}
+#regCheckBox{
+	position:absolute;
+    width:290px;
+    left: 15px;
+    top: 220px;
+}
+#regSelect{
+	position:absolute;
+    width:180px;
+    left: 80px;
+    top: 300px;
+}
+#btn-pos-bot{
+	margin-left: 110px;
+	margin-top: 175px;
+}
+#right-btn-pos-bot{
+	margin-left: 260px;
+	margin-top: -50px;
+}
+#right-btn-pos{
+	margin-bottom: 15px;
+	margin-left: 260px;
+	margin-top: -45px;
+}
+#close{
+	margin-bottom: 15px;
+}
+#center-field-SMS, #center-field{
+	position:absolute;
+    width:150px;
+    left:85px;
+    text-align: left;
+
+}
+#center-field-SMS{
+	    top: 155px;
+}
+#center-field{
+    top: 135px;
+}
+#btn-pos, #btn-position-left{
+	margin-left: 10px;
+	margin-bottom: 15px;
+	margin-right: 160px;
+}
+#btn-pos{
+	margin-top: 20px;
+}
+
+#contImage{
+	margin-left: 20px;
+}
+#center-title{
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+}
+#center-title2{
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 20px;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+#center-cont{
+	text-align: center;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+#left-cont{
+	text-align: left;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+#textAreaSize{
+	margin-left: 10px;
+	width: 315px;
+	height: 100px;
+}
+#hover_profile_picture:hover{
+	opacity:0.4;
+	cursor: pointer;
+}
+#search_field{
+	width: 280px;
+}
+#search_button{
+	margin-top: -30px;
+
+}

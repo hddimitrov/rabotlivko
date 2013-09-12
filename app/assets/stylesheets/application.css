@@ -7,17 +7,13 @@
  *
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
+ *= require reset
  *= require bootstrap_and_overrides
  *= require bootstrap-editable
  *= require chosen.css
  *= require_self
  *= require_tree .
  */
-
-body {
-  padding-top: 60px;
-  padding-bottom: 40px;
-}
 
 a {
   cursor: pointer!important;

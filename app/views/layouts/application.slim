@@ -6,53 +6,73 @@ html
     = javascript_include_tag 'application'
     = csrf_meta_tags
   body ng-app='rab'
-    .navbar.navbar-inverse.navbar-fixed-top
-      .navbar-inner
-        .container
-          button.btn.btn-navbar data-target='.nav-collapse' data-toggle='collapse' type='button'
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.brand href='#{root_path}' Работливко
-          .nav-collapse.collapse
-          ul.nav.nav-pills
-            li#fdsa.dropdown
-              a#drop5.dropdown-toggle data-target="#" data-toggle="dropdown" href="#" role="button"
-                | Възложител
-                b.caret
-              ul#menu2.dropdown-menu aria-labelledby="drop5" role="menu"
-                li
-                  a href="#{new_want_ad_path}" tabindex="-1" Публикувай обява
-                li
-                  a href="#{contractors_path}" tabindex="-1" Търси изпълнител
-                li
-                  a href="#{adverts_path}" tabindex="-1" Търси реклама
-                li.divider
-                li
-                  a href="#" tabindex="-1" Как става?
-            li.dropdown
-              a#drop5.dropdown-toggle data-target="#" data-toggle="dropdown" href="#" role="button"
-                | Изпълнител
-                b.caret
-              ul#menu3.dropdown-menu aria-labelledby="drop5" role="menu"
-                li
-                  a href="#{user_root_path}" tabindex="-1" Стани изпълнител
-                li
-                  a href="#{new_advert_path}" tabindex="-1" Направи си реклама
-                li
-                  a href="#{want_ads_path}" tabindex="-1" Търси обява
-                li.divider
-                li
-                  a href="#" tabindex="-1" Как става?
-          p.navbar-text.pull-right
-            - if current_user.present?
-              a.navbar-link href='#{user_root_path}' = current_user.name
-              = link_to 'Излез', destroy_user_session_path, :method => :delete
-            - else
-              a href='#login-modal' role='button' data-toggle='modal' Влез
+    .wrapper.clearfix
+      header.clearfix
+        a.logo_small.pull-left href='index.html'
+        .header_buttons.pull-left
+          .btn-group
+            a.btn.btn-primary.dropdown-toggle data-toggle='dropdown' href='#'
+              | Възложител
+              span.caret
+            ul.dropdown-menu
+              li
+                a href='create_ad_contractor.html' Публикувай обява
+              li
+                a href='search_contractor_actor.html' Търси изпълнител
+              li
+                a href='search_contractor_ads.html' Търси реклама
+              li
+                a href='help_contractor.html' Как става?
+          .btn-group
+            a.btn.btn-warning.dropdown-toggle data-toggle='dropdown' href='#'
+              | Изпълнител
+              span.caret
+            ul.dropdown-menu
+              li
+                a href='' Стани изпълнител
+              li
+                a href='search_actor.html' Търси обява
+              li
+                a href='create_ad_actor.html' Направи си реклама
+              li
+                a href='help_actor.html' Как става?
+        .profile_nav.pull-right
+          - if current_user.present?
+            a href='#{user_root_path}' = current_user.name
+            = link_to 'Излез', destroy_user_session_path, :method => :delete
+          - else
+            button.btn.btn-primary href='#login-modal' role='button' data-toggle='modal' Вход
+          / .pull-left
+          /   input.input-block-level placeholder='И-мейл' type='text'
+          /   label.checkbox
+          /     input type='checkbox' value='remember-me'
+          /     | Запомни ме
+          / .pull-left
+          /   input.input-block-level placeholder='Парола' type='text'
+          /   br/
+          /   a href=''
+          / .pull-left
+          /   button.btn.btn-primary.pull-left type='submit'
+          /   button.btn.btn-facebook.pull-left
+          /     i.icon-facebook
+          /   br/
+          /   a href=''
+
+      .container
+        = yield
+
+      footer
+        ul.navigation
+          li
+            = link_to "За RabotaZaDen", page_about_path
+          li
+            a href='faq.html' Често Задвани Въпроси
+          li
+            a href='terms.html' Потребителско Споразумение
+          li
+            a href='ad.html' Рекламирай в RabotaZaDen
+          li
+            a href='contact.html' Контакт
 
     = render partial: 'shared/login_modal'
     = render partial: 'shared/resend_confirmation_modal'
-
-    .container
-      = yield

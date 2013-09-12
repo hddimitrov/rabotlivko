@@ -58,7 +58,8 @@ angular.module('rab').controller('adverts_show', ['$scope', 'rabServices', 'favo
       $scope.center.latitude = state['lat'];
       $scope.center.longitude = state['lon'];
       $scope.zoom = 8;
-      $scope.markers = [$scope.center];
+      marker = {latitude: $scope.center.latitude, longitude: $scope.center.longitude};
+      $scope.markers = [marker];
     }
 
     $scope.cities = $scope.cities_by_state[state_id];
@@ -70,7 +71,8 @@ angular.module('rab').controller('adverts_show', ['$scope', 'rabServices', 'favo
       $scope.center.latitude = city['lat'];
       $scope.center.longitude = city['lon'];
       $scope.zoom = 14;
-      $scope.markers = [$scope.center];
+      marker = {latitude: $scope.center.latitude, longitude: $scope.center.longitude};
+      $scope.markers = [marker];
     }
   }
 

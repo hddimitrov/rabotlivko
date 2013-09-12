@@ -1,0 +1,71 @@
+/* main */
+
+header {
+    border-bottom: 2px solid #626362;
+    height: 45px;
+    padding: 10px 0;
+}
+
+.header_buttons {
+    margin: 10px 20px 0 80px;
+}
+
+.wrapper {
+    width: 980px;
+    margin: 0 auto;
+}
+
+footer {
+    border-top: 2px solid #626362;
+    clear: both;
+}
+
+/*content layout */
+
+.one_column {
+    padding: 20px;
+    margin: 30px 0;
+    float: left;
+    width: 940px;
+}
+
+.three_c_sm_left {
+    width: 160px;
+    margin: 30px 20px 30px 0;
+    float: left;
+}
+
+.three_c_sm_right {
+    width: 160px;
+    margin: 30px 0 30px 20px;
+    float: left;
+}
+
+.three_c_big {
+    width: 580px;
+    padding: 20px;
+    margin: 30px 0;
+    float: left;
+}
+
+.three_c_big_nopadding {
+    width: 620px;
+    margin: 30px 0;
+    float: left;
+}
+
+.two_c_sm {
+    width: 160px;
+    margin: 30px 0 30px 20px;
+    float: left;
+}
+
+.two_c_big {
+    width: 800px;
+    margin: 30px 0;
+    float: left;
+}
+
+.banner {
+    background-color: #fff;
+}

@@ -1,0 +1,165 @@
+body {
+    background: url("background.png") repeat scroll 0 0 #fff;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #000;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+
+}
+h2 {
+    font-size: 24px;
+    text-align: center;
+}
+h3 {
+    font-size: 20px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 12px;
+}
+p {
+    margin-bottom: 20px;
+}
+input[type="checkbox"] {
+    margin: 3px 0 0 -20px;
+}
+textarea {
+    width: 400px;
+    height: 100px;
+}
+
+.white_background {
+    background-color: #fff;
+}
+
+.logo_small {
+    background: url("logo_sm.png") no-repeat scroll 0 0 transparent;
+    width: 200px;
+    height: 45px;
+}
+.logo_big {
+    background: url("logo_big.png") no-repeat scroll 0 0 transparent;
+    width: 580px;
+    height: 96px;
+    margin: 50px 0 50px 20px;
+}
+
+.profile_nav {
+    margin: 10px 20px 0 80px;
+    font-size: 12px;
+}
+.profile_nav label {
+    font-size: 12px;
+}
+.profile_nav input[type="checkbox"] {
+    margin: 2px 0 0 -20px;
+}
+.profile_nav input[type=text] {
+    width: 140px;
+    margin: 0 10px 2px 0;
+}
+.profile_nav .btn {
+    margin: 0 0 2px 0;
+}
+.medal_list {
+    padding: 0 15px;
+}
+
+.form-search {
+    display: inline-block;
+    position: relative;
+}
+.form-search input.search-query {
+    width: 700px;
+}
+.form-search .btn {
+    position: absolute;
+    right: 0;
+}
+
+.nav {
+    margin-bottom: 0;
+    padding: 0 20px;
+}
+.profile_nav .btn.btn-facebook {
+    margin-left: 10px;
+}
+.btn-flag {
+    background: url("flag.png") no-repeat scroll 0 0 transparent !important;
+    border: 0 solid;
+    box-shadow: none !important;
+    height: 37px;
+    margin: 0 10px 0 0 !important;
+    width: 30px;
+    padding: 0;
+}
+.btn-picture {
+    background: url("profile_blank.png") no-repeat scroll 0 0 transparent !important;
+    border: 0 solid;
+    box-shadow: none !important;
+    height: 45px;
+    margin: 0 0 0 10px !important;
+    width: 45px;
+    padding: 0;
+}
+.rating {
+    background: url("rating_sm.png") no-repeat scroll 0 0 transparent;
+    height: 26px;
+    width: 26px;
+}
+.ratings .rating {
+    position: absolute;
+    top: 25px;
+    left: 165px;
+}
+
+footer .navigation {
+    height: 28px;
+    list-style: none outside none;
+    margin: 0;
+}
+footer .navigation li {
+    float: left;
+    margin-left: 40px;
+}
+footer .navigation li:first-child {
+    float: left;
+    margin-left: 0;
+}
+footer .navigation li.active {
+
+}
+footer .navigation li a {
+    line-height: 28px;
+}
+
+.popupContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+}
+.popupContent .close-button {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+}
+.popupContent {
+    background: #ffffff;
+    padding: 20px;
+    margin: 50px auto 0;
+    width: 300px;
+    position: relative;
+}
+.popupContent.terms {
+    width: 750px;
+}
