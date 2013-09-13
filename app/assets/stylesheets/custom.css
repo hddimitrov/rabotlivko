@@ -7,17 +7,25 @@
 .contact_map a:hover {
     color: #005580 !important;
 }
-
+.faq_container_top {
+	background: url("faq_bg_top.png") no-repeat;
+	width: 423px;
+	height: 37px;
+}
+.faq_container_bottom {
+	background: url("faq_bg_bottom.png") no-repeat;
+	width: 423px;
+	height: 28px;
+}
 .faq_container {
-    background: url("faq_bg.png") no-repeat scroll 0 0 transparent;
+    background: url("faq_bg_content.png") repeat-y;
     font-size: 12px;
-    height: 80px;
-    padding: 29px 20px 20px;
+    padding: 0px 20px 0px;
     width: 383px;
     clear: both;
 }
 .faq_container h4 {
-    margin: 10px 0 5px;
+    margin: 0px 0 5px;
 }
 .faq_container p {
     margin-bottom: 0;
@@ -91,6 +99,16 @@
     text-align: right;
     margin-right: 10px;
     padding-top: 5px;
+}
+.profile_edit {
+	border-bottom:1px dashed #fd9b00;
+}
+.profile_edit:hover {
+	color:#fd9b00;
+	cursor: pointer;
+	background:url("edit_sm.png") no-repeat top right;
+	padding-right:25px;
+	border-bottom:1px dashed transparent;
 }
 .profile-content {
     line-height: 20px;
@@ -411,9 +429,54 @@
 	cursor: pointer;
 }
 #search_field{
-	width: 280px;
+	width: 510px;
 }
-#search_button{
-	margin-top: -30px;
+.search_button{
+	margin-left: 100px;
+	margin-top: 0px;
+}
+.rating-style {
+	margin-top: 40px;
+}
+/* CHAT */
+.chat-body {
+	margin-top: 10px;
+}
+.accordion-toggle {
+	height: 50px;
+}
+.chat-left-header {
+	width: 400px;
+}
+.chat-right-header {
+	margin-top: -50px;
+	padding-right: 10px;
+}
+.chat-person-message {
+	border-bottom: 1px dashed #000000;
+}
+.chat-content {
+	width: 96%;
+	border: 1px solid #000000;
+	padding: 2%;
+	height: 170px;
+	overflow: auto;
+	margin-bottom: 5px;
+}
+.chat-person-name {
+	font-weight: bold;
+}
 
-}
+
+.btn-custom {
+  background-color: hsl(0, 0%, 100%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#ffffff");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#ffffff), to(#ffffff));
+  background-image: -moz-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -ms-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #ffffff));
+  background-image: -webkit-linear-gradient(top, #ffffff, #ffffff);
+  background-image: -o-linear-gradient(top, #ffffff, #ffffff);
+  background-image: linear-gradient(#ffffff, #ffffff);
+  border-color: #ffffff #ffffff hsl(0, 0%, 100%);
