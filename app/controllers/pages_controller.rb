@@ -11,4 +11,8 @@ class PagesController < ApplicationController
 
   def contacts
   end
+
+  def contacts_map
+    render partial: 'contacts_map'
+  end
 end
