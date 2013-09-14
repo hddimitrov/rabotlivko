@@ -28,7 +28,7 @@ server "212.71.254.218", :app, :web, :db, :primary => true
 
 # if you want to clean up old releases on each deploy uncomment this:
 after "deploy:restart", "deploy:cleanup"
-after 'deploy:update_code', 'deploy:symlink_yml'
+after "deploy:symlink", "deploy:symlink_yml"
 
 # if you're still using the script/reaper helper you will need
 # these http://github.com/rails/irs_process_scripts
