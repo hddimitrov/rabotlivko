@@ -39,18 +39,18 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "ln -nfs #{shared_path}/config/mandrill.yml #{release_path}/config/mandrill.yml"
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 
   desc 'create mandrill.yml synlink to config'
-  task :symlink_yml, :roles => :app do
+  task :symlink_yml do
     puts "creating symlink_yml"
+    run "ln -nfs #{shared_path}/config/mandrill.yml #{release_path}/config/mandrill.yml"
   end
 end
 
 # if you want to clean up old releases on each deploy uncomment this:
 after 'deploy:restart', 'deploy:cleanup'
-after 'deploy:update_code', 'deploy:symlink_yml'
-before 'deploy:assets:precompile', 'deploy:symlink'
+after 'deploy:finalize_update', 'deploy:symlink_yml'
+# before 'deploy:assets:precompile', 'deploy:symlink_yml'
 
