@@ -47,6 +47,6 @@ namespace :deploy do
   end
 
   task :symlink_yml do
-    run "ln -sf #{shared_path}/config/mandrill.rb #{release_path}/config/initializers/mandrill.rb"
+    run "ln -sf #{shared_path}/config/mandrill.yml #{current_path}/config/mandrill.yml"
   end
 end
