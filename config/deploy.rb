@@ -47,8 +47,8 @@ namespace :deploy do
   end
 
   desc 'create mandrill.yml synlink to config'
-  task :symlink_yml do
+  task :symlink_yml, :roles => :app do
     puts "creating symlink_yml"
-    run "ln -sf #{shared_path}/config/mandrill.yml #{current_path}/config/mandrill.yml"
+    run "ln -nfs #{shared_path}/config/mandrill.yml #{release_path}/config/mandrill.yml"
   end
 end
