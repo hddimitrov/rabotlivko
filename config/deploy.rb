@@ -33,6 +33,11 @@ after "deploy:restart", "deploy:cleanup"
 # these http://github.com/rails/irs_process_scripts
 
 # If you are using Passenger mod_rails uncomment this:
+
+before :deploy do
+  upload 'config/enviroments/production.rb', 'config/enviroments/production.rb'
+end
+
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
