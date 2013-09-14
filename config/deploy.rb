@@ -39,13 +39,13 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
+    run "ln -nfs #{shared_path}/config/mandrill.yml #{release_path}/config/mandrill.yml"
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 
   desc 'create mandrill.yml synlink to config'
   task :symlink_yml, :roles => :app do
     puts "creating symlink_yml"
-    run "ln -nfs #{shared_path}/config/mandrill.yml #{release_path}/config/mandrill.yml"
   end
 end
 
