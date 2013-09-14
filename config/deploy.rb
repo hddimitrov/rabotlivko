@@ -26,10 +26,6 @@ set :rake, 'bundle exec rake'
 
 server "212.71.254.218", :app, :web, :db, :primary => true
 
-# if you want to clean up old releases on each deploy uncomment this:
-after "deploy:restart", "deploy:cleanup"
-after "deploy:update_code", "deploy:symlink_yml"
-
 # if you're still using the script/reaper helper you will need
 # these http://github.com/rails/irs_process_scripts
 
@@ -52,3 +48,9 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/config/mandrill.yml #{release_path}/config/mandrill.yml"
   end
 end
+
+# if you want to clean up old releases on each deploy uncomment this:
+after 'deploy:restart', 'deploy:cleanup'
+after 'deploy:update_code', 'deploy:symlink_yml'
+before 'deploy:assets:precompile', 'deploy:symlink'
+
