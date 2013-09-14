@@ -34,8 +34,8 @@ after "deploy:restart", "deploy:cleanup"
 
 # If you are using Passenger mod_rails uncomment this:
 
-before :deploy do
-  upload 'config/enviroments/production.rb', 'config/enviroments/production.rb'
+before 'deploy' do
+  upload 'config/initializers/mandrill.rb', "#{current_path}/config/initializers/mandrill.rb"
 end
 
 namespace :deploy do
