@@ -28,20 +28,25 @@ server "212.71.254.218", :app, :web, :db, :primary => true
 
 # if you want to clean up old releases on each deploy uncomment this:
 after "deploy:restart", "deploy:cleanup"
+after 'deploy:update_code', 'deploy:symlink_yml'
 
 # if you're still using the script/reaper helper you will need
 # these http://github.com/rails/irs_process_scripts
 
 # If you are using Passenger mod_rails uncomment this:
 
-after 'deploy:update_code' do
-  upload 'config/initializers/mandrill.rb', "#{current_path}/config/initializers/mandrill.rb", via: :scp
-end
+# after 'deploy:update_code' do
+#   # upload 'config/initializers/mandrill.rb', "#{current_path}/config/initializers/mandrill.rb", via: :scp
+# end
 
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+  end
+
+  task :symlink_yml do
+    run "ln -sf #{shared_path}/config/mandrill.rb #{release_path}/config/initializers/mandrill.rb"
   end
 end
