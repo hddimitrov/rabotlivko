@@ -58,10 +58,10 @@
       p Тази опция е създадена отново за твое удобство. Ако добавиш потребител в любими, ти можеш лесно да го намериш и да му пратиш известие за обява, към която смяташ, че ще има интерес! Обикновено в ‘любими’ ти слагаш потребители, с който вече си работил и от чиито услуги и качества си останал доволен!
     .faq_container_bottom
 
-  .faq_form
+  = form_tag('/ask_question', method: 'post', class: 'faq_form')
     p Не намираш отговор на въпроса си? - Изпрати ни запитване.
-    input.input-block-level placeholder="Твоят и-мейл" type="text"
-      textarea Въпросът ти...
+    input.input-block-level placeholder="Твоят и-мейл" type="text" name='email'
+    textarea placeholder="Въпросът ти..." name='message'
     button.btn.btn-large.btn-primary.pull-right type="submit" Попитай
 
 .three_c_sm_right.banner
