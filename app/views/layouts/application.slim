@@ -16,13 +16,13 @@ html
               span.caret
             ul.dropdown-menu
               li
-                a href='create_ad_contractor.html' Публикувай обява
+                a href='#{new_want_ad_path}' Публикувай обява
               li
-                a href='search_contractor_actor.html' Търси изпълнител
+                a href='#{contractors_path}' Търси изпълнител
               li
-                a href='search_contractor_ads.html' Търси реклама
+                a href='#{adverts_path}' Търси реклама
               li
-                a href='help_contractor.html' Как става?
+                a href='#' Как става?
           .btn-group
             a.btn.btn-warning.dropdown-toggle data-toggle='dropdown' href='#'
               | Изпълнител
@@ -31,11 +31,11 @@ html
               li
                 a href='' Стани изпълнител
               li
-                a href='search_actor.html' Търси обява
+                a href='#{want_ads_path}' Търси обява
               li
-                a href='create_ad_actor.html' Направи си реклама
+                a href='#{new_advert_path}' Направи си реклама
               li
-                a href='help_actor.html' Как става?
+                a href='#' Как става?
         .profile_nav.pull-right
           - if current_user.present?
             a href='#{user_root_path}' = current_user.name
@@ -66,13 +66,13 @@ html
           li
             = link_to "За RabotaZaDen", page_about_path
           li
-            a href='faq.html' Често Задвани Въпроси
+            a href='#{page_faq_path}' Често Задвани Въпроси
           li
-            a href='terms.html' Потребителско Споразумение
+            a href='#' Потребителско Споразумение
           li
-            a href='ad.html' Рекламирай в RabotaZaDen
+            a href='#' Рекламирай в RabotaZaDen
           li
-            a href='contact.html' Контакт
+            a href='#{page_contacts_path}' Контакт
 
     = render partial: 'shared/fb_js_sdk_load'
     = render partial: 'shared/login_modal'
