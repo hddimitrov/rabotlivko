@@ -83,10 +83,25 @@
   /   |  Прелгедали: 12
   /   br
   /   |  Кандидатствали: 2
-  a[href=""]
+  a[data-toggle="modal" href="#report"]
     | Докладвай нередност
 
 .three_c_sm_right.banner Банер
+
+
+#report.modal.hide.fade aria-hidden="true" data-width="300" style="display: none;" tabindex="-1"
+  h3#center-title Докладвай нередност
+  p#center-cont Моля обяснете какъв е проблемът с обявата
+  = form_tag('/flag_item', method: 'post')
+    input name='item_type' type='hidden' value='want_ad'
+    input name='item_id' type='hidden' value="#{@want_ad.id}"
+
+    textarea#textAreaSize name='explanation' placeholder="Проблема е ..."
+    br
+      input#btn-pos.btn.btn-warning type="submit" value="Докладвай"
+        #right-btn-pos
+          a.btn data-dismiss="modal" Отмени
+
 
 ///////////////////////////////////////////
 
