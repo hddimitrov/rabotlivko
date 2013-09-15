@@ -1,5 +1,70 @@
-h1 New want_ad
-
-== render 'form'
-
-= link_to 'Back', want_ads_path
+.three_c_sm_left.banner
+  | Банер
+.three_c_big.white_background  ng-controller='want_ads_create' ng-init="want_ad={};current_step=1;categories=#{Category.all.to_json}"
+  form[novalidate='' ng-submit="submit_form()" name='want_ad_form']
+    div ng-show="current_step == 1"
+      .pull-right
+        | Стъпка 1
+        a href="javascript:void(0);" ng-click="continue()"  2
+      h3 Създай обява
+      .control-group[ng-class='{error: continue_clicked && !want_ad.title }']
+        input#want-ad-title[required='required' placeholder="Заглавие" type="text" name="title" ng-model='want_ad.title']
+        span.help-inline[ng-show="continue_clicked && !want_ad.title"] Моля въведете заглавие
+      br
+      .control-group[ng-class='{error: continue_clicked && !want_ad.category_id }']
+        select.chzn-select[chosen='' ng-model="want_ad.category_id" data-placeholder="Категория" ng-options="category.id as category.title for category in categories"]
+        span.help-inline[ng-show="continue_clicked && !want_ad.category_id"] Моля изберете категория
+      br
+      .control-group[ng-class='{error: continue_clicked && !want_ad.description }']
+          textarea[ng-model="want_ad.description"] Описание
+          span.help-inline[ng-show="continue_clicked && !want_ad.description"] Моля въведете описания
+      .documents_list.clearfix
+        .document.pull-left CV.pdf
+        .document.pull-left Сертификат за градинарство.pdf
+        button.btn.btn-primary.pull-left Добави
+        span.pull-left
+          | Можете да добавите още
+          span 3
+          | документа.
+      button.btn.btn-large.btn-primary[ng-click="continue()"] Напред
+      a[href="javascript:void(0);" ng-click="save_draft()"] Запази в черновата
+    div ng-show="current_step == 2"
+      .pull-right
+        | Стъпка
+        a[href="javascript:void(0);" ng-click="current_step = 1"]
+          |  1
+        |   2
+      h3
+        | Създай обява
+      .form-inline
+        input.input-small[type="text" placeholder="Цена"]
+        label.checkbox
+          input[type="checkbox" value="negotiate-price"]
+          |  По договаряне
+      label.radio.inline
+        input#activeDate1[type="radio" name="activeDate" value="date" checked]
+        input.input-small[type="text" placeholder="10.02.2013"]
+      label.radio.inline
+        input#activeDate2[type="radio" name="activeDate" value="two-weeks"]
+        |  Активна за две седмици
+      br
+      input.input-block-level[type="text" placeholder="Адрес"]
+      .contact_map
+        iframe[width="500" height="150" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Sofia,+Bulgaria&amp;aq=0&amp;oq=sofia&amp;sll=37.0625,-95.677068&amp;sspn=48.641855,87.363281&amp;ie=UTF8&amp;hq=&amp;hnear=Sofia,+Sofia-city,+Bulgaria&amp;t=m&amp;z=10&amp;ll=42.697839,23.32167&amp;output=embed"]
+        br
+        small
+          a[href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Sofia,+Bulgaria&amp;aq=0&amp;oq=sofia&amp;sll=37.0625,-95.677068&amp;sspn=48.641855,87.363281&amp;ie=UTF8&amp;hq=&amp;hnear=Sofia,+Sofia-city,+Bulgaria&amp;t=m&amp;z=10&amp;ll=42.697839,23.32167" style="color:#0000FF;text-align:left"]
+            | View Larger Map
+      br
+      button.btn.btn-primary
+        | Покани приятел
+      button.btn.btn-primary
+        | Направи ВИП
+      br
+      br
+      button.btn.btn-large.btn-primary[ng-click="save()"]
+        | Напред
+      a[href="javascript:void(0);" ng-click="save_draft()"]
+        | Запази в черновата
+.three_c_sm_right.banner
+  | Банер
