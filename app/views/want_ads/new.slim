@@ -1,32 +1,39 @@
 .three_c_sm_left.banner
   | Банер
-.three_c_big.white_background  ng-controller='want_ads_create' ng-init="want_ad={};address={};current_step=2;categories=#{Category.all.to_json};states=#{State.select_ready.to_json};cities_by_state=#{City.select_ready.group_by(&:state_id).to_json}"
+.three_c_big.white_background  ng-controller='want_ads_create' ng-init="want_ad={};address={};current_step=1;categories=#{Category.all.to_json};states=#{State.select_ready.to_json};cities_by_state=#{City.select_ready.group_by(&:state_id).to_json}"
   = javascript_include_tag 'http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false'
-  form[novalidate='' ng-submit="submit_form()" name='want_ad_form']
+  / form[name='want_ad_form' action='/api/want_ad/create' method='POST' novalidate]
+  = form_tag('/api/want_ad/create', method: 'post', novalidate: '', :multipart: true)
     div ng-show="current_step == 1"
       .pull-right
         | Стъпка 1
         a href="javascript:void(0);" ng-click="continue()"  2
       h3 Създай обява
       .control-group[ng-class='{error: continue_clicked && !want_ad.title }']
-        input#want-ad-title[required='required' placeholder="Заглавие" type="text" name="title" ng-model='want_ad.title']
+        input#want-ad-title[required='required' placeholder="Заглавие" type="text" name="want_ad[title]" ng-model='want_ad.title']
         span.help-inline[ng-show="continue_clicked && !want_ad.title"] Моля въведете заглавие
       .control-group[ng-class='{error: continue_clicked && !want_ad.category_id }']
-        select.chzn-select[chosen='' ng-model="want_ad.category_id" data-placeholder="Категория" ng-options="category.id as category.title for category in categories"]
+        select.chzn-select[name='want_ad[category_id]' chosen ng-model="want_ad.category_id" data-placeholder="Категория" ng-options="category.id as category.title for category in categories"]
         span.help-inline[ng-show="continue_clicked && !want_ad.category_id"] Моля изберете категория
       .control-group[ng-class='{error: continue_clicked && !want_ad.description}']
-          textarea[ng-model="want_ad.description"] Описание
+          textarea[name="description" ng-model="want_ad.description"] Описание
           span.help-inline[ng-show="continue_clicked && !want_ad.description"] Моля въведете описание
+      .control-group
+        input.input-block-level#address-line[type="hidden" name='want_ad[q_draft]' ng-model="want_ad.q_draft"]
+      / .documents_list.clearfix
+      /   .document.pull-left CV.pdf
+      /   .document.pull-left Сертификат за градинарство.pdf
+      /   button.btn.btn-primary.pull-left Добави
+        / span.pull-left
+        /   | Можете да добавите още
+        /   span 3
+        /   | документа.
       .documents_list.clearfix
-        .document.pull-left CV.pdf
-        .document.pull-left Сертификат за градинарство.pdf
-        button.btn.btn-primary.pull-left Добави
-        span.pull-left
-          | Можете да добавите още
-          span 3
-          | документа.
-      button.btn.btn-large.btn-primary[ng-click="continue()"] Напред
-      a[href="javascript:void(0);" ng-click="save_draft()"] Запази в черновата
+        .document.pull-left[ng-repeat="file in files"]
+          | {{file.name}}
+        input[type="file" file-upload multiple]
+      button.btn.btn-large.btn-primary[type="button" ng-click="continue()"] Напред
+      a[href="javascript:void(0);" ng-click="create(false)"] Запази в черновата
     div ng-show="current_step == 2"
       .pull-right
         | Стъпка
@@ -37,22 +44,23 @@
         | Създай обява
       .control-group[ng-class='{error: continue_clicked && !want_ad.price_negotiable && !want_ad.price}']
         .form-inline
-          input.input-small#price-input[type="text" placeholder="Цена" ng-model="want_ad.price"]
+          input.input-small#price-input[type="text" placeholder="Цена" name='want_ad[price]' ng-model="want_ad.price"]
           label.checkbox
-            input#price-negotiable[type="checkbox" ng-model="want_ad.price_negotiable" ng-true-value="true" ng-false-value=""]
+            input#price-negotiable[type="checkbox" name='want_ad[price_negotiable]' ng-model="want_ad.price_negotiable" ng-true-value="true" ng-false-value=""]
             |  По договаряне
           span.help-inline[ng-show="continue_clicked && !want_ad.price_negotiable && !want_ad.price"] Моля въведете цена
-      .control-group
+      .control-group[ng-class='{error: continue_clicked && !two_weeks && !want_ad.deadline}']
         .form-inline
-          input.input-small.datepicker#deadline-input[type="text" placeholder="Срок" ng-model="want_ad.deadline"]
+          input.input-small.datepicker#deadline-input[type="text" name='want_ad[deadline]' placeholder="Срок" ng-model="want_ad.deadline"]
           label.checkbox
             input#deadline-two-weeks[type="checkbox" ng-model="two_weeks" ng-change="set_deadline(two_weeks)"]
             |  Активна за две седмици
+          span.help-inline[ng-show="continue_clicked && !two_weeks && !want_ad.deadline"] Моля въведете срок
       .control-group
-        select.chzn-select[chosen ng-model="address.state_id" data-placeholder="Област" ng-options="state.state_id as state.name for state in states" values='address.state_id+states' ng-change='state_changed(address.state_id)']
-        select.chzn-select[chosen ng-model="address.city_id" data-placeholder="Град" ng-options="city.city_id as city.name for city in cities" values='address.city_id+cities' ng-change='city_changed(address.city_id)']
+        select.chzn-select[name="want_ad[address][state_id]" chosen ng-model="address.state_id" data-placeholder="Област" ng-options="state.state_id as state.name for state in states" values='address.state_id+states' ng-change='state_changed(address.state_id)']
+        select.chzn-select[name="want_ad[address][city_id]" chosen ng-model="address.city_id" data-placeholder="Град" ng-options="city.city_id as city.name for city in cities" values='address.city_id+cities' ng-change='city_changed(address.city_id)']
       .control-group
-        input.input-block-level#address-line[type="text" placeholder="Адрес" geocomplete='center' line='address.line' markers='markers']
+        input.input-block-level#address-line[name="want_ad[address][line]" type="text" placeholder="Адрес" geocomplete='center' line='address.line' markers='markers']
       .google-map.contact_map[center="center" draggable="true" zoom="zoom" markers="markers" mark-click="false"]
       br
       button.btn.btn-primary
@@ -61,9 +69,9 @@
         | Направи ВИП
       br
       br
-      button.btn.btn-large.btn-primary[ng-click="save()"]
+      button.btn.btn-large.btn-primary[type="submit" ng-click="create(false)"]
         | Напред
-      a[href="javascript:void(0);" ng-click="save_draft()"]
+      a[href="javascript:void(0);" ng-click="create(true)"]
         | Запази в черновата
 .three_c_sm_right.banner
   | Банер

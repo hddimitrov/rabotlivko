@@ -39,51 +39,27 @@ class WantAdsController < ApplicationController
 
   def new
     @want_ad = WantAd.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @want_ad }
-    end
   end
 
-  # GET /want_ads/1/edit
-  def edit
-    @want_ad = WantAd.find(params[:id])
-  end
-
-  # POST /want_ads
-  # POST /want_ads.json
   def create
-    @want_ad = WantAd.new(params[:want_ad])
+    @want_ad = WantAd.new
     @want_ad.user_id = current_user.id
+    @want_ad.title = params[:want_ad][:title]
+    @want_ad.description = params[:want_ad][:description]
+    @want_ad.category_id = params[:want_ad][:category_id]
+    if params[:want_ad][:price_negotiable]
+      @want_ad.q_price_negotiable = true
+    else
+      @want_ad.price = params[:want_ad][:price]
+    end
+    @want_ad.deadline = params[:want_ad][:deadline] if params[:want_ad][:deadline].present?
 
-    respond_to do |format|
-      if @want_ad.save
-        format.html { redirect_to @want_ad, notice: 'Want ad was successfully created.' }
-        format.json { render json: @want_ad, status: :created, location: @want_ad }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @want_ad.errors, status: :unprocessable_entity }
-      end
+    @want_ad.build_address(params[:want_ad][:address])
+
+    if @want_ad.save
+      redirect_to @want_ad
     end
   end
-
-  # PUT /want_ads/1
-  # PUT /want_ads/1.json
-  # def update
-  #   @want_ad = WantAd.find(params[:id])
-
-  #   respond_to do |format|
-  #     if @want_ad.update_attributes(params[:want_ad])
-  #       format.html { redirect_to @want_ad, notice: 'Want ad was successfully updated.' }
-  #       format.json { head :no_content }
-  #     else
-  #       format.html { render action: "edit" }
-  #       format.json { render json: @want_ad.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
 
   def update
 
@@ -118,8 +94,6 @@ class WantAdsController < ApplicationController
     render nothing: true
   end
 
-  # DELETE /want_ads/1
-  # DELETE /want_ads/1.json
   def destroy
     @want_ad = WantAd.find(params[:id])
     @want_ad.destroy
@@ -130,7 +104,7 @@ class WantAdsController < ApplicationController
     end
   end
 
-# category_id
+  # category_id
   # min_price, max_price
   # deadline
 

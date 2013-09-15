@@ -1,14 +1,18 @@
 angular.module('rab').controller('want_ads_create',
-                                ['$scope', 'rabServices',
-                                function($scope, rabServices) {
+                                ['$scope', 'rabServices', 'creationServices',
+                                function($scope, rabServices, creationServices) {
 
-  $scope.continue = function() {
-    $scope.continue_clicked = true;
-    if($scope.want_ad.title && $scope.want_ad.category_id && $scope.want_ad.description) {
-      $scope.current_step = 2;
-      $scope.continue_clicked = false;
-    }
-  };
+
+  $scope.files = [];
+
+  //listen for the file selected event
+  $scope.$on('fileSelected', function (event, args) {
+    console.log('file Selected');
+    $scope.$apply(function () {
+      //add the file object to the scope's files collection
+      $scope.files.push(args.file);
+    });
+  });
 
   $scope.$watch('want_ad.price_negotiable', function() {
     if($scope.want_ad.price_negotiable){
@@ -71,13 +75,24 @@ angular.module('rab').controller('want_ads_create',
     return true;
   };
 
-  $scope.save_draft = function() {
-
+  $scope.continue = function() {
+    $scope.continue_clicked = true;
+    if($scope.want_ad.title && $scope.want_ad.category_id && $scope.want_ad.description) {
+      $scope.current_step = 2;
+      $scope.continue_clicked = false;
+    }
+    return false;
   };
 
-  $scope.save = function() {
+  $scope.create = function(draft) {
     $scope.continue_clicked = true;
-    console.log($scope.want_ad);
-    console.log($scope.address);
+    $scope.want_ad.q_draft = draft;
+    $scope.want_ad.address = $scope.address;
+    if(($scope.want_ad.price_negotiable || $scope.want_ad.price) && $scope.want_ad.deadline) {
+      // creationServices.create_want_ad($scope.want_ad, $scope.files);
+      document.want_ad_form.submit();
+    } else {
+      return false;
+    }
   };
 }]);
