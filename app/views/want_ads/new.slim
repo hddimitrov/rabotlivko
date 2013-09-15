@@ -14,7 +14,7 @@
       .control-group[ng-class='{error: continue_clicked && !want_ad.category_id }']
         select.chzn-select[chosen='' ng-model="want_ad.category_id" data-placeholder="Категория" ng-options="category.id as category.title for category in categories"]
         span.help-inline[ng-show="continue_clicked && !want_ad.category_id"] Моля изберете категория
-      .control-group[ng-class='{error: continue_clicked && !want_ad.description }']
+      .control-group[ng-class='{error: continue_clicked && !want_ad.description}']
           textarea[ng-model="want_ad.description"] Описание
           span.help-inline[ng-show="continue_clicked && !want_ad.description"] Моля въведете описание
       .documents_list.clearfix
@@ -35,17 +35,19 @@
         |   2
       h3
         | Създай обява
-      .form-inline
-        input.input-small[type="text" placeholder="Цена"]
-        label.checkbox
-          input[type="checkbox" value="negotiate-price"]
-          |  По договаряне
-      label.radio.inline
-        input#activeDate1[type="radio" name="activeDate" value="date" checked]
-        input.input-small[type="text" placeholder="10.02.2013"]
-      label.radio.inline
-        input#activeDate2[type="radio" name="activeDate" value="two-weeks"]
-        |  Активна за две седмици
+      .control-group[ng-class='{error: continue_clicked && !want_ad.price_negotiable && !want_ad.price}']
+        .form-inline
+          input.input-small#price-input[type="text" placeholder="Цена" ng-model="want_ad.price"]
+          label.checkbox
+            input#price-negotiable[type="checkbox" ng-model="want_ad.price_negotiable" ng-true-value="true" ng-false-value=""]
+            |  По договаряне
+          span.help-inline[ng-show="continue_clicked && !want_ad.price_negotiable && !want_ad.price"] Моля въведете цена
+      .control-group
+        .form-inline
+          input.input-small.datepicker#deadline-input[type="text" placeholder="Срок" ng-model="want_ad.deadline"]
+          label.checkbox
+            input#deadline-two-weeks[type="checkbox" ng-model="two_weeks" ng-change="set_deadline(two_weeks)"]
+            |  Активна за две седмици
       .control-group
         select.chzn-select[chosen ng-model="address.state_id" data-placeholder="Област" ng-options="state.state_id as state.name for state in states" values='address.state_id+states' ng-change='state_changed(address.state_id)']
         select.chzn-select[chosen ng-model="address.city_id" data-placeholder="Град" ng-options="city.city_id as city.name for city in cities" values='address.city_id+cities' ng-change='city_changed(address.city_id)']

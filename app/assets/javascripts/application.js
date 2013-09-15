@@ -15,6 +15,7 @@
 //= require twitter/bootstrap
 //= require nested_form
 //= require chosen.jquery.min
+//= require moment.min
 //= require jquery.cookie
 //= require google-maps
 //= require jquery.geocomplete
@@ -36,4 +37,9 @@ $(document).ready(function() {
   $('#title').editable();
   $('#description').editable();
   $('#category_id').editable({source: $('.categories').data('categories')});
+
+  dp = $('#deadline-input').datepicker({format: 'dd.mm.yyyy', autoclose: true});
+  dp.on('changeDate', function(ev){
+    dp.val(ev.target.value);
+  });
 });

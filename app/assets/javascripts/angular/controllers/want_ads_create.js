@@ -6,8 +6,23 @@ angular.module('rab').controller('want_ads_create',
     $scope.continue_clicked = true;
     if($scope.want_ad.title && $scope.want_ad.category_id && $scope.want_ad.description) {
       $scope.current_step = 2;
+      $scope.continue_clicked = false;
     }
   };
+
+  $scope.$watch('want_ad.price_negotiable', function() {
+    if($scope.want_ad.price_negotiable){
+      $scope.want_ad.price = '';
+    }
+  });
+
+  $scope.set_deadline = function(two_weeks) {
+    if(two_weeks) {
+      date = moment().add('days', 14);
+      $scope.want_ad.deadline = date.format('DD.MM.YYYY');
+      $("#deadline-input").datepicker('setDate', date.toDate());
+    }
+   };
 
   angular.extend($scope, {
     center: {
@@ -61,6 +76,7 @@ angular.module('rab').controller('want_ads_create',
   };
 
   $scope.save = function() {
+    $scope.continue_clicked = true;
     console.log($scope.want_ad);
     console.log($scope.address);
   };
