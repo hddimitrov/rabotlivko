@@ -20,15 +20,21 @@ angular.module('rab.directives').directive('geocomplete', function ($log, $timeo
     restrict: 'A',
     scope:{
       location:'=geocomplete',
+      markers:'=markers',
+      line:'=line',
       ngModel:'='
     },
     priority: 200,
     link: function (scope, element, attrs) {
       var autocomplete = $(element).geocomplete().bind('geocode:result', function (event, result) {
-        if(result.formatted_address) {
-          console.log(event.target.value);
+        if(result.geometry && result.geometry.location) {
+          var location = result.geometry.location;
           $timeout(function() {
             scope.line = event.target.value;
+            latlon = {latitude: location.lat(), longitude: location.lng()};
+            marker = {latitude: location.lat(), longitude: location.lng()};
+            scope.location = latlon;
+            scope.markers = [marker];
           });
         }
       });

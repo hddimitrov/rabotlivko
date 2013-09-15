@@ -1,6 +1,7 @@
 .three_c_sm_left.banner
   | Банер
-.three_c_big.white_background  ng-controller='want_ads_create' ng-init="want_ad={};current_step=1;categories=#{Category.all.to_json}"
+.three_c_big.white_background  ng-controller='want_ads_create' ng-init="want_ad={};address={};current_step=2;categories=#{Category.all.to_json};states=#{State.select_ready.to_json};cities_by_state=#{City.select_ready.group_by(&:state_id).to_json}"
+  = javascript_include_tag 'http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false'
   form[novalidate='' ng-submit="submit_form()" name='want_ad_form']
     div ng-show="current_step == 1"
       .pull-right
@@ -10,14 +11,12 @@
       .control-group[ng-class='{error: continue_clicked && !want_ad.title }']
         input#want-ad-title[required='required' placeholder="Заглавие" type="text" name="title" ng-model='want_ad.title']
         span.help-inline[ng-show="continue_clicked && !want_ad.title"] Моля въведете заглавие
-      br
       .control-group[ng-class='{error: continue_clicked && !want_ad.category_id }']
         select.chzn-select[chosen='' ng-model="want_ad.category_id" data-placeholder="Категория" ng-options="category.id as category.title for category in categories"]
         span.help-inline[ng-show="continue_clicked && !want_ad.category_id"] Моля изберете категория
-      br
       .control-group[ng-class='{error: continue_clicked && !want_ad.description }']
           textarea[ng-model="want_ad.description"] Описание
-          span.help-inline[ng-show="continue_clicked && !want_ad.description"] Моля въведете описания
+          span.help-inline[ng-show="continue_clicked && !want_ad.description"] Моля въведете описание
       .documents_list.clearfix
         .document.pull-left CV.pdf
         .document.pull-left Сертификат за градинарство.pdf
@@ -47,14 +46,12 @@
       label.radio.inline
         input#activeDate2[type="radio" name="activeDate" value="two-weeks"]
         |  Активна за две седмици
-      br
-      input.input-block-level[type="text" placeholder="Адрес"]
-      .contact_map
-        iframe[width="500" height="150" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Sofia,+Bulgaria&amp;aq=0&amp;oq=sofia&amp;sll=37.0625,-95.677068&amp;sspn=48.641855,87.363281&amp;ie=UTF8&amp;hq=&amp;hnear=Sofia,+Sofia-city,+Bulgaria&amp;t=m&amp;z=10&amp;ll=42.697839,23.32167&amp;output=embed"]
-        br
-        small
-          a[href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Sofia,+Bulgaria&amp;aq=0&amp;oq=sofia&amp;sll=37.0625,-95.677068&amp;sspn=48.641855,87.363281&amp;ie=UTF8&amp;hq=&amp;hnear=Sofia,+Sofia-city,+Bulgaria&amp;t=m&amp;z=10&amp;ll=42.697839,23.32167" style="color:#0000FF;text-align:left"]
-            | View Larger Map
+      .control-group
+        select.chzn-select[chosen ng-model="address.state_id" data-placeholder="Област" ng-options="state.state_id as state.name for state in states" values='address.state_id+states' ng-change='state_changed(address.state_id)']
+        select.chzn-select[chosen ng-model="address.city_id" data-placeholder="Град" ng-options="city.city_id as city.name for city in cities" values='address.city_id+cities' ng-change='city_changed(address.city_id)']
+      .control-group
+        input.input-block-level#address-line[type="text" placeholder="Адрес" geocomplete='center' line='address.line' markers='markers']
+      .google-map.contact_map[center="center" draggable="true" zoom="zoom" markers="markers" mark-click="false"]
       br
       button.btn.btn-primary
         | Покани приятел

@@ -3,4 +3,6 @@ class City < ActiveRecord::Base
 
   belongs_to :state
   has_many :addresses
+
+  scope :select_ready, select('id AS city_id, name, state_id, lat, lon').order('name')
 end
