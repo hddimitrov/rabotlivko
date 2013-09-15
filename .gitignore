@@ -18,3 +18,4 @@
 /public/assets
 /public/uploads
 
+config/mandrill.yml
