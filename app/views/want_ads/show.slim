@@ -13,11 +13,15 @@
       a[href=""]
         | Следвай
 
-    h3.title id='title' data-type="textarea" data-title="Заглавие" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.title
+    - if @q_owner
+      h3.title id='title' data-type="textarea" data-title="Заглавие" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.title
+      h4.category id="category_id" data-type="select" data-pk="#{@want_ad.id}" data-url="/api/want_ad/update" data-original-title="Категория" = @want_ad.category.try(:title)
+      p.description id='description' data-type="textarea" data-title="Описание" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.description
 
-    h4.category id="category_id" data-type="select" data-pk="#{@want_ad.id}" data-url="/api/want_ad/update" data-original-title="Категория" = @want_ad.category.try(:title)
-
-    p.description id='description' data-type="textarea" data-title="Описание" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.description
+    - else
+      h3.title = @want_ad.title
+      h4.category = @want_ad.category.try(:title)
+      p.description = @want_ad.description
 
   .pull-right.clearfix
     .contact_map
@@ -79,10 +83,25 @@
   /   |  Прелгедали: 12
   /   br
   /   |  Кандидатствали: 2
-  a[href=""]
+  a[data-toggle="modal" href="#report"]
     | Докладвай нередност
 
 .three_c_sm_right.banner Банер
+
+
+#report.modal.hide.fade aria-hidden="true" data-width="300" style="display: none;" tabindex="-1"
+  h3#center-title Докладвай нередност
+  p#center-cont Моля обяснете какъв е проблемът с обявата
+  = form_tag('/flag_item', method: 'post')
+    input name='item_type' type='hidden' value='want_ad'
+    input name='item_id' type='hidden' value="#{@want_ad.id}"
+
+    textarea#textAreaSize name='explanation' placeholder="Проблема е ..."
+    br
+      input#btn-pos.btn.btn-warning type="submit" value="Докладвай"
+        #right-btn-pos
+          a.btn data-dismiss="modal" Отмени
+
 
 ///////////////////////////////////////////
 

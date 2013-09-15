@@ -5,6 +5,7 @@ Rabotlivko::Application.routes.draw do
   match '/contacts', to: 'pages#contacts', as: :page_contacts
   match '/contacts_map', to: 'pages#contacts_map', as: :page_contacts_map
   match '/ask_question', to: 'contacts#ask_question', via: :post
+  match '/flag_item', to: 'contacts#flag_item', via: :post
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }, skip: [:registrations, :sessions, :confirmations, :passwords]
   ActiveAdmin.routes(self)
