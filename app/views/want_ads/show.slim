@@ -6,9 +6,10 @@
       img.profile-avatar[src="http://lorempixel.com/100/100/people/"]
       br
       span
-        | Име Фамилия
+        = link_to "#{@want_ad.user.name}", user_path(@want_ad.user)
       br
       .rating
+
       a[href=""]
         | Следвай
 
@@ -29,47 +30,55 @@
           | View Larger Map
     |  Сподели:
 
-
-
     a[href=""]
-      .fb-like data-href="#{want_ad_url(@want_ad)}" data-layout="box_count" data-send="false" data-show-faces="true" data-width="450"
-
-
       / img[src="asset/image/share_facebook.png"]
+      .fb-like data-href="#{want_ad_url(@want_ad)}" data-layout="box_count" data-send="false" data-show-faces="true" data-width="450"
     a[href=""]
       / img[src="asset/image/share_twitter.png"]
       a.twitter-share-button data-count="none" data-hashtags="rabotazaden" data-url='http://localhost:1234/want_ads/2-you-are-still-the-one' href="https://twitter.com/share" data-text="#{@want_ad.title} #{want_ad_url(@want_ad)}"
 
     a[href="mailto:''?body=#{want_ad_url(@want_ad)}"]
-      img[src="asset/image/share_email.png"]
+      img[src="/assets/share_email.png"]
 
   .documents_list.clearfix
-      - for attachment in @want_ad.attachments
-          img.pull-left src="#{attachment.file}" width='150'
-    .document.pull-left
-      | CV.pdf
-    .document.pull-left
-      | Сертификат за градинарство.pdf
-    .document.pull-left
-      | CV.pdf
-    .document.pull-left
-      | Сертификат за градинарство.pdf
+    - for attachment in @want_ad.attachments
+      a href="#{attachment.file}" target='_blank'
+        .document.pull-left = attachment.description
+
+
+    / .document.pull-left
+    /   | CV.pdf
+    / .document.pull-left
+    /   | Сертификат за градинарство.pdf
+    / .document.pull-left
+    /   | CV.pdf
+    / .document.pull-left
+    /   | Сертификат за градинарство.pdf
+
   .pull-right.clearfix
-    a.btn.btn-warning[href="ad_apply.html"]
-      | Кандидатствай
-    a.btn[href=""]
-      | Добави в любими
+    - if current_user.present?
+      - if @q_owner
+        = render 'applications'
+      - else
+        a.pull-right.btn.btn-error ng-show="candidate_properties.applicant_status == 'applied' && (!candidate_properties.owner_status || candidate_properties.owner_status == 'hired')" ng-click="applicant_manage_want_ad_job('resigned')" Откажи се
+        a.pull-right.btn.btn-success ng-hide="candidate_properties.owner_status || candidate_properties.applicant_status == 'applied'" ng-click="applicant_manage_want_ad_job('applied')" Кандидатствай
+        a.pull-right.btn.btn-success ng-show="candidate_properties.applicant_status == 'applied' && (candidate_properties.owner_status == 'hired' || candidate_properties.owner_status == 'completed')" ng-click="applicant_manage_want_ad_job('completed')" Готово е
+
+    - if current_user.present? and !@q_owner
+      div ng-init='favorited = #{current_user.favorite_wantads.include? @want_ad}'
+        a.pull-right.btn.btn-warning ng-show='favorited == true' ng-click="unfav(#{@want_ad.id})" Махни от любими
+        a.pull-right.btn.btn-success ng-hide='favorited' ng-click="fav(#{@want_ad.id})" Добави в любими
+
   .clearfix
     .ad-calendar.pull-left
-      | Май
+      | #{@want_ad.deadline.strftime('%B')}
       br
-      |  12
-    .ad-price.pull-left
-      | 17лв
-  div
-    |  Прелгедали: 12
-    br
-    |  Кандидатствали: 2
+      | #{@want_ad.deadline.day}
+    .ad-price.pull-left = number_to_currency(@want_ad.price, locale: :bg)
+  / div
+  /   |  Прелгедали: 12
+  /   br
+  /   |  Кандидатствали: 2
   a[href=""]
     | Докладвай нередност
 
@@ -77,60 +86,50 @@
 
 ///////////////////////////////////////////
 
-.row ng-controller='want_ads_show' ng-init="init('#{@want_ad.id}', {}, #{@application.to_json});"
-  .span9
-    .row
-      .span7
-        h3.title.pull-left id='title' data-type="textarea" data-title="Заглавие" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.title
-      span2
-        h3.category.pull-right id="category_id" data-type="select" data-pk="#{@want_ad.id}" data-url="/api/want_ad/update" data-original-title="Категория" = @want_ad.category.try(:title)
+/ .row ng-controller='want_ads_show' ng-init="init('#{@want_ad.id}', {}, #{@application.to_json});"
+/   .span9
+/     .row
+/       .span7
+/         h3.title.pull-left id='title' data-type="textarea" data-title="Заглавие" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.title
+/       span2
+/         h3.category.pull-right id="category_id" data-type="select" data-pk="#{@want_ad.id}" data-url="/api/want_ad/update" data-original-title="Категория" = @want_ad.category.try(:title)
 
-    .row
-      .description id='description' data-type="textarea" data-title="Описание" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.description
+/     .row
+/       .description id='description' data-type="textarea" data-title="Описание" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.description
 
-    .row
-      .owner.pull-right = @want_ad.user.name
+/     .row
+/       .owner.pull-right = @want_ad.user.name
 
-    br
-    .row
-      .price id='price'
-        strong = @want_ad.price
+/     br
+/     .row
+/       .price id='price'
+/         strong = @want_ad.price
 
-    br
-    .row
-      .price
-        strong = @want_ad.deadline
+/     br
+/     .row
+/       .price
+/         strong = @want_ad.deadline
 
-    .row
-      .attachments
-        - for attachment in @want_ad.attachments
-          .attachment
-            img.pull-left src="#{attachment.file}" width='150'
+/     .row
+/       .attachments
+/         - for attachment in @want_ad.attachments
+/           .attachment
+/             img.pull-left src="#{attachment.file}" width='150'
 
-    - if current_user.present? and !@q_owner
-      .row ng-init='favorited = #{current_user.favorite_wantads.include? @want_ad}'
-        a.pull-right.btn.btn-warning ng-show='favorited == true' ng-click="unfav(#{@want_ad.id})" Махни от любими
-        a.pull-right.btn.btn-success ng-hide='favorited' ng-click="fav(#{@want_ad.id})" Добави в любими
+/     - if current_user.present? and !@q_owner
+/       .row ng-init='favorited = #{current_user.favorite_wantads.include? @want_ad}'
+/         a.pull-right.btn.btn-warning ng-show='favorited == true' ng-click="unfav(#{@want_ad.id})" Махни от любими
+/         a.pull-right.btn.btn-success ng-hide='favorited' ng-click="fav(#{@want_ad.id})" Добави в любими
 
-    br
+/     br
 
-    .row
-      - if current_user.present?
-        - if @q_owner
-          = render 'applications'
-        - else
-          a.pull-right.btn.btn-error ng-show="candidate_properties.applicant_status == 'applied' && (!candidate_properties.owner_status || candidate_properties.owner_status == 'hired')" ng-click="applicant_manage_want_ad_job('resigned')" Откажи се
-          a.pull-right.btn.btn-success ng-hide="candidate_properties.owner_status || candidate_properties.applicant_status == 'applied'" ng-click="applicant_manage_want_ad_job('applied')" Кандидатствай
-          a.pull-right.btn.btn-success ng-show="candidate_properties.applicant_status == 'applied' && (candidate_properties.owner_status == 'hired' || candidate_properties.owner_status == 'completed')" ng-click="applicant_manage_want_ad_job('completed')" Готово е
-      br
-      br
-
-
-  .span3
-    .banner
-        img src='http://lorempixel.com/150/500/technics'
-    br
-    .banner
-        img src='http://lorempixel.com/150/500/cats'
+/     .row
+/       - if current_user.present?
+/         - if @q_owner
+/           = render 'applications'
+/         - else
+/           a.pull-right.btn.btn-error ng-show="candidate_properties.applicant_status == 'applied' && (!candidate_properties.owner_status || candidate_properties.owner_status == 'hired')" ng-click="applicant_manage_want_ad_job('resigned')" Откажи се
+/           a.pull-right.btn.btn-success ng-hide="candidate_properties.owner_status || candidate_properties.applicant_status == 'applied'" ng-click="applicant_manage_want_ad_job('applied')" Кандидатствай
+/           a.pull-right.btn.btn-success ng-show="candidate_properties.applicant_status == 'applied' && (candidate_properties.owner_status == 'hired' || candidate_properties.owner_status == 'completed')" ng-click="applicant_manage_want_ad_job('completed')" Готово е
 
 .categories data-categories="#{@categories.to_json}"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130831153623) do
+ActiveRecord::Schema.define(:version => 20130910163118) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -94,7 +94,10 @@ ActiveRecord::Schema.define(:version => 20130831153623) do
     t.boolean  "q_price_negotiable", :default => false
     t.integer  "ad_status_id"
     t.date     "published_at"
+    t.string   "slug"
   end
+
+  add_index "adverts", ["slug"], :name => "index_adverts_on_slug", :unique => true
 
   create_table "applications", :force => true do |t|
     t.string   "applicable_type"
@@ -160,6 +163,26 @@ ActiveRecord::Schema.define(:version => 20130831153623) do
   add_index "marks", ["markable_id", "markable_type", "mark"], :name => "index_marks_on_markable_id_and_markable_type_and_mark"
   add_index "marks", ["marker_id", "marker_type", "mark"], :name => "index_marks_on_marker_id_and_marker_type_and_mark"
 
+  create_table "messages", :force => true do |t|
+    t.string   "topic"
+    t.text     "body"
+    t.integer  "received_messageable_id"
+    t.string   "received_messageable_type"
+    t.integer  "sent_messageable_id"
+    t.string   "sent_messageable_type"
+    t.boolean  "opened",                     :default => false
+    t.boolean  "recipient_delete",           :default => false
+    t.boolean  "sender_delete",              :default => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.string   "ancestry"
+    t.boolean  "recipient_permanent_delete", :default => false
+    t.boolean  "sender_permanent_delete",    :default => false
+  end
+
+  add_index "messages", ["ancestry"], :name => "index_messages_on_ancestry"
+  add_index "messages", ["sent_messageable_id", "received_messageable_id"], :name => "acts_as_messageable_ids"
+
   create_table "notifications", :force => true do |t|
     t.integer  "user_id"
     t.boolean  "q_notified"
@@ -220,6 +243,9 @@ ActiveRecord::Schema.define(:version => 20130831153623) do
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.integer  "ad_status_id"
+    t.string   "slug"
   end
+
+  add_index "want_ads", ["slug"], :name => "index_want_ads_on_slug", :unique => true
 
 end
