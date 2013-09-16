@@ -58,6 +58,20 @@ favorite_services.factory('favoriteServices', ['$http', function($http) {
       });
 
       return promise;
+    },
+    follow_user: function(user_id) {
+      var promise = $http.post('/api/user/follow', {user_id: user_id}).then(function (response) {
+        return response.data;
+      });
+
+      return promise;
+    },
+    unfollow_user: function(user_id) {
+      var promise = $http.post('/api/user/unfollow', {user_id: user_id}).then(function (response) {
+        return response.data;
+      });
+
+      return promise;
     }
   }
 

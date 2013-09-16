@@ -24,6 +24,22 @@ angular.module('rab').controller('want_ads_show',
     });
   };
 
+  $scope.follow = function(user_id) {
+    console.log('follow user_id: ' + user_id);
+    favoriteServices.follow_user(user_id).then(function(response){
+      console.log('user followed');
+      $scope.followed = true;
+    });
+  };
+
+  $scope.unfollow = function(user_id) {
+    console.log('unfollow user_id: ' + user_id);
+    favoriteServices.unfollow_user(user_id).then(function(response){
+      console.log('user unfollowed');
+      $scope.followed = false;
+    });
+  };
+
   $scope.applicant_manage_want_ad_job = function(status) {
     jobServices.applicant_manage_want_ad_job($scope.want_ad_id, status).then(function(response){
       $scope.candidate_properties.applicant_status = status;

@@ -48,11 +48,13 @@ Rabotlivko::Application.routes.draw do
     end
 
     scope 'user' do
-      match 'fav',     to: 'favorites#fav_user', via: :post
-      match 'unfav',   to: 'favorites#unfav_user', via: :post
-      match 'block',   to: 'favorites#block_user', via: :post
-      match 'unblock', to: 'favorites#unblock_user', via: :post
-      match 'update',  to: 'users#update', via: :post
+      match 'fav',      to: 'favorites#fav_user', via: :post
+      match 'unfav',    to: 'favorites#unfav_user', via: :post
+      match 'block',    to: 'favorites#block_user', via: :post
+      match 'unblock',  to: 'favorites#unblock_user', via: :post
+      match 'follow',   to: 'favorites#follow_user', via: :post
+      match 'unfollow', to: 'favorites#unfollow_user', via: :post
+      match 'update',   to: 'users#update', via: :post
       match 'become_contractor', to: 'users#become_contractor', via: :post,  as: :become_contractor
     end
 

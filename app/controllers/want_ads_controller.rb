@@ -21,6 +21,7 @@ class WantAdsController < ApplicationController
 
     if current_user.present?
       @q_owner = current_user.id == @want_ad.user_id
+      @want_ad_user = @want_ad.user
 
       if @q_owner
         @want_ad.applications.each do |app|
