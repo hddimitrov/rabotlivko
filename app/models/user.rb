@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   scope :beginning,   lambda { where('id > 0')}
 
   acts_as_marker
-  markable_as [ :favorite, :blocked ]
+  markable_as [ :favorite, :blocked, :followed ]
 
   acts_as_messageable required: :body, dependent: :destroy
 

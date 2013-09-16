@@ -62,6 +62,26 @@ class FavoritesController < ApplicationController
     render nothing: true
   end
 
+  def follow_user
+    user = User.find_by_id(params[:user_id])
+
+    if user.present?
+      current_user.mark_as_followed(user)
+    end
+
+    render nothing: true
+  end
+
+  def unfollow_user
+    user = User.find_by_id(params[:user_id])
+
+    if user.present?
+      current_user.remove_mark :followed, user
+    end
+
+    render nothing: true
+  end
+
   def block_user
     user = User.find_by_id(params[:user_id])
 

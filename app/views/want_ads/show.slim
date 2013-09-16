@@ -6,12 +6,12 @@
       img.profile-avatar[src="http://lorempixel.com/100/100/people/"]
       br
       span
-        = link_to "#{@want_ad.user.name}", user_path(@want_ad.user)
+        = link_to "#{@want_ad_user.name}", user_path(@want_ad_user)
       br
       .rating
 
-      a[href=""]
-        | Следвай
+      - if current_user.present? && !@q_owner && !current_user.followed_users.include?(@want_ad_user)
+        a[href="" ng-click="follow(#{@want_ad_user.id})" ng-hide='followed'] Следвай
 
     - if @q_owner
       h3.title id='title' data-type="textarea" data-title="Заглавие" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.title
@@ -117,7 +117,7 @@
 /       .description id='description' data-type="textarea" data-title="Описание" data-pk="#{@want_ad.id}" data-url='/api/want_ad/update' = @want_ad.description
 
 /     .row
-/       .owner.pull-right = @want_ad.user.name
+/       .owner.pull-right = @want_ad_user.name
 
 /     br
 /     .row
