@@ -3,7 +3,7 @@
 .three_c_big.white_background  ng-controller='want_ads_create' ng-init="want_ad={};address={};current_step=1;categories=#{Category.all.to_json};states=#{State.select_ready.to_json};cities_by_state=#{City.select_ready.group_by(&:state_id).to_json}"
   = javascript_include_tag 'http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false'
   / form[name='want_ad_form' action='/api/want_ad/create' method='POST' novalidate]
-  = form_tag('/api/want_ad/create', method: 'post', novalidate: '', :multipart: true)
+  = form_tag('/api/want_ad/create', method: 'post', novalidate: '', multipart: true)
     div ng-show="current_step == 1"
       .pull-right
         | Стъпка 1
@@ -31,7 +31,7 @@
       .documents_list.clearfix
         .document.pull-left[ng-repeat="file in files"]
           | {{file.name}}
-        input[type="file" file-upload multiple]
+        input[name="want_ad[attachments]" type="file" file-upload multiple]
       button.btn.btn-large.btn-primary[type="button" ng-click="continue()"] Напред
       a[href="javascript:void(0);" ng-click="create(false)"] Запази в черновата
     div ng-show="current_step == 2"
