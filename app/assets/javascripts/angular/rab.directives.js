@@ -42,11 +42,48 @@ angular.module('rab.directives').directive('geocomplete', function ($log, $timeo
   };
 });
 
-angular.module('rab.directives').directive('fileUpload', function () {
+// angular.module('rab.directives').directive('fileUpload', function () {
+//     return {
+//         scope: true,
+//         link: function (scope, element, attributes) {
+//             element.bind('change', function (event) {
+//                 var files = event.target.files;
+//                 //iterate files since 'multiple' may be specified on the element
+//                 for (var i = 0;i<files.length;i++) {
+//                     //emit event upward
+//                     scope.$emit('fileSelected', { file: files[i] });
+//                 }
+//             });
+//         }
+//     };
+// });
+
+angular.module('rab.directives').directive('fileUploadButton', function () {
     return {
         scope: true,
-        link: function (scope, el, attrs) {
-            el.bind('change', function (event) {
+        link: function (scope, element, attributes) {
+            var button = el.children()[0]
+
+            element.css({
+              position: 'relative',
+              overflow: 'hidden',
+              width: button.offsetWidth,
+              height: button.offsetHeight
+            })
+
+            var fileInput = angular.element('<input type="file" multiple="multiple" name="want_ad[attachments_attributes][][file]"/>');
+            fileInput.css({
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              'z-index': '2',
+              width: '100%',
+              height: '100%',
+              opacity: '0',
+              cursor: 'pointer'
+            });
+
+            fileInput.bind('change', function (event) {
                 var files = event.target.files;
                 //iterate files since 'multiple' may be specified on the element
                 for (var i = 0;i<files.length;i++) {
@@ -54,6 +91,9 @@ angular.module('rab.directives').directive('fileUpload', function () {
                     scope.$emit('fileSelected', { file: files[i] });
                 }
             });
+
+            element.append(fileInput)
         }
     };
 });
+

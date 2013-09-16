@@ -19,7 +19,7 @@
           textarea[name="description" ng-model="want_ad.description"] Описание
           span.help-inline[ng-show="continue_clicked && !want_ad.description"] Моля въведете описание
       .control-group
-        input.input-block-level#address-line[type="hidden" name='want_ad[q_draft]' ng-model="want_ad.q_draft"]
+        / input.input-block-level#address-line[type="hidden" name='want_ad[q_draft]' ng-model="want_ad.q_draft"]
       / .documents_list.clearfix
       /   .document.pull-left CV.pdf
       /   .document.pull-left Сертификат за градинарство.pdf
@@ -31,7 +31,9 @@
       .documents_list.clearfix
         .document.pull-left[ng-repeat="file in files"]
           | {{file.name}}
-        input[name="want_ad[attachments]" type="file" file-upload multiple]
+        input[name="want_ad[attachments_attributes][][file]" type="file" file-upload multiple]
+        / div[file-upload-button]
+        /   button.btn.btn-primary.pull-left Добави файл
       button.btn.btn-large.btn-primary[type="button" ng-click="continue()"] Напред
       a[href="javascript:void(0);" ng-click="create(false)"] Запази в черновата
     div ng-show="current_step == 2"
@@ -57,10 +59,10 @@
             |  Активна за две седмици
           span.help-inline[ng-show="continue_clicked && !two_weeks && !want_ad.deadline"] Моля въведете срок
       .control-group
-        select.chzn-select[name="want_ad[address][state_id]" chosen ng-model="address.state_id" data-placeholder="Област" ng-options="state.state_id as state.name for state in states" values='address.state_id+states' ng-change='state_changed(address.state_id)']
-        select.chzn-select[name="want_ad[address][city_id]" chosen ng-model="address.city_id" data-placeholder="Град" ng-options="city.city_id as city.name for city in cities" values='address.city_id+cities' ng-change='city_changed(address.city_id)']
+        select.chzn-select[name="want_ad[address_attributes][state_id]" chosen ng-model="address.state_id" data-placeholder="Област" ng-options="state.state_id as state.name for state in states" values='address.state_id+states' ng-change='state_changed(address.state_id)']
+        select.chzn-select[name="want_ad[address_attributes][city_id]" chosen ng-model="address.city_id" data-placeholder="Град" ng-options="city.city_id as city.name for city in cities" values='address.city_id+cities' ng-change='city_changed(address.city_id)']
       .control-group
-        input.input-block-level#address-line[name="want_ad[address][line]" type="text" placeholder="Адрес" geocomplete='center' line='address.line' markers='markers']
+        input.input-block-level#address-line[name="want_ad[address_attributes][line]" type="text" placeholder="Адрес" geocomplete='center' line='address.line' markers='markers']
       .google-map.contact_map[center="center" draggable="true" zoom="zoom" markers="markers" mark-click="false"]
       br
       button.btn.btn-primary

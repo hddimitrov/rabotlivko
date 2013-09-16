@@ -42,19 +42,21 @@ class WantAdsController < ApplicationController
   end
 
   def create
-    @want_ad = WantAd.new
+    @want_ad = WantAd.new(params[:want_ad])
     @want_ad.user_id = current_user.id
-    @want_ad.title = params[:want_ad][:title]
-    @want_ad.description = params[:want_ad][:description]
-    @want_ad.category_id = params[:want_ad][:category_id]
-    if params[:want_ad][:price_negotiable]
-      @want_ad.q_price_negotiable = true
-    else
-      @want_ad.price = params[:want_ad][:price]
-    end
-    @want_ad.deadline = params[:want_ad][:deadline] if params[:want_ad][:deadline].present?
+    # @want_ad.title = params[:want_ad][:title]
+    # @want_ad.description = params[:want_ad][:description]
+    # @want_ad.category_id = params[:want_ad][:category_id]
+    # if params[:want_ad][:price_negotiable]
+    #   @want_ad.q_price_negotiable = true
+    # else
+    #   @want_ad.price = params[:want_ad][:price]
+    # end
+    # @want_ad.deadline = params[:want_ad][:deadline] if params[:want_ad][:deadline].present?
 
-    @want_ad.build_address(params[:want_ad][:address])
+    # @want_ad.build_address(params[:want_ad][:address])
+
+    # @want_ad.attachments.build(params[:want_ad][:attachments_attributes])
 
     if @want_ad.save
       redirect_to @want_ad
